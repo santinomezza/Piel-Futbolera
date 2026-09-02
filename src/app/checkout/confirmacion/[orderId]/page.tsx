@@ -8,6 +8,7 @@ import { Footer } from '@/components/store/Footer'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { CheckCircle2, Clock, XCircle, Truck, Package, Home } from 'lucide-react'
+import { getPaymentStatus } from '@/lib/mercadopago'
 
 interface ConfirmationPageProps {
   params: Promise<{
@@ -15,6 +16,8 @@ interface ConfirmationPageProps {
   }>
   searchParams: Promise<{
     status?: string
+    payment_id?: string
+    preference_id?: string
   }>
 }
 
@@ -24,8 +27,9 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
   const { orderId } = await params
   const resolvedSearchParams = await searchParams
   const mpStatus = resolvedSearchParams.status
+  const paymentId = resolvedSearchParams.payment_id
 
-  const order = await prisma.order.findUnique({
+  let order = await prisma.order.findUnique({
     where: { id: orderId },
     include: {
       customer: true,
@@ -47,25 +51,42 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
     notFound()
   }
 
-  let addressData: any = {}
+  if (order.status === 'PENDING' && paymentId) {
+    const info = await getPaymentStatus(paymentId)
+    if (info?.status === 'approved' && info.externalReference === orderId) {
+      const existing = await prisma.payment.findFirst({ where: { mpPaymentId: info.id } })
+      if (!existing) {
+        await prisma.$transaction(async (tx) => {
+          await tx.order.update({ where: { id: orderId }, data: { status: 'PAID' } })
+          await tx.payment.create({
+            data: {
+              orderId,
+              mpPaymentId: info.id!,
+              status: 'approved',
+              paymentMethodId: info.paymentMethodId || 'mercadopago',
+            },
+          })
+        })
+        order = { ...order, status: 'PAID' }
+      }
+    }
+  }
+
+  let addressData: { address?: string; city?: string; province?: string; postalCode?: string } = {}
   try {
     addressData = JSON.parse(order.shippingAddress)
   } catch {
     addressData = {}
   }
 
-  // Determine display status
   const isApproved = order.status === 'PAID' || mpStatus === 'approved'
-  const isPending = order.status === 'PENDING' || mpStatus === 'pending'
-  const isRejected = mpStatus === 'rejected'
+  const isPending = order.status === 'PENDING' && !isApproved
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0B0F17]">
       <Header />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-        
-        {/* Status Header Banner */}
         <div className="text-center space-y-4 bg-[#141B28] p-8 rounded-3xl border border-slate-800 shadow-xl">
           {isApproved ? (
             <div className="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
@@ -105,22 +126,17 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
           </div>
         </div>
 
-        {/* Order Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Shipping & Customer Details */}
           <div className="bg-[#141B28] p-6 rounded-3xl border border-slate-800 space-y-4">
             <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">
               <Truck className="w-4 h-4 text-sky-400" />
               <span>Datos del Envío ({order.courier})</span>
             </div>
-
             <div className="space-y-2 text-xs text-slate-300">
               <p><strong>Comprador:</strong> {order.customer.firstName} {order.customer.lastName}</p>
               <p><strong>Email:</strong> {order.customer.email}</p>
               <p><strong>Teléfono:</strong> {order.customer.phone}</p>
               <p><strong>Domicilio:</strong> {addressData.address || order.customer.address}, {addressData.city || order.customer.city} ({addressData.postalCode || order.customer.postalCode})</p>
-              
               {order.trackingCode && (
                 <div className="pt-3 border-t border-slate-800 bg-sky-500/10 p-3 rounded-xl border border-sky-500/20">
                   <span className="text-[11px] uppercase font-bold text-sky-400 block">Código de Seguimiento {order.courier}:</span>
@@ -130,13 +146,11 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
             </div>
           </div>
 
-          {/* Payment Summary */}
           <div className="bg-[#141B28] p-6 rounded-3xl border border-slate-800 space-y-4">
             <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">
               <Package className="w-4 h-4 text-sky-400" />
               <span>Resumen Financiero</span>
             </div>
-
             <div className="space-y-2 text-xs">
               <div className="flex justify-between text-slate-400">
                 <span>Subtotal productos:</span>
@@ -152,15 +166,12 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* Itemized List */}
         <div className="bg-[#141B28] p-6 rounded-3xl border border-slate-800 space-y-4">
           <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">
             Productos en la Orden
           </h3>
-
           <div className="space-y-3">
             {order.items.map((item: typeof order.items[number]) => {
               let imgs: string[] = []
@@ -170,7 +181,6 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
                 imgs = [item.variant.product.images]
               }
               const mainImg = imgs[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
-
               return (
                 <div key={item.id} className="flex gap-4 items-center p-3 bg-slate-900/60 rounded-2xl border border-slate-800">
                   <div className="relative w-14 h-16 bg-slate-950 rounded-xl overflow-hidden shrink-0 border border-slate-800">
@@ -197,7 +207,6 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
             </Button>
           </Link>
         </div>
-
       </main>
 
       <Footer />

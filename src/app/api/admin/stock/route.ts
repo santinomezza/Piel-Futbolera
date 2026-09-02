@@ -17,9 +17,26 @@ export async function POST(req: Request) {
     }
 
     if (parsed.data.newStock === 0) {
+      const orderItems = await prisma.orderItem.count({
+        where: { variantId: parsed.data.variantId },
+      })
+
+      if (orderItems > 0) {
+        await prisma.productVariant.update({
+          where: { id: parsed.data.variantId },
+          data: { stock: 0 },
+        })
+        return NextResponse.json({
+          success: true,
+          disabled: true,
+          message: 'Variante con historial de ventas: se dejó en stock 0 en lugar de eliminarla.',
+        })
+      }
+
       await prisma.productVariant.delete({
         where: { id: parsed.data.variantId },
       })
+      return NextResponse.json({ success: true, deleted: true })
     } else {
       const updatedVariant = await prisma.productVariant.update({
         where: { id: parsed.data.variantId },
@@ -27,8 +44,6 @@ export async function POST(req: Request) {
       })
       return NextResponse.json({ success: true, variant: updatedVariant })
     }
-
-    return NextResponse.json({ success: true, deleted: true })
   } catch (error) {
     console.error('❌ Stock update error:', error)
     return NextResponse.json({ error: 'Error al actualizar stock' }, { status: 500 })

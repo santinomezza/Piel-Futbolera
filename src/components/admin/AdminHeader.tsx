@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, ShoppingBag, Package, Download, Store, Shield } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, Download, Store, Settings } from 'lucide-react'
 
 export const AdminHeader: React.FC = () => {
   const pathname = usePathname()
@@ -12,7 +12,8 @@ export const AdminHeader: React.FC = () => {
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Productos', href: '/admin/products', icon: Package },
     { name: 'Pedidos', href: '/admin/pedidos', icon: ShoppingBag },
-    { name: 'Gestión de Stock', href: '/admin/stock', icon: Package },
+    { name: 'Stock', href: '/admin/stock', icon: Package },
+    { name: 'Configuración', href: '/admin/configuracion', icon: Settings },
   ]
 
   return (

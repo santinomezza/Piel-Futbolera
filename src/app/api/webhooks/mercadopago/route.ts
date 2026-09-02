@@ -1,103 +1,158 @@
 import { NextResponse } from 'next/server'
+import { createHmac, timingSafeEqual } from 'node:crypto'
 import { prisma } from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 import { getPaymentStatus } from '@/lib/mercadopago'
 
+function verifyMercadoPagoSignature(
+  rawBody: string,
+  signatureHeader: string | null,
+  requestIdHeader: string | null,
+  secret: string
+): boolean {
+  if (!signatureHeader || !requestIdHeader) return false
+  const parts = signatureHeader.split(',')
+  let ts: string | null = null
+  let v1: string | null = null
+  for (const p of parts) {
+    const [k, v] = p.split('=')
+    if (k === 'ts') ts = v
+    if (k === 'v1') v1 = v
+  }
+  if (!ts || !v1) return false
+  const manifest = `id=${requestIdHeader};ts=${ts};`
+  const computed = createHmac('sha256', secret).update(manifest + rawBody).digest('hex')
+  const a = Buffer.from(computed, 'hex')
+  const b = Buffer.from(v1, 'hex')
+  if (a.length !== b.length) return false
+  return timingSafeEqual(a, b)
+}
+
 export async function POST(req: Request) {
+  const rawBody = await req.text()
+  const secret = process.env.MP_WEBHOOK_SECRET
+
+  if (secret) {
+    const signature = req.headers.get('x-signature')
+    const requestId = req.headers.get('x-request-id')
+    const valid = verifyMercadoPagoSignature(rawBody, signature, requestId, secret)
+    if (!valid) {
+      console.warn('⚠️ Webhook rejected: invalid signature')
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+    }
+  } else {
+    console.warn('⚠️ MP_WEBHOOK_SECRET not configured, skipping signature verification')
+  }
+
+  let body: unknown = {}
   try {
-    const url = new URL(req.url)
-    const topic = url.searchParams.get('topic') || url.searchParams.get('type')
-    const paymentId = url.searchParams.get('data.id') || url.searchParams.get('id')
+    body = rawBody ? JSON.parse(rawBody) : {}
+  } catch {
+    body = {}
+  }
 
-    let body: any = {}
-    try {
-      body = await req.json()
-    } catch {
-      // Body might be empty in standard MP GET/POST webhooks
-    }
+  const b = body as { type?: string; data?: { id?: number | string }; id?: number | string }
+  const url = new URL(req.url)
+  const topic = url.searchParams.get('topic') || url.searchParams.get('type') || b?.type
+  const paymentId =
+    url.searchParams.get('data.id') ||
+    url.searchParams.get('id') ||
+    (b?.data?.id != null ? String(b.data.id) : null) ||
+    (b?.id != null ? String(b.id) : null)
 
-    const effectivePaymentId = paymentId || body?.data?.id || body?.id
+  if (!paymentId) {
+    return NextResponse.json({ message: 'No payment ID in webhook' }, { status: 200 })
+  }
 
-    if (!effectivePaymentId) {
-      return NextResponse.json({ message: 'No payment ID in webhook' }, { status: 200 })
-    }
+  const logTopic = topic ? ` topic=${topic}` : ''
+  console.log(`🔔 Webhook received for Payment ID: ${paymentId}${logTopic}`)
 
-    console.log(`🔔 Webhook received for Payment ID: ${effectivePaymentId}`)
+  const existingPayment = await prisma.payment.findFirst({
+    where: { mpPaymentId: paymentId },
+  })
 
-    // Query official Mercado Pago API to verify authentic state
-    const paymentInfo = await getPaymentStatus(effectivePaymentId)
+  if (existingPayment) {
+    console.log(`ℹ️ Payment ${paymentId} already processed, skipping`)
+    return NextResponse.json({ status: 'ok' }, { status: 200 })
+  }
 
-    if (!paymentInfo || !paymentInfo.externalReference) {
-      console.warn(`⚠️ Payment ${effectivePaymentId} not found or missing external reference`)
-      return NextResponse.json({ message: 'Payment verification failed' }, { status: 200 })
-    }
+  const paymentInfo = await getPaymentStatus(paymentId)
+  if (!paymentInfo || !paymentInfo.externalReference) {
+    console.warn(`⚠️ Payment ${paymentId} not found or missing external reference`)
+    return NextResponse.json({ message: 'Payment verification failed' }, { status: 200 })
+  }
 
-    const orderId = paymentInfo.externalReference
-    const order = await prisma.order.findUnique({
-      where: { id: orderId },
-      include: { items: true, payments: true },
-    })
+  const orderId = paymentInfo.externalReference
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true, payments: true, shipments: true },
+  })
 
-    if (!order) {
-      console.warn(`⚠️ Order ${orderId} not found in database`)
-      return NextResponse.json({ message: 'Order not found' }, { status: 200 })
-    }
+  if (!order) {
+    console.warn(`⚠️ Order ${orderId} not found in database`)
+    return NextResponse.json({ message: 'Order not found' }, { status: 200 })
+  }
 
-    // Process status update
-    if (paymentInfo.status === 'approved' && order.status !== 'PAID') {
-      console.log(`✅ Payment approved for Order ${order.orderNumber}. Updating DB & Stock...`)
+  try {
+    if (paymentInfo.status === 'approved') {
+      if (order.status === 'PAID') {
+        return NextResponse.json({ status: 'ok' }, { status: 200 })
+      }
 
-      // 1. Transaction to update order, reduce stock, and record payment info
       await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-        // Update Order
         await tx.order.update({
           where: { id: orderId },
-          data: {
-            status: 'PAID',
-            trackingCode: order.courier === 'ANDREANI' ? `AND-${Date.now().toString().slice(-8)}` : `CA-${Date.now().toString().slice(-8)}`,
-          },
+          data: { status: 'PAID' },
         })
 
-        // Update Payment record
         await tx.payment.create({
           data: {
             orderId: order.id,
-            mpPaymentId: paymentInfo.id,
+            mpPaymentId: paymentInfo.id!,
             status: 'approved',
             paymentMethodId: paymentInfo.paymentMethodId || 'mercadopago',
           },
         })
 
-        // Reduce stock atomically for each variant
+        await tx.shipment.updateMany({
+          where: { orderId: order.id },
+          data: { status: 'PENDING' },
+        })
+      })
+
+      console.log(`✅ Payment approved for Order ${order.orderNumber}`)
+    } else if (paymentInfo.status === 'rejected' || paymentInfo.status === 'cancelled') {
+      await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+        const existing = await tx.payment.findFirst({ where: { mpPaymentId: paymentId } })
+        if (existing) return
+
+        await tx.payment.create({
+          data: {
+            orderId: order.id,
+            mpPaymentId: paymentInfo.id!,
+            status: paymentInfo.status!,
+            paymentMethodId: paymentInfo.paymentMethodId || 'mercadopago',
+          },
+        })
+
         for (const item of order.items) {
           await tx.productVariant.update({
             where: { id: item.variantId },
-            data: {
-              stock: {
-                decrement: item.quantity,
-              },
-            },
+            data: { stock: { increment: item.quantity } },
           })
         }
 
-        // Update Shipment record status
-        await tx.shipment.updateMany({
-          where: { orderId: order.id },
-          data: {
-            status: 'GENERATED',
-            trackingNumber: order.courier === 'ANDREANI' ? `AND-${Date.now().toString().slice(-8)}` : `CA-${Date.now().toString().slice(-8)}`,
-          },
-        })
+        if (order.status === 'PENDING') {
+          await tx.order.update({
+            where: { id: orderId },
+            data: { status: 'CANCELLED' },
+          })
+        }
       })
-    } else if (paymentInfo.status === 'rejected') {
-      await prisma.payment.create({
-        data: {
-          orderId: order.id,
-          mpPaymentId: paymentInfo.id,
-          status: 'rejected',
-          paymentMethodId: paymentInfo.paymentMethodId || 'mercadopago',
-        },
-      })
+
+      console.log(`↩️ Payment ${paymentInfo.status} for Order ${order.orderNumber}, stock released`)
+    } else {
+      console.log(`ℹ️ Payment ${paymentId} in status ${paymentInfo.status}, no action`)
     }
 
     return NextResponse.json({ status: 'ok' }, { status: 200 })

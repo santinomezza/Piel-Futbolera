@@ -5,7 +5,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -68,7 +68,7 @@ model ProductVariant {
 
 model Customer {
   id         String   @id @default(uuid())
-  email      String
+  email      String   @unique
   firstName  String
   lastName   String
   dni        String
@@ -139,4 +139,10 @@ model AdminUser {
   name      String
   role      String   @default("ADMIN")
   createdAt DateTime @default(now())
+}
+
+model StoreConfig {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 import { createCheckoutPreference } from '@/lib/mercadopago'
+import { rateLimit, getClientIp } from '@/lib/rateLimit'
 
 const checkoutSchema = z.object({
   customer: z.object({
@@ -29,7 +31,29 @@ const checkoutSchema = z.object({
   shippingFee: z.number().min(0),
 })
 
+async function generateOrderNumber(tx: Prisma.TransactionClient): Promise<string> {
+  const last = await tx.order.findFirst({
+    orderBy: { createdAt: 'desc' },
+    select: { orderNumber: true },
+  })
+  let next = 1001
+  if (last) {
+    const m = last.orderNumber.match(/(\d+)$/)
+    if (m) next = parseInt(m[1], 10) + 1
+  }
+  return `DOCE-${next}`
+}
+
 export async function POST(req: Request) {
+  const ip = getClientIp(req)
+  const rl = rateLimit(`checkout:${ip}`, 10, 60_000)
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Demasiados intentos. Esperá un momento.' },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
+    )
+  }
+
   try {
     const body = await req.json()
     const parsed = checkoutSchema.safeParse(body)
@@ -43,77 +67,111 @@ export async function POST(req: Request) {
 
     const { customer: custData, items, courier, shippingFee } = parsed.data
 
-    // 1. Verify stock availability in DB
-    for (const item of items) {
-      const variant = await prisma.productVariant.findUnique({
-        where: { id: item.variantId },
-      })
-      if (!variant || variant.stock < item.quantity) {
-        return NextResponse.json(
-          { error: `Stock insuficiente para ${item.name} (Talle ${item.size}). Disponible: ${variant?.stock || 0}` },
-          { status: 400 }
-        )
-      }
-    }
-
-    // 2. Compute financial totals
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const totalAmount = subtotal + shippingFee
 
-    // 3. Upsert Customer in DB
-    const customer = await prisma.customer.create({
-      data: {
-        email: custData.email,
-        firstName: custData.firstName,
-        lastName: custData.lastName,
-        dni: custData.dni,
-        phone: custData.phone,
-        address: custData.address,
-        city: custData.city,
-        province: custData.province,
-        postalCode: custData.postalCode,
-      },
-    })
+    let orderId: string
 
-    // Generate Order Number (DOCE-XXXX)
-    const orderCount = await prisma.order.count()
-    const orderNumber = `DOCE-${1000 + orderCount + 1}`
-
-    // 4. Create Order in DB
-    const order = await prisma.order.create({
-      data: {
-        orderNumber,
-        customerId: customer.id,
-        status: 'PENDING',
-        subtotal,
-        shippingFee,
-        totalAmount,
-        courier,
-        shippingAddress: JSON.stringify({
-          address: custData.address,
-          city: custData.city,
-          province: custData.province,
-          postalCode: custData.postalCode,
-        }),
-        items: {
-          create: items.map((i) => ({
-            variantId: i.variantId,
-            quantity: i.quantity,
-            unitPrice: i.price,
-          })),
-        },
-        shipments: {
-          create: [
-            {
-              courier,
-              status: 'PENDING',
+    try {
+      const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+        for (const item of items) {
+          const updated = await tx.productVariant.updateMany({
+            where: {
+              id: item.variantId,
+              stock: { gte: item.quantity },
             },
-          ],
-        },
-      },
-    })
+            data: {
+              stock: { decrement: item.quantity },
+            },
+          })
 
-    // 5. Generate Mercado Pago Preference
+          if (updated.count === 0) {
+            const current = await tx.productVariant.findUnique({
+              where: { id: item.variantId },
+              select: { stock: true, size: true },
+            })
+            throw new StockError(
+              `Stock insuficiente para ${item.name} (Talle ${current?.size || item.size}). Disponible: ${current?.stock ?? 0}`
+            )
+          }
+        }
+
+        const customer = await tx.customer.upsert({
+          where: { email: custData.email },
+          update: {
+            firstName: custData.firstName,
+            lastName: custData.lastName,
+            dni: custData.dni,
+            phone: custData.phone,
+            address: custData.address,
+            city: custData.city,
+            province: custData.province,
+            postalCode: custData.postalCode,
+          },
+          create: {
+            email: custData.email,
+            firstName: custData.firstName,
+            lastName: custData.lastName,
+            dni: custData.dni,
+            phone: custData.phone,
+            address: custData.address,
+            city: custData.city,
+            province: custData.province,
+            postalCode: custData.postalCode,
+          },
+        })
+
+        const number = await generateOrderNumber(tx)
+
+        const order = await tx.order.create({
+          data: {
+            orderNumber: number,
+            customerId: customer.id,
+            status: 'PENDING',
+            subtotal,
+            shippingFee,
+            totalAmount,
+            courier,
+            shippingAddress: JSON.stringify({
+              address: custData.address,
+              city: custData.city,
+              province: custData.province,
+              postalCode: custData.postalCode,
+            }),
+            items: {
+              create: items.map((i) => ({
+                variantId: i.variantId,
+                quantity: i.quantity,
+                unitPrice: i.price,
+              })),
+            },
+            shipments: {
+              create: [
+                {
+                  courier,
+                  status: 'PENDING',
+                },
+              ],
+            },
+          },
+        })
+
+        return order
+      })
+
+      orderId = result.id
+    } catch (err) {
+      if (err instanceof StockError) {
+        return NextResponse.json({ error: err.message }, { status: 400 })
+      }
+      throw err
+    }
+
+    const order = await prisma.order.findUnique({ where: { id: orderId } })
+    if (!order) {
+      return NextResponse.json({ error: 'No se pudo recuperar la orden creada' }, { status: 500 })
+    }
+
     const mpPreference = await createCheckoutPreference({
       orderId: order.id,
       orderNumber: order.orderNumber,
@@ -131,7 +189,6 @@ export async function POST(req: Request) {
       },
     })
 
-    // Save payment preference reference
     await prisma.payment.create({
       data: {
         orderId: order.id,
@@ -152,5 +209,12 @@ export async function POST(req: Request) {
       { error: 'Ocurrió un error al procesar el pedido. Por favor intentá nuevamente.' },
       { status: 500 }
     )
+  }
+}
+
+class StockError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'StockError'
   }
 }

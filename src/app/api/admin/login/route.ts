@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { cookies } from 'next/headers'
+import { rateLimit, getClientIp } from '@/lib/rateLimit'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -8,6 +9,15 @@ const loginSchema = z.object({
 })
 
 export async function POST(req: Request) {
+  const ip = getClientIp(req)
+  const rl = rateLimit(`admin_login:${ip}`, 5, 60_000)
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Demasiados intentos. Esperá unos minutos.' },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
+    )
+  }
+
   try {
     const body = await req.json()
     const parsed = loginSchema.safeParse(body)

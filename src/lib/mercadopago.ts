@@ -1,11 +1,30 @@
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
+import { getMercadoPagoAccessToken, getMercadoPagoPublicKey } from './storeConfig'
 
-// Initialize Mercado Pago client safely on backend
-const accessToken = process.env.MP_ACCESS_TOKEN || 'TEST-MP-ACCESS-TOKEN-DOCE-DEV'
-const client = new MercadoPagoConfig({ accessToken })
+let _client: MercadoPagoConfig | null = null
+let _clientToken: string | null = null
 
-export const mpPreference = new Preference(client)
-export const mpPayment = new Payment(client)
+async function getClient(): Promise<MercadoPagoConfig> {
+  const token = await getMercadoPagoAccessToken()
+  if (!token) {
+    throw new Error('Mercado Pago access token no configurado. Configuralo en /admin/configuracion')
+  }
+  if (!_client || _clientToken !== token) {
+    _client = new MercadoPagoConfig({ accessToken: token })
+    _clientToken = token
+  }
+  return _client
+}
+
+export async function getPreferenceClient(): Promise<Preference> {
+  const c = await getClient()
+  return new Preference(c)
+}
+
+export async function getPaymentClient(): Promise<Payment> {
+  const c = await getClient()
+  return new Payment(c)
+}
 
 export interface CreatePreferenceInput {
   orderId: string
@@ -27,7 +46,11 @@ export interface CreatePreferenceInput {
 export async function createCheckoutPreference(input: CreatePreferenceInput) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
-  const preferenceData = {
+  const isHttps = baseUrl.startsWith('https://')
+  const isLocalhost = /localhost|127\.0\.0\.1/.test(baseUrl)
+  const autoReturn = isHttps && !isLocalhost
+
+  const preferenceData: Record<string, unknown> = {
     items: input.items.map((item) => ({
       id: input.orderId,
       title: item.title,
@@ -49,14 +72,18 @@ export async function createCheckoutPreference(input: CreatePreferenceInput) {
       pending: `${baseUrl}/checkout/confirmacion/${input.orderId}?status=pending`,
       failure: `${baseUrl}/checkout/confirmacion/${input.orderId}?status=rejected`,
     },
-    auto_return: 'approved',
     external_reference: input.orderId,
     statement_descriptor: 'DOCE CAMISETAS',
     notification_url: `${baseUrl}/api/webhooks/mercadopago`,
   }
 
+  if (autoReturn) {
+    preferenceData.auto_return = 'approved'
+  }
+
   try {
-    const response = await mpPreference.create({ body: preferenceData })
+    const mp = await getPreferenceClient()
+    const response = await mp.create({ body: preferenceData as never })
     return {
       id: response.id,
       initPoint: response.init_point,
@@ -70,10 +97,11 @@ export async function createCheckoutPreference(input: CreatePreferenceInput) {
 
 export async function getPaymentStatus(paymentId: string) {
   try {
-    const payment = await mpPayment.get({ id: paymentId })
+    const mp = await getPaymentClient()
+    const payment = await mp.get({ id: paymentId })
     return {
       id: payment.id?.toString(),
-      status: payment.status, // approved, pending, rejected
+      status: payment.status,
       statusDetail: payment.status_detail,
       externalReference: payment.external_reference,
       paymentMethodId: payment.payment_method_id,
@@ -82,5 +110,13 @@ export async function getPaymentStatus(paymentId: string) {
   } catch (error) {
     console.error(`❌ Error fetching Mercado Pago payment ${paymentId}:`, error)
     return null
+  }
+}
+
+export async function getPublicConfig() {
+  const publicKey = await getMercadoPagoPublicKey()
+  return {
+    publicKey,
+    isConfigured: Boolean(publicKey),
   }
 }
