@@ -111,7 +111,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
                 : 'Pago No Completado'}
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Número de Orden: <strong className="text-sky-400 font-mono">{order.orderNumber}</strong>
+              Número de Orden: <strong className="text-emerald-400 font-mono">{order.orderNumber}</strong>
             </p>
           </div>
 
@@ -129,7 +129,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#141B28] p-6 rounded-3xl border border-slate-800 space-y-4">
             <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">
-              <Truck className="w-4 h-4 text-sky-400" />
+              <Truck className="w-4 h-4 text-emerald-400" />
               <span>Datos del Envío ({order.courier})</span>
             </div>
             <div className="space-y-2 text-xs text-slate-300">
@@ -138,8 +138,8 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               <p><strong>Teléfono:</strong> {order.customer.phone}</p>
               <p><strong>Domicilio:</strong> {addressData.address || order.customer.address}, {addressData.city || order.customer.city} ({addressData.postalCode || order.customer.postalCode})</p>
               {order.trackingCode && (
-                <div className="pt-3 border-t border-slate-800 bg-sky-500/10 p-3 rounded-xl border border-sky-500/20">
-                  <span className="text-[11px] uppercase font-bold text-sky-400 block">Código de Seguimiento {order.courier}:</span>
+                <div className="pt-3 border-t border-slate-800 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20">
+                  <span className="text-[11px] uppercase font-bold text-emerald-400 block">Código de Seguimiento {order.courier}:</span>
                   <span className="font-mono font-bold text-sm text-white">{order.trackingCode}</span>
                 </div>
               )}
@@ -148,7 +148,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
 
           <div className="bg-[#141B28] p-6 rounded-3xl border border-slate-800 space-y-4">
             <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-slate-800 pb-3 text-sm">
-              <Package className="w-4 h-4 text-sky-400" />
+              <Package className="w-4 h-4 text-emerald-400" />
               <span>Resumen Financiero</span>
             </div>
             <div className="space-y-2 text-xs">
@@ -162,7 +162,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               </div>
               <div className="pt-2 border-t border-slate-800 flex justify-between text-base font-bold text-white">
                 <span>Total Abonado:</span>
-                <span className="text-sky-400 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
+                <span className="text-emerald-400 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
               </div>
             </div>
           </div>

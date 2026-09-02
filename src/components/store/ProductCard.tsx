@@ -43,7 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const mainImage = product.images[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
 
   return (
-    <div className="group relative bg-[#141B28] rounded-2xl border border-slate-800/80 hover:border-sky-500/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/5 flex flex-col justify-between">
+    <div className="group relative bg-[#141B28] rounded-2xl border border-slate-800/80 hover:border-emerald-500/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 flex flex-col justify-between">
       
       {/* Top Image Container */}
       <div className="relative aspect-[4/5] bg-slate-900 overflow-hidden">
@@ -72,7 +72,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <Link
             href={`/producto/${product.slug}`}
-            className="px-4 py-2 bg-sky-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
+            className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
           >
             <Eye className="w-4 h-4" />
             <span>Ver Detalle y Talles</span>
@@ -84,7 +84,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
         <div>
           <Link href={`/producto/${product.slug}`} className="block">
-            <h3 className="font-semibold text-slate-100 text-base group-hover:text-sky-400 transition line-clamp-1">
+            <h3 className="font-semibold text-slate-100 text-base group-hover:text-emerald-400 transition line-clamp-1">
               {product.name}
             </h3>
           </Link>

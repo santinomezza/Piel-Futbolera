@@ -89,7 +89,7 @@ export default async function AdminDashboardPage() {
           <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl space-y-3">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs font-semibold">Cantidad de Pedidos</span>
-              <div className="p-2 bg-sky-500/10 rounded-xl text-sky-400">
+              <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
                 <ShoppingBag className="w-5 h-5" />
               </div>
             </div>
@@ -141,11 +141,11 @@ export default async function AdminDashboardPage() {
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
                   <span className="text-slate-300">Andreani</span>
-                  <span className="text-sky-400">{andreaniCount} pedidos ({allOrders.length > 0 ? Math.round((andreaniCount / allOrders.length) * 100) : 0}%)</span>
+                  <span className="text-emerald-400">{andreaniCount} pedidos ({allOrders.length > 0 ? Math.round((andreaniCount / allOrders.length) * 100) : 0}%)</span>
                 </div>
                 <div className="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-sky-500 rounded-full transition-all"
+                    className="h-full bg-emerald-500 rounded-full transition-all"
                     style={{ width: `${allOrders.length > 0 ? (andreaniCount / allOrders.length) * 100 : 0}%` }}
                   />
                 </div>
@@ -196,7 +196,7 @@ export default async function AdminDashboardPage() {
         <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800 space-y-4">
           <div className="flex justify-between items-center border-b border-slate-800 pb-3">
             <h3 className="font-bold text-white font-outfit text-base">Últimos Pedidos Recibidos</h3>
-            <Link href="/admin/pedidos" className="text-xs text-sky-400 font-semibold hover:underline">
+            <Link href="/admin/pedidos" className="text-xs text-emerald-400 font-semibold hover:underline">
               Ver Todos los Pedidos
             </Link>
           </div>
@@ -216,7 +216,7 @@ export default async function AdminDashboardPage() {
               <tbody className="divide-y divide-slate-800/60">
                 {allOrders.slice(0, 5).map((order: typeof allOrders[number]) => (
                   <tr key={order.id} className="hover:bg-slate-900/50 transition">
-                    <td className="py-3 px-3 font-mono font-bold text-sky-400">{order.orderNumber}</td>
+                    <td className="py-3 px-3 font-mono font-bold text-emerald-400">{order.orderNumber}</td>
                     <td className="py-3 px-3 font-semibold text-slate-200">
                       {order.customer.firstName} {order.customer.lastName}
                     </td>

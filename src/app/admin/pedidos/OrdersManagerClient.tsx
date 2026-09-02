@@ -113,7 +113,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+              className="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
             >
               <option value="ALL">Todos los Estados</option>
               <option value="PENDING">Pendiente de Pago</option>
@@ -130,7 +130,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
             <select
               value={selectedCourier}
               onChange={(e) => setSelectedCourier(e.target.value)}
-              className="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+              className="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
             >
               <option value="ALL">Todos los Correos</option>
               <option value="ANDREANI">Andreani</option>
@@ -162,7 +162,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
           <tbody className="divide-y divide-slate-800/60">
             {filteredOrders.map((order) => (
               <tr key={order.id} className="hover:bg-slate-900/40 transition">
-                <td className="py-3 px-4 font-mono font-bold text-sky-400">{order.orderNumber}</td>
+                <td className="py-3 px-4 font-mono font-bold text-emerald-400">{order.orderNumber}</td>
                 <td className="py-3 px-4">
                   <div className="font-semibold text-slate-100">{order.customer.firstName} {order.customer.lastName}</div>
                   <div className="text-[11px] text-slate-400">{order.customer.email}</div>
@@ -202,7 +202,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
                   </button>
                   <button
                     onClick={() => handleOpenStatusModal(order)}
-                    className="p-2 bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/20 transition"
+                    className="p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/20 transition"
                     title="Actualizar estado / seguimiento"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
@@ -220,7 +220,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
           <div className="w-full max-w-2xl bg-[#0F1622] rounded-3xl border border-slate-800 p-6 shadow-2xl space-y-4">
             <div className="flex justify-between items-center border-b border-slate-800 pb-3">
               <h3 className="text-lg font-bold text-white font-outfit">
-                Detalle del Pedido <span className="text-sky-400 font-mono">{activeModalOrder.orderNumber}</span>
+                Detalle del Pedido <span className="text-emerald-400 font-mono">{activeModalOrder.orderNumber}</span>
               </h3>
               <button onClick={() => setActiveModalOrder(null)} className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
@@ -239,7 +239,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
                 <span className="font-bold text-slate-200 block mb-1">Dirección de Entrega</span>
                 <p>{activeModalOrder.customer.address}</p>
                 <p className="text-slate-400">{activeModalOrder.customer.city} ({activeModalOrder.customer.postalCode})</p>
-                <p className="text-sky-400 font-semibold">{activeModalOrder.courier}</p>
+                <p className="text-emerald-400 font-semibold">{activeModalOrder.courier}</p>
               </div>
             </div>
 
@@ -257,7 +257,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
 
             <div className="pt-3 border-t border-slate-800 flex justify-between items-center text-xs">
               <span className="text-slate-400">Total acumulado:</span>
-              <span className="text-base font-bold text-sky-400 font-outfit">
+              <span className="text-base font-bold text-emerald-400 font-outfit">
                 ${activeModalOrder.totalAmount.toLocaleString('es-AR')}
               </span>
             </div>
@@ -284,7 +284,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                 >
                   <option value="PENDING">PENDING (Pendiente)</option>
                   <option value="PAID">PAID (Pagado)</option>
@@ -301,7 +301,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
                   value={newTrackingCode}
                   onChange={(e) => setNewTrackingCode(e.target.value)}
                   placeholder="ej. AND-987654321"
-                  className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 />
               </div>
             </div>

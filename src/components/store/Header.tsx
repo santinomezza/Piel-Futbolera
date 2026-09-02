@@ -49,14 +49,14 @@ function HeaderContent() {
             {/* Brand Logo */}
             <div className="flex items-center gap-8">
               <Link href="/" className="flex items-center gap-3 group">
-                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-sky-500/20 group-hover:scale-105 transition bg-slate-900 border border-slate-800">
+                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition bg-slate-900 border border-slate-800">
                   <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="44px" />
                 </div>
                 <div>
                   <span className="font-extrabold text-xl tracking-tight text-white font-outfit leading-none block">
                     PielFutbolera
                   </span>
-                  <span className="block text-[10px] uppercase font-bold text-sky-400 mt-1 tracking-widest">
+                  <span className="block text-[10px] uppercase font-bold text-emerald-400 mt-1 tracking-widest">
                     Camisetas
                   </span>
                 </div>
@@ -84,7 +84,7 @@ function HeaderContent() {
                   placeholder="Buscar camiseta (ej. Albiceleste, 1986)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-900/80 border border-slate-800 focus:border-sky-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition"
+                  className="w-full pl-10 pr-4 py-2 bg-slate-900/80 border border-slate-800 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition"
                 />
                 <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500" />
               </div>
@@ -98,7 +98,7 @@ function HeaderContent() {
                 className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 border border-slate-800 hover:border-slate-700 rounded-xl transition"
                 title="Panel de Administración"
               >
-                <Shield className="w-3.5 h-3.5 text-sky-400" />
+                <Shield className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Panel Dueño</span>
               </Link>
 
@@ -108,10 +108,10 @@ function HeaderContent() {
                 className="relative p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl transition flex items-center gap-2"
                 aria-label="Abrir carrito"
               >
-                <ShoppingBag className="w-5 h-5 text-sky-400" />
+                <ShoppingBag className="w-5 h-5 text-emerald-400" />
                 <span className="text-xs font-bold hidden sm:inline">Carrito</span>
                 {totalItems > 0 && (
-                  <span className="w-5 h-5 bg-sky-500 text-slate-950 text-[11px] font-black rounded-full flex items-center justify-center animate-pulse-glow">
+                  <span className="w-5 h-5 bg-emerald-500 text-slate-950 text-[11px] font-black rounded-full flex items-center justify-center animate-pulse-glow">
                     {totalItems}
                   </span>
                 )}
@@ -158,7 +158,7 @@ function HeaderContent() {
               <Link
                 href="/admin"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-semibold text-sky-400 hover:bg-slate-800 rounded-lg flex items-center gap-2"
+                className="px-3 py-2 text-sm font-semibold text-emerald-400 hover:bg-slate-800 rounded-lg flex items-center gap-2"
               >
                 <Shield className="w-4 h-4" />
                 Panel Admin

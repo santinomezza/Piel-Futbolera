@@ -140,7 +140,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
 
         <button
           onClick={handleOpenCreateModal}
-          className="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-sky-600/20 transition flex items-center justify-center gap-2"
+          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
         >
           <Plus className="w-4 h-4" />
           <span>Agregar Producto Nuevo</span>
@@ -156,7 +156,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             placeholder="Buscar por nombre, liga o país..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#141C2B] border border-slate-800 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
+            className="w-full bg-[#141C2B] border border-slate-800 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
           />
         </div>
 
@@ -167,7 +167,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+              className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
             >
               <option value="ALL">Todas las Categorías</option>
               <option value="TITULAR">Titular</option>
@@ -181,7 +181,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
           <select
             value={countryFilter}
             onChange={(e) => setCountryFilter(e.target.value)}
-            className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+            className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
           >
             <option value="ALL">Todos los Países</option>
             {countries.map((c) => (
@@ -267,7 +267,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                       {/* Country & League */}
                       <td className="py-3 px-3 space-y-1">
                         <div className="flex items-center gap-1.5 text-slate-300 font-semibold">
-                          <Globe className="w-3.5 h-3.5 text-sky-400" />
+                          <Globe className="w-3.5 h-3.5 text-emerald-400" />
                           <span>{prod.country?.name || 'Sin país'}</span>
                         </div>
                         {prod.league && (
@@ -331,7 +331,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleOpenEditModal(prod)}
-                            className="p-2 bg-slate-900 hover:bg-slate-800 text-sky-400 rounded-xl border border-slate-800 transition"
+                            className="p-2 bg-slate-900 hover:bg-slate-800 text-emerald-400 rounded-xl border border-slate-800 transition"
                             title="Editar producto"
                           >
                             <Edit2 className="w-4 h-4" />

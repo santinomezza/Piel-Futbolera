@@ -33,7 +33,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
           {/* Header */}
           <div className="p-6 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-sky-500/10 rounded-xl text-sky-400">
+              <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div>
@@ -84,7 +84,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-semibold text-slate-100 truncate">{item.name}</h3>
                     <div className="mt-1 flex items-center gap-2">
-                      <span className="text-xs font-semibold px-2 py-0.5 bg-slate-800 text-sky-400 rounded-md">
+                      <span className="text-xs font-semibold px-2 py-0.5 bg-slate-800 text-emerald-400 rounded-md">
                         Talle: {item.size}
                       </span>
                       <span className="text-xs text-slate-400">SKU: {item.sku}</span>
@@ -141,7 +141,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                 </div>
                 <div className="pt-2 border-t border-slate-800 flex justify-between text-base font-bold text-slate-100">
                   <span>Total estimado</span>
-                  <span className="text-sky-400">${subtotal.toLocaleString('es-AR')}</span>
+                  <span className="text-emerald-400">${subtotal.toLocaleString('es-AR')}</span>
                 </div>
               </div>
 

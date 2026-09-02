@@ -87,15 +87,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         
         {/* Hero Section */}
         {!categoryFilter && !countryFilter && !leagueFilter && !searchQuery && (
-          <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-slate-800 bg-gradient-to-r from-sky-950/40 via-slate-900 to-slate-950 shadow-2xl">
+          <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-slate-800 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-950 shadow-2xl">
             <div className="max-w-2xl space-y-6 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                 <Sparkles className="w-4 h-4" />
                 <span>Ediciones Especiales & Ligas Mundiales 2026</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-outfit leading-tight">
-                Camisetas de Fútbol con <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Identidad Única</span>
+                Camisetas de Fútbol con <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300">Identidad Única</span>
               </h1>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
@@ -105,7 +105,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <a
                   href="#catalogo"
-                  className="px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-sky-600/25 transition"
+                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/25 transition"
                 >
                   Explorar Catálogo
                 </a>
@@ -117,7 +117,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
             {/* Background glow element */}
-            <div className="absolute top-1/2 right-10 -translate-y-1/2 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 right-10 -translate-y-1/2 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           </section>
         )}
 
@@ -150,7 +150,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <div className="p-12 text-center bg-[#141B28] rounded-3xl border border-slate-800 space-y-3">
               <p className="text-slate-300 font-semibold">No encontramos camisetas que coincidan con los filtros aplicados.</p>
               <p className="text-xs text-slate-500">Probá modificando o limpiando los filtros seleccionados.</p>
-              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-sky-400 rounded-xl transition">
+              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 rounded-xl transition">
                 Ver Todas las Camisetas
               </Link>
             </div>

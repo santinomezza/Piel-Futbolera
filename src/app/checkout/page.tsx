@@ -148,22 +148,22 @@ export default function CheckoutPage() {
         <div className="max-w-xl mx-auto flex items-center justify-between relative">
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-slate-800 -z-10 -translate-y-1/2" />
           
-          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step >= 1 ? 'text-sky-400 font-bold' : 'text-slate-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step >= 1 ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20' : 'bg-slate-800 text-slate-400'}`}>
+          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step >= 1 ? 'text-emerald-400 font-bold' : 'text-slate-500'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step >= 1 ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' : 'bg-slate-800 text-slate-400'}`}>
               1
             </div>
             <span className="text-[11px]">Datos de Envío</span>
           </div>
 
-          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step >= 2 ? 'text-sky-400 font-bold' : 'text-slate-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step >= 2 ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20' : 'bg-slate-800 text-slate-400'}`}>
+          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step >= 2 ? 'text-emerald-400 font-bold' : 'text-slate-500'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step >= 2 ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' : 'bg-slate-800 text-slate-400'}`}>
               2
             </div>
             <span className="text-[11px]">Método de Envío</span>
           </div>
 
-          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step === 3 ? 'text-sky-400 font-bold' : 'text-slate-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step === 3 ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20' : 'bg-slate-800 text-slate-400'}`}>
+          <div className={`flex flex-col items-center gap-1 bg-[#0B0F17] px-3 ${step === 3 ? 'text-emerald-400 font-bold' : 'text-slate-500'}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${step === 3 ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' : 'bg-slate-800 text-slate-400'}`}>
               3
             </div>
             <span className="text-[11px]">Pago Mercado Pago</span>
@@ -198,7 +198,7 @@ export default function CheckoutPage() {
                       value={customer.firstName}
                       onChange={(e) => setCustomer({ ...customer, firstName: e.target.value })}
                       placeholder="Juan"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                       value={customer.lastName}
                       onChange={(e) => setCustomer({ ...customer, lastName: e.target.value })}
                       placeholder="Pérez"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -222,7 +222,7 @@ export default function CheckoutPage() {
                       value={customer.email}
                       onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
                       placeholder="juan@ejemplo.com"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -234,7 +234,7 @@ export default function CheckoutPage() {
                       value={customer.dni}
                       onChange={(e) => setCustomer({ ...customer, dni: e.target.value })}
                       placeholder="38123456"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -246,7 +246,7 @@ export default function CheckoutPage() {
                       value={customer.phone}
                       onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
                       placeholder="1198765432"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ export default function CheckoutPage() {
                       value={customer.postalCode}
                       onChange={(e) => setCustomer({ ...customer, postalCode: e.target.value })}
                       placeholder="C1043 o 1425"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
                       value={customer.address}
                       onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
                       placeholder="Av. Corrientes 1234 4to B"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
@@ -284,7 +284,7 @@ export default function CheckoutPage() {
                       value={customer.city}
                       onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
                       placeholder="Buenos Aires"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
@@ -304,7 +304,7 @@ export default function CheckoutPage() {
                   </h2>
                   <button
                     onClick={() => setStep(1)}
-                    className="text-xs text-sky-400 hover:underline"
+                    className="text-xs text-emerald-400 hover:underline"
                   >
                     Modificar datos
                   </button>
@@ -321,12 +321,12 @@ export default function CheckoutPage() {
                       onClick={() => setSelectedCourier(quote)}
                       className={`p-4 rounded-2xl border cursor-pointer transition flex items-center justify-between ${
                         selectedCourier?.courierId === quote.courierId
-                          ? 'bg-sky-500/10 border-sky-500 shadow-md shadow-sky-500/10'
+                          ? 'bg-emerald-500/10 border-emerald-500 shadow-md shadow-emerald-500/10'
                           : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedCourier?.courierId === quote.courierId ? 'border-sky-400 bg-sky-500' : 'border-slate-600'}`}>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedCourier?.courierId === quote.courierId ? 'border-emerald-400 bg-emerald-500' : 'border-slate-600'}`}>
                           {selectedCourier?.courierId === quote.courierId && (
                             <div className="w-2 h-2 rounded-full bg-slate-950" />
                           )}
@@ -373,7 +373,7 @@ export default function CheckoutPage() {
                   <h2 className="text-xl font-bold text-white font-outfit">
                     3. Pago con Mercado Pago
                   </h2>
-                  <button onClick={() => setStep(2)} className="text-xs text-sky-400 hover:underline">
+                  <button onClick={() => setStep(2)} className="text-xs text-emerald-400 hover:underline">
                     Cambiar envío
                   </button>
                 </div>
@@ -389,12 +389,12 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-slate-300">
                     <span>Envío por:</span>
-                    <strong className="text-sky-400">{selectedCourier?.courierName} (${selectedCourier?.price.toLocaleString('es-AR')})</strong>
+                    <strong className="text-emerald-400">{selectedCourier?.courierName} (${selectedCourier?.price.toLocaleString('es-AR')})</strong>
                   </div>
                 </div>
 
-                <div className="p-4 bg-sky-500/10 border border-sky-500/20 rounded-2xl text-xs text-slate-300 space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-sky-400">
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-slate-300 space-y-2">
+                  <div className="flex items-center gap-2 font-bold text-emerald-400">
                     <ShieldCheck className="w-4 h-4" />
                     <span>Checkout Pro Oficial de Mercado Pago</span>
                   </div>
@@ -456,7 +456,7 @@ export default function CheckoutPage() {
 
               <div className="pt-3 border-t border-slate-800 flex justify-between text-base font-bold text-white">
                 <span>Total Final</span>
-                <span className="text-sky-400 font-outfit">${totalAmount.toLocaleString('es-AR')}</span>
+                <span className="text-emerald-400 font-outfit">${totalAmount.toLocaleString('es-AR')}</span>
               </div>
             </div>
           </div>

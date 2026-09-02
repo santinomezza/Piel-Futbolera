@@ -59,7 +59,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
   return (
     <div className="space-y-4">
       {feedback && (
-        <div className="p-3 bg-sky-500/10 border border-sky-500/30 rounded-xl text-sky-400 text-xs font-semibold flex items-center gap-2">
+        <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs font-semibold flex items-center gap-2">
           <Check className="w-4 h-4 shrink-0" />
           <span>{feedback}</span>
         </div>
@@ -88,7 +88,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                   <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
                   <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
                   <td className="py-3 px-4">
-                    <span className="font-bold text-sky-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                    <span className="font-bold text-emerald-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
                       {variant.size}
                     </span>
                   </td>
@@ -99,7 +99,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                       min="0"
                       value={currentStock}
                       onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                      className="w-20 px-2.5 py-1 bg-slate-900 border border-slate-800 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-sky-500 focus:outline-none"
+                      className="w-20 px-2.5 py-1 bg-slate-900 border border-slate-800 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                     />
                   </td>
                   <td className="py-3 px-4">

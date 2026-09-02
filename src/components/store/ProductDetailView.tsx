@@ -84,7 +84,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
       <div>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-sky-400 transition"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-emerald-400 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Volver al Catálogo</span>
@@ -118,7 +118,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                   key={idx}
                   onClick={() => setActiveImage(img)}
                   className={`relative w-20 h-24 bg-slate-900 rounded-xl overflow-hidden border-2 transition ${
-                    activeImage === img ? 'border-sky-500 shadow-md shadow-sky-500/20' : 'border-slate-800 opacity-60 hover:opacity-100'
+                    activeImage === img ? 'border-emerald-500 shadow-md shadow-emerald-500/20' : 'border-slate-800 opacity-60 hover:opacity-100'
                   }`}
                 >
                   <Image src={img} alt={`Vista ${idx + 1}`} fill className="object-cover" />
@@ -134,7 +134,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
             <h1 className="text-3xl font-extrabold text-white font-outfit leading-tight">
               {product.name}
             </h1>
-            <p className="text-2xl font-bold text-sky-400 font-outfit">
+            <p className="text-2xl font-bold text-emerald-400 font-outfit">
               ${product.price.toLocaleString('es-AR')}
             </p>
           </div>
@@ -172,7 +172,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                     disabled={!hasStock}
                     className={`py-3 rounded-xl font-bold text-sm border transition flex flex-col items-center justify-center ${
                       isSelected
-                        ? 'bg-sky-600 text-white border-sky-400 shadow-lg shadow-sky-600/30'
+                        ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg shadow-emerald-600/30'
                         : hasStock
                         ? 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-800 hover:border-slate-700'
                         : 'bg-slate-950 text-slate-600 border-slate-900 cursor-not-allowed opacity-40 line-through'
@@ -215,8 +215,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
 
           {/* Toast Notification */}
           {addedMessage && (
-            <div className="p-3 bg-sky-500/15 border border-sky-500/30 rounded-xl text-xs font-semibold text-sky-300 flex items-center gap-2 animate-fade-in">
-              <Check className="w-4 h-4 text-sky-400 shrink-0" />
+            <div className="p-3 bg-emerald-500/15 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-300 flex items-center gap-2 animate-fade-in">
+              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>{addedMessage}</span>
             </div>
           )}
@@ -236,7 +236,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           {/* Value props */}
           <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800 text-xs text-slate-400">
             <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex items-center gap-2.5">
-              <Truck className="w-4 h-4 text-sky-400 shrink-0" />
+              <Truck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Cotización real de envíos por Andreani & Correo Arg.</span>
             </div>
             <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex items-center gap-2.5">

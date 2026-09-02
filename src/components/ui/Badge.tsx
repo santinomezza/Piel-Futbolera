@@ -22,7 +22,7 @@ export const Badge: React.FC<BadgeProps> = ({
   }
 
   const variantStyles = {
-    primary: 'bg-sky-500/15 text-sky-400 border border-sky-500/30',
+    primary: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
     secondary: 'bg-slate-800 text-slate-300 border border-slate-700',
     gold: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
     emerald: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
