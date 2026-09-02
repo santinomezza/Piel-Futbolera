@@ -1,4 +1,4 @@
-// Prisma Schema for DOCE Camisetas E-Commerce
+// Prisma Schema for PielFutbolera E-Commerce
 
 generator client {
   provider = "prisma-client-js"

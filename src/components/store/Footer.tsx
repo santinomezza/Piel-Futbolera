@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShieldCheck, Truck, CreditCard, RefreshCw } from 'lucide-react'
 
 export const Footer: React.FC = () => {
@@ -55,11 +56,11 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center font-black text-white text-base">
-              12
+          <div className="flex items-center gap-2.5">
+            <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-slate-900 border border-slate-800">
+              <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
             </div>
-            <span className="font-extrabold text-xl text-white font-outfit">DOCE</span>
+            <span className="font-extrabold text-xl text-white font-outfit">PielFutbolera</span>
           </div>
           <p className="text-xs text-slate-400 leading-relaxed">
             Especialistas en camisetas deportivas y retro con confección premium en Argentina. Diseños genéricos propios con identidad futbolera.
@@ -101,7 +102,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
-        © {new Date().getFullYear()} DOCE Camisetas. Todos los derechos reservados. Argentina.
+        © {new Date().getFullYear()} PielFutbolera. Todos los derechos reservados. Argentina.
       </div>
     </footer>
   )

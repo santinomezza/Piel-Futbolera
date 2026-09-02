@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
           <div className="w-12 h-12 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center mx-auto border border-sky-500/20">
             <Shield className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-bold text-white font-outfit">DOCE Admin</h1>
+          <h1 className="text-2xl font-bold text-white font-outfit">PielFutbolera · Admin</h1>
           <p className="text-xs text-slate-400">Ingresá con tu cuenta de administración del negocio.</p>
         </div>
 
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@doce.com.ar"
+                placeholder="admin@pielfutbolera.com.ar"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
               />
               <Mail className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="text-center pt-2 border-t border-slate-800/80">
-          <p className="text-[11px] text-slate-500">Credenciales por defecto dev: admin@doce.com.ar / admin123</p>
+          <p className="text-[11px] text-slate-500">Credenciales por defecto dev: admin@pielfutbolera.com.ar / admin123</p>
         </div>
 
       </div>

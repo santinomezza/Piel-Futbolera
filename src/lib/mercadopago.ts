@@ -73,7 +73,7 @@ export async function createCheckoutPreference(input: CreatePreferenceInput) {
       failure: `${baseUrl}/checkout/confirmacion/${input.orderId}?status=rejected`,
     },
     external_reference: input.orderId,
-    statement_descriptor: 'DOCE CAMISETAS',
+    statement_descriptor: 'PIELFUTBOLERA',
     notification_url: `${baseUrl}/api/webhooks/mercadopago`,
   }
 

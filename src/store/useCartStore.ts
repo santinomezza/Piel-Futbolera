@@ -77,7 +77,7 @@ export const useCartStore = create<CartStore>()(
       getSubtotal: () => get().items.reduce((total, item) => total + item.price * item.quantity, 0),
     }),
     {
-      name: 'doce-cart-storage',
+      name: 'pielfutbolera-cart-storage',
       storage: createJSONStorage(() =>
         typeof window !== 'undefined'
           ? localStorage

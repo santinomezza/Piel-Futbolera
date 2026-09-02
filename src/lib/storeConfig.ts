@@ -1,12 +1,12 @@
 import { prisma } from '@/lib/prisma'
 import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'node:crypto'
 
-const SECRET_FALLBACK = 'doce-fallback-encryption-secret-change-me-in-prod'
+const SECRET_FALLBACK = 'pielfutbolera-fallback-encryption-secret-change-me-in-prod'
 const ALGO = 'aes-256-gcm'
 
 function getKey(): Buffer {
   const passphrase = process.env.STORE_CONFIG_SECRET || SECRET_FALLBACK
-  return scryptSync(passphrase, 'doce-salt-v1', 32)
+  return scryptSync(passphrase, 'pielfutbolera-salt-v1', 32)
 }
 
 export function encryptSecret(plain: string): string {

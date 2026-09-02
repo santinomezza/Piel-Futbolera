@@ -69,7 +69,7 @@ export async function GET() {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="DOCE_Ventas_${new Date().toISOString().split('T')[0]}.csv"`,
+        'Content-Disposition': `attachment; filename="PielFutbolera_Ventas_${new Date().toISOString().split('T')[0]}.csv"`,
       },
     })
   } catch (error) {

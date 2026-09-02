@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ShoppingBag, Search, Shield, Menu, X } from 'lucide-react'
 import { useCartStore } from '@/store/useCartStore'
@@ -47,15 +48,15 @@ function HeaderContent() {
             
             {/* Brand Logo */}
             <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center gap-2 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-700 rounded-xl flex items-center justify-center font-black text-white text-xl shadow-lg shadow-sky-500/20 group-hover:scale-105 transition">
-                  12
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-sky-500/20 group-hover:scale-105 transition bg-slate-900 border border-slate-800">
+                  <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="44px" />
                 </div>
                 <div>
-                  <span className="font-extrabold text-2xl tracking-tight text-white tracking-wider font-outfit">
-                    DOCE
+                  <span className="font-extrabold text-xl tracking-tight text-white font-outfit leading-none block">
+                    PielFutbolera
                   </span>
-                  <span className="block text-[10px] uppercase font-bold text-sky-400 -mt-1 tracking-widest">
+                  <span className="block text-[10px] uppercase font-bold text-sky-400 mt-1 tracking-widest">
                     Camisetas
                   </span>
                 </div>
@@ -178,8 +179,10 @@ export const Header: React.FC = () => {
     <Suspense fallback={
       <header className="sticky top-0 z-40 glass-nav border-b border-slate-800 h-20 flex items-center justify-between px-8 text-white font-bold font-outfit">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-sky-600 rounded-xl flex items-center justify-center text-white text-xl">12</div>
-          <span className="text-2xl font-black">DOCE</span>
+          <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-slate-900 border border-slate-800">
+            <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
+          </div>
+          <span className="text-2xl font-black">PielFutbolera</span>
         </Link>
       </header>
     }>

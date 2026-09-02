@@ -28,10 +28,10 @@ export async function POST(req: Request) {
 
     const { email, password } = parsed.data
 
-    // Validate admin credentials (development default: admin@doce.com.ar / admin123)
-    if (email === 'admin@doce.com.ar' && (password === 'admin123' || password === 'admin123_dev_password_hash')) {
+    // Validate admin credentials (development default: admin@pielfutbolera.com.ar / admin123)
+    if (email === 'admin@pielfutbolera.com.ar' && (password === 'admin123' || password === 'admin123_dev_password_hash')) {
       const cookieStore = await cookies()
-      cookieStore.set('admin_session', 'authenticated_token_doce_admin_2026', {
+      cookieStore.set('admin_session', 'authenticated_token_pielfutbolera_admin_2026', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',

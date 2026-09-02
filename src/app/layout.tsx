@@ -15,16 +15,19 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "DOCE | Camisetas de Fútbol Premium en Argentina",
+  title: "PielFutbolera | Camisetas de Fútbol Premium en Argentina",
   description: "La tienda oficial de camisetas de fútbol de alta calidad en Argentina. Modelos titulares, suplentes, retro y de arquero con envíos a todo el país.",
-  keywords: ["camisetas de fútbol", "camisetas retro", "camisetas titular", "camisetas arquero", "fútbol argentina", "DOCE"],
-  authors: [{ name: "DOCE Camisetas" }],
+  keywords: ["camisetas de fútbol", "camisetas retro", "camisetas titular", "camisetas arquero", "fútbol argentina", "PielFutbolera"],
+  authors: [{ name: "PielFutbolera" }],
+  icons: {
+    icon: "/logo.jpg",
+  },
   openGraph: {
-    title: "DOCE | Camisetas de Fútbol Premium",
+    title: "PielFutbolera | Camisetas de Fútbol Premium",
     description: "Modelos exclusivos de camisetas deportivas con envíos por Andreani y Correo Argentino.",
     type: "website",
     locale: "es_AR",
-    siteName: "DOCE Camisetas",
+    siteName: "PielFutbolera",
   },
 };
 

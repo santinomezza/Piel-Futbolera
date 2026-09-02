@@ -13,7 +13,7 @@ export default async function AdminDashboardPage() {
   const cookieStore = await cookies()
   const session = cookieStore.get('admin_session')
 
-  if (!session || session.value !== 'authenticated_token_doce_admin_2026') {
+  if (!session || session.value !== 'authenticated_token_pielfutbolera_admin_2026') {
     redirect('/admin/login')
   }
 
@@ -52,7 +52,7 @@ export default async function AdminDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-white font-outfit">Dashboard de Ventas & Finanzas</h1>
-            <p className="text-xs text-slate-400 mt-1">Métricas en tiempo real para DOCE Camisetas.</p>
+            <p className="text-xs text-slate-400 mt-1">Métricas en tiempo real para PielFutbolera.</p>
           </div>
 
           {lowStockVariants.length > 0 && (

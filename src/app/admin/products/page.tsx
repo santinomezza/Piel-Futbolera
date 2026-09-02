@@ -11,7 +11,7 @@ export default async function AdminProductsPage() {
   const cookieStore = await cookies()
   const session = cookieStore.get('admin_session')
 
-  if (!session || session.value !== 'authenticated_token_doce_admin_2026') {
+  if (!session || session.value !== 'authenticated_token_pielfutbolera_admin_2026') {
     redirect('/admin/login')
   }
 

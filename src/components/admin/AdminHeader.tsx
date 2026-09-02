@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, ShoppingBag, Package, Download, Store, Settings } from 'lucide-react'
 
@@ -23,14 +24,14 @@ export const AdminHeader: React.FC = () => {
           
           {/* Brand */}
           <div className="flex items-center gap-6">
-            <Link href="/admin" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center font-black text-white text-sm">
-                12
+            <Link href="/admin" className="flex items-center gap-2.5">
+              <div className="relative w-9 h-9 overflow-hidden rounded-lg shadow-md shadow-sky-500/20 bg-slate-900 border border-slate-800">
+                <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="36px" />
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg text-white font-outfit">DOCE</span>
+                <span className="font-extrabold text-lg text-white font-outfit">PielFutbolera</span>
                 <span className="text-[10px] uppercase font-bold bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2 py-0.5 rounded">
-                  Admin Panel
+                  Admin
                 </span>
               </div>
             </Link>

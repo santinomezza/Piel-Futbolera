@@ -41,7 +41,7 @@ async function generateOrderNumber(tx: Prisma.TransactionClient): Promise<string
     const m = last.orderNumber.match(/(\d+)$/)
     if (m) next = parseInt(m[1], 10) + 1
   }
-  return `DOCE-${next}`
+  return `PF-${next}`
 }
 
 export async function POST(req: Request) {

@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('🌱 Starting database seed for DOCE Camisetas...')
+  console.log('🌱 Starting database seed for PielFutbolera...')
 
   // Clean existing database
   await prisma.payment.deleteMany()
@@ -17,16 +17,16 @@ async function main() {
   await prisma.country.deleteMany()
   await prisma.adminUser.deleteMany()
 
-  // 1. Create Admin User (admin@doce.com.ar / admin123)
+  // 1. Create Admin User (admin@pielfutbolera.com.ar / admin123)
   await prisma.adminUser.create({
     data: {
-      email: 'admin@doce.com.ar',
-      name: 'Admin DOCE',
+      email: 'admin@pielfutbolera.com.ar',
+      name: 'Admin PielFutbolera',
       password: 'admin123_dev_password_hash',
       role: 'ADMIN',
     },
   })
-  console.log('✅ Created Admin User: admin@doce.com.ar')
+  console.log('✅ Created Admin User: admin@pielfutbolera.com.ar')
 
   // 2. Create Initial Countries
   const countryArg = await prisma.country.create({
@@ -240,7 +240,7 @@ async function main() {
   if (sampleVariant) {
     const order = await prisma.order.create({
       data: {
-        orderNumber: 'DOCE-1001',
+        orderNumber: 'PF-1001',
         customerId: customer.id,
         status: 'PAID',
         subtotal: 45999.00,

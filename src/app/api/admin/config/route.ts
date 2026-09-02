@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { encryptSecret } from '@/lib/storeConfig'
 
-const ADMIN_TOKEN = 'authenticated_token_doce_admin_2026'
+const ADMIN_TOKEN = 'authenticated_token_pielfutbolera_admin_2026'
 
 const configSchema = z.object({
   mpPublicKey: z.string().optional().nullable(),
