@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
 import { Header } from '@/components/store/Header'
 import { Footer } from '@/components/store/Footer'
@@ -87,8 +88,22 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         
         {/* Hero Section */}
         {!categoryFilter && !countryFilter && !leagueFilter && !searchQuery && (
-          <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-emerald-900 bg-gradient-to-r from-emerald-950/40 via-emerald-950 to-emerald-950 shadow-2xl">
-            <div className="max-w-2xl space-y-6 relative z-10">
+          <section className="relative rounded-3xl overflow-hidden border border-emerald-900 shadow-2xl">
+            <div className="absolute inset-0 z-0">
+              <Image
+                src="/hero-bg.avif"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover scale-110 blur-2xl"
+                style={{ filter: 'blur(18px)' }}
+              />
+              <div className="absolute inset-0 bg-emerald-950/70" />
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/40 via-emerald-950/30 to-emerald-950/60" />
+            </div>
+            <div className="relative z-10 p-8 sm:p-12">
+            <div className="max-w-2xl space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                 <Sparkles className="w-4 h-4" />
                 <span>Ediciones Especiales & Ligas Mundiales 2026</span>
@@ -114,6 +129,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   <span>Envíos Nacionales Andreani & Correo Arg</span>
                 </div>
               </div>
+            </div>
             </div>
 
             {/* Background glow element */}
