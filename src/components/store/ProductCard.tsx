@@ -43,10 +43,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const mainImage = product.images[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
 
   return (
-    <div className="group relative bg-[#141B28] rounded-2xl border border-slate-800/80 hover:border-emerald-500/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 flex flex-col justify-between">
+    <div className="group relative bg-[#0F2418] rounded-2xl border border-emerald-900/80 hover:border-emerald-500/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 flex flex-col justify-between">
       
       {/* Top Image Container */}
-      <div className="relative aspect-[4/5] bg-slate-900 overflow-hidden">
+      <div className="relative aspect-[4/5] bg-emerald-950 overflow-hidden">
         <Image
           src={mainImage}
           alt={product.name}
@@ -69,7 +69,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Quick View Hover Overlay */}
-        <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 bg-emerald-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <Link
             href={`/producto/${product.slug}`}
             className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
@@ -94,7 +94,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Stock & Price */}
-        <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+        <div className="pt-3 border-t border-emerald-900/80 flex items-center justify-between">
           <div>
             <span className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">Precio</span>
             <span className="text-lg font-bold text-slate-100 font-outfit">

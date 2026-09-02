@@ -70,7 +70,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
   const hasActiveFilters = Boolean(activeCountry || activeLeague || activeCategory || activeQuery)
 
   return (
-    <div className="space-y-4 bg-[#0F1622] border border-slate-800/80 rounded-3xl p-5 sm:p-6 shadow-xl">
+    <div className="space-y-4 bg-[#0F2418] border border-emerald-900/80 rounded-3xl p-5 sm:p-6 shadow-xl">
       
       {/* Header & Quick Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -91,7 +91,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
             placeholder="Buscar equipo, jugador o año (ej: 1986)..."
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
-            className="w-full pl-9 pr-10 py-2.5 bg-slate-900 border border-slate-800 focus:border-emerald-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition"
+            className="w-full pl-9 pr-10 py-2.5 bg-emerald-950 border border-emerald-900 focus:border-emerald-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition"
           />
           <Search className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
           {searchInputValue && (
@@ -125,7 +125,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
               // Reset league if selected country doesn't match current league
               updateFilters({ country: countryId, league: null })
             }}
-            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
           >
             <option value="">Todos los Países</option>
             {countries.map((c) => (
@@ -145,7 +145,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
           <select
             value={activeLeague}
             onChange={(e) => updateFilters({ league: e.target.value })}
-            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
           >
             <option value="">Todas las Ligas</option>
             {availableLeagues.map((l) => (
@@ -165,7 +165,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
           <select
             value={activeCategory}
             onChange={(e) => updateFilters({ category: e.target.value })}
-            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
           >
             <option value="">Todas las Categorías</option>
             <option value="TITULAR">Titulares</option>
@@ -179,7 +179,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
 
       {/* Active Filter Badges & Reset */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800/60">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-emerald-900/60">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-semibold text-slate-400">Filtros activos:</span>
             

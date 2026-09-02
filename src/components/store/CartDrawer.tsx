@@ -23,15 +23,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-emerald-950/70 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-[#111622] border-l border-slate-800 shadow-2xl flex flex-col justify-between">
+        <div className="w-screen max-w-md bg-[#111622] border-l border-emerald-900 shadow-2xl flex flex-col justify-between">
           
           {/* Header */}
-          <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+          <div className="p-6 border-b border-emerald-900 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
                 <ShoppingBag className="w-5 h-5" />
@@ -44,7 +44,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800 transition"
+              className="p-2 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-emerald-900 transition"
               aria-label="Cerrar carrito"
             >
               <X className="w-5 h-5" />
@@ -55,7 +55,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
           <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
             {items.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-                <div className="p-4 bg-slate-900 rounded-full text-slate-600">
+                <div className="p-4 bg-emerald-950 rounded-full text-slate-600">
                   <ShoppingBag className="w-10 h-10" />
                 </div>
                 <p className="text-slate-300 font-medium">Tu carrito está vacío</p>
@@ -70,9 +70,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
               items.map((item) => (
                 <div
                   key={item.variantId}
-                  className="p-3.5 bg-[#182030] rounded-xl border border-slate-800 flex gap-3.5 items-center group transition hover:border-slate-700"
+                  className="p-3.5 bg-[#182030] rounded-xl border border-emerald-900 flex gap-3.5 items-center group transition hover:border-emerald-800"
                 >
-                  <div className="relative w-16 h-20 bg-slate-900 rounded-lg overflow-hidden shrink-0 border border-slate-800">
+                  <div className="relative w-16 h-20 bg-emerald-950 rounded-lg overflow-hidden shrink-0 border border-emerald-900">
                     <Image
                       src={item.image}
                       alt={item.name}
@@ -84,7 +84,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-semibold text-slate-100 truncate">{item.name}</h3>
                     <div className="mt-1 flex items-center gap-2">
-                      <span className="text-xs font-semibold px-2 py-0.5 bg-slate-800 text-emerald-400 rounded-md">
+                      <span className="text-xs font-semibold px-2 py-0.5 bg-emerald-900 text-emerald-400 rounded-md">
                         Talle: {item.size}
                       </span>
                       <span className="text-xs text-slate-400">SKU: {item.sku}</span>
@@ -92,10 +92,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
                     <div className="mt-3 flex items-center justify-between">
                       {/* Quantity selector */}
-                      <div className="flex items-center border border-slate-700 rounded-lg bg-slate-900/60 overflow-hidden">
+                      <div className="flex items-center border border-emerald-800 rounded-lg bg-emerald-950/60 overflow-hidden">
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                          className="px-2 py-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition"
+                          className="px-2 py-1 text-slate-400 hover:text-slate-100 hover:bg-emerald-900 transition"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
@@ -103,7 +103,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                           disabled={item.quantity >= item.stock}
-                          className="px-2 py-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition disabled:opacity-30"
+                          className="px-2 py-1 text-slate-400 hover:text-slate-100 hover:bg-emerald-900 transition disabled:opacity-30"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
@@ -129,7 +129,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
           {/* Footer Summary */}
           {items.length > 0 && (
-            <div className="p-6 border-t border-slate-800 bg-[#141B29] space-y-4">
+            <div className="p-6 border-t border-emerald-900 bg-[#141B29] space-y-4">
               <div className="space-y-1.5">
                 <div className="flex justify-between text-sm text-slate-400">
                   <span>Subtotal</span>
@@ -139,13 +139,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                   <span>Envío</span>
                   <span>Calculado en el checkout</span>
                 </div>
-                <div className="pt-2 border-t border-slate-800 flex justify-between text-base font-bold text-slate-100">
+                <div className="pt-2 border-t border-emerald-900 flex justify-between text-base font-bold text-slate-100">
                   <span>Total estimado</span>
                   <span className="text-emerald-400">${subtotal.toLocaleString('es-AR')}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
+              <div className="flex items-center gap-2 text-xs text-slate-400 bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-900">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>Pago 100% protegido con Mercado Pago.</span>
               </div>

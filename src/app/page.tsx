@@ -80,14 +80,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const selectedLeagueObj = leagues.find((l) => l.id === leagueFilter)
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0F17]">
+    <div className="min-h-screen flex flex-col bg-[#0A1A12]">
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
         
         {/* Hero Section */}
         {!categoryFilter && !countryFilter && !leagueFilter && !searchQuery && (
-          <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-slate-800 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-950 shadow-2xl">
+          <section className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-emerald-900 bg-gradient-to-r from-emerald-950/40 via-emerald-950 to-emerald-950 shadow-2xl">
             <div className="max-w-2xl space-y-6 relative z-10">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                 <Sparkles className="w-4 h-4" />
@@ -109,7 +109,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 >
                   Explorar Catálogo
                 </a>
-                <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 px-4 py-3 rounded-xl border border-slate-800">
+                <div className="flex items-center gap-2 text-xs text-slate-400 bg-emerald-950/60 px-4 py-3 rounded-xl border border-emerald-900">
                   <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>Envíos Nacionales Andreani & Correo Arg</span>
                 </div>
@@ -128,7 +128,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
         {/* Catalog Section & Product Grid */}
         <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-900 pb-4">
             <div>
               <h2 className="text-xl font-bold text-white font-outfit">
                 {selectedLeagueObj
@@ -147,10 +147,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {/* Product Grid */}
           {products.length === 0 ? (
-            <div className="p-12 text-center bg-[#141B28] rounded-3xl border border-slate-800 space-y-3">
+            <div className="p-12 text-center bg-[#0F2418] rounded-3xl border border-emerald-900 space-y-3">
               <p className="text-slate-300 font-semibold">No encontramos camisetas que coincidan con los filtros aplicados.</p>
               <p className="text-xs text-slate-500">Probá modificando o limpiando los filtros seleccionados.</p>
-              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-emerald-400 rounded-xl transition">
+              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-emerald-900 hover:bg-emerald-800 text-xs font-bold text-emerald-400 rounded-xl transition">
                 Ver Todas las Camisetas
               </Link>
             </div>

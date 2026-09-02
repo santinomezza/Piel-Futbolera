@@ -65,10 +65,10 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
         </div>
       )}
 
-      <div className="bg-[#0F1622] rounded-3xl border border-slate-800 overflow-hidden shadow-xl">
+      <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
         <table className="w-full text-left text-xs">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px] tracking-wider bg-slate-900/60">
+            <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
               <th className="py-3.5 px-4">Camiseta</th>
               <th className="py-3.5 px-4">Categoría</th>
               <th className="py-3.5 px-4">Talle</th>
@@ -78,17 +78,17 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
               <th className="py-3.5 px-4 text-right">Acción</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-emerald-900/60">
             {initialVariants.map((variant) => {
               const currentStock = stockMap[variant.id]
               const isLowStock = currentStock <= 5
 
               return (
-                <tr key={variant.id} className="hover:bg-slate-900/40 transition">
+                <tr key={variant.id} className="hover:bg-emerald-950/40 transition">
                   <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
                   <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
                   <td className="py-3 px-4">
-                    <span className="font-bold text-emerald-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                    <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900">
                       {variant.size}
                     </span>
                   </td>
@@ -99,7 +99,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                       min="0"
                       value={currentStock}
                       onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                      className="w-20 px-2.5 py-1 bg-slate-900 border border-slate-800 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                      className="w-20 px-2.5 py-1 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                     />
                   </td>
                   <td className="py-3 px-4">

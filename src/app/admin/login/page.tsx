@@ -39,8 +39,8 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#070A0F] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#0F1622] rounded-3xl border border-slate-800 p-8 shadow-2xl space-y-6">
+    <div className="min-h-screen bg-[#06120C] flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-[#0F2418] rounded-3xl border border-emerald-900 p-8 shadow-2xl space-y-6">
         
         <div className="text-center space-y-2">
           <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto border border-emerald-500/20">
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@pielfutbolera.com.ar"
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                className="w-full pl-10 pr-4 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <Mail className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
             </div>
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                className="w-full pl-10 pr-4 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <Lock className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
             </div>
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
           </Button>
         </form>
 
-        <div className="text-center pt-2 border-t border-slate-800/80">
+        <div className="text-center pt-2 border-t border-emerald-900/80">
           <p className="text-[11px] text-slate-500">Credenciales por defecto dev: admin@pielfutbolera.com.ar / admin123</p>
         </div>
 

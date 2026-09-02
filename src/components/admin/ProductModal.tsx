@@ -302,10 +302,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-[#0F1622] border border-slate-800 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      <div className="bg-[#0F2418] border border-emerald-900 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
         
         {/* Modal Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-800 bg-[#0B0F17]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-emerald-900 bg-[#0A1A12]">
           <div>
             <h2 className="text-lg font-bold text-white font-outfit">
               {initialProduct?.id ? 'Editar Producto' : 'Alta de Producto Nuevo'}
@@ -318,7 +318,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition"
+            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-emerald-900 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -342,7 +342,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 placeholder="ej: Camiseta Albiceleste Titular 2026"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
 
@@ -355,7 +355,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 step="100"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-mono"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-mono"
               />
             </div>
 
@@ -364,7 +364,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
                 <option value="TITULAR">Camiseta Titular</option>
                 <option value="SUPLENTE">Camiseta Suplente</option>
@@ -383,12 +383,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               placeholder="Detalles sobre materiales, tejido, escudos y confección..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 resize-none"
+              className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 resize-none"
             />
           </div>
 
           {/* Country & League with Inline Creation */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#121927] border border-slate-800/80 rounded-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#121927] border border-emerald-900/80 rounded-2xl">
             {/* Country Selector */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
@@ -405,7 +405,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.countryId}
                 onChange={handleCountryChange}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
                 <option value="" disabled>Seleccionar País</option>
                 {countries.map((c) => (
@@ -441,7 +441,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.leagueId || '__NONE__'}
                 onChange={handleLeagueChange}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
                 <option value="__NONE__">Sin Liga / Selección Nacional</option>
                 {availableLeaguesForCountry.map((l) => (
@@ -463,7 +463,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
                 <option value="IN_STOCK">En Stock</option>
                 <option value="LOW_STOCK">Últimas Unidades</option>
@@ -478,7 +478,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 placeholder="ej: NUEVO, RETRO, POPULAR, DESTACADO"
                 value={formData.badge || ''}
                 onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                className="w-full bg-[#141C2B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -488,7 +488,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             <label className="text-xs font-bold text-slate-300 block">Stock Disponible por Talle *</label>
             <div className="grid grid-cols-5 gap-3">
               {formData.variants.map((v, index) => (
-                <div key={v.size} className="p-3 bg-[#121927] border border-slate-800 rounded-2xl text-center space-y-1">
+                <div key={v.size} className="p-3 bg-[#121927] border border-emerald-900 rounded-2xl text-center space-y-1">
                   <span className="text-xs font-black text-emerald-400 block">{v.size}</span>
                   <input
                     type="number"
@@ -500,7 +500,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       updatedVariants[index].stock = newStock
                       setFormData({ ...formData, variants: updatedVariants })
                     }}
-                    className="w-full bg-[#1A2333] border border-slate-700 rounded-xl py-1 px-2 text-center text-xs text-white font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#1A2333] border border-emerald-800 rounded-xl py-1 px-2 text-center text-xs text-white font-mono focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               ))}
@@ -514,7 +514,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             </label>
 
             {/* Image Upload Area */}
-            <div className="relative border-2 border-dashed border-slate-800 hover:border-emerald-500/50 rounded-2xl p-6 text-center transition bg-[#121927]/50 group">
+            <div className="relative border-2 border-dashed border-emerald-900 hover:border-emerald-500/50 rounded-2xl p-6 text-center transition bg-[#121927]/50 group">
               <input
                 type="file"
                 multiple
@@ -542,7 +542,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 {formData.images.map((imgUrl, idx) => (
                   <div
                     key={idx}
-                    className="relative group aspect-square rounded-2xl overflow-hidden border border-slate-800 bg-slate-900"
+                    className="relative group aspect-square rounded-2xl overflow-hidden border border-emerald-900 bg-emerald-950"
                   >
                     <img
                       src={imgUrl}
@@ -566,11 +566,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           </div>
 
           {/* Modal Footer / Submit */}
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-emerald-900 flex justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl transition border border-slate-800"
+              className="px-5 py-2.5 bg-emerald-950 hover:bg-emerald-900 text-slate-300 text-xs font-semibold rounded-xl transition border border-emerald-900"
             >
               Cancelar
             </button>
@@ -595,8 +595,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       {/* Inline Create Country Sub-Modal */}
       {showNewCountryModal && (
         <div className="fixed inset-0 z-60 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#121927] border border-slate-800 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div className="bg-[#121927] border border-emerald-900 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-emerald-900 pb-3">
               <h3 className="text-sm font-bold text-white">Agregar Nuevo País</h3>
               <button onClick={() => setShowNewCountryModal(false)} className="text-slate-400 hover:text-white">
                 <X className="w-4 h-4" />
@@ -611,14 +611,14 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   placeholder="ej: Alemania, Francia, Colombia"
                   value={newCountryName}
                   onChange={(e) => setNewCountryName(e.target.value)}
-                  className="w-full bg-[#1A2333] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#1A2333] border border-emerald-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                 />
               </div>
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowNewCountryModal(false)}
-                  className="px-4 py-2 bg-slate-900 text-slate-300 text-xs font-semibold rounded-xl"
+                  className="px-4 py-2 bg-emerald-950 text-slate-300 text-xs font-semibold rounded-xl"
                 >
                   Cancelar
                 </button>
@@ -638,8 +638,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       {/* Inline Create League Sub-Modal */}
       {showNewLeagueModal && (
         <div className="fixed inset-0 z-60 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#121927] border border-slate-800 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div className="bg-[#121927] border border-emerald-900 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-emerald-900 pb-3">
               <h3 className="text-sm font-bold text-white">Agregar Nueva Liga</h3>
               <button onClick={() => setShowNewLeagueModal(false)} className="text-slate-400 hover:text-white">
                 <X className="w-4 h-4" />
@@ -654,7 +654,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   placeholder="ej: Bundesliga, Serie A, MLS"
                   value={newLeagueName}
                   onChange={(e) => setNewLeagueName(e.target.value)}
-                  className="w-full bg-[#1A2333] border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#1A2333] border border-emerald-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -664,7 +664,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   type="color"
                   value={newLeagueColor}
                   onChange={(e) => setNewLeagueColor(e.target.value)}
-                  className="w-full h-10 bg-[#1A2333] border border-slate-700 rounded-xl p-1 cursor-pointer"
+                  className="w-full h-10 bg-[#1A2333] border border-emerald-800 rounded-xl p-1 cursor-pointer"
                 />
               </div>
 
@@ -672,7 +672,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowNewLeagueModal(false)}
-                  className="px-4 py-2 bg-slate-900 text-slate-300 text-xs font-semibold rounded-xl"
+                  className="px-4 py-2 bg-emerald-950 text-slate-300 text-xs font-semibold rounded-xl"
                 >
                   Cancelar
                 </button>

@@ -44,7 +44,7 @@ export default async function AdminDashboardPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#070A0F] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#06120C] text-slate-100 flex flex-col">
       <AdminHeader />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -69,7 +69,7 @@ export default async function AdminDashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           
           {/* Card 1: Revenue */}
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl space-y-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl space-y-3">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs font-semibold">Ventas Totales (Aprobadas)</span>
               <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
@@ -86,7 +86,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           {/* Card 2: Total Orders */}
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl space-y-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl space-y-3">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs font-semibold">Cantidad de Pedidos</span>
               <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
@@ -100,7 +100,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           {/* Card 3: Ticket Promedio */}
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl space-y-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl space-y-3">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs font-semibold">Ticket Promedio</span>
               <div className="p-2 bg-amber-500/10 rounded-xl text-amber-400">
@@ -114,7 +114,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           {/* Card 4: Pending Dispatch */}
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl space-y-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl space-y-3">
             <div className="flex justify-between items-center text-slate-400">
               <span className="text-xs font-semibold">Pendientes de Despacho</span>
               <div className="p-2 bg-purple-500/10 rounded-xl text-purple-400">
@@ -132,8 +132,8 @@ export default async function AdminDashboardPage() {
         {/* Courier Distribution & System Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800 space-y-4">
-            <h3 className="font-bold text-white font-outfit text-base border-b border-slate-800 pb-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900 space-y-4">
+            <h3 className="font-bold text-white font-outfit text-base border-b border-emerald-900 pb-3">
               Desglose de Envíos por Correo
             </h3>
             
@@ -143,7 +143,7 @@ export default async function AdminDashboardPage() {
                   <span className="text-slate-300">Andreani</span>
                   <span className="text-emerald-400">{andreaniCount} pedidos ({allOrders.length > 0 ? Math.round((andreaniCount / allOrders.length) * 100) : 0}%)</span>
                 </div>
-                <div className="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-emerald-950 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-emerald-500 rounded-full transition-all"
                     style={{ width: `${allOrders.length > 0 ? (andreaniCount / allOrders.length) * 100 : 0}%` }}
@@ -156,7 +156,7 @@ export default async function AdminDashboardPage() {
                   <span className="text-slate-300">Correo Argentino</span>
                   <span className="text-amber-400">{correoCount} pedidos ({allOrders.length > 0 ? Math.round((correoCount / allOrders.length) * 100) : 0}%)</span>
                 </div>
-                <div className="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-emerald-950 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-amber-500 rounded-full transition-all"
                     style={{ width: `${allOrders.length > 0 ? (correoCount / allOrders.length) * 100 : 0}%` }}
@@ -166,13 +166,13 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800 space-y-4">
-            <h3 className="font-bold text-white font-outfit text-base border-b border-slate-800 pb-3">
+          <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900 space-y-4">
+            <h3 className="font-bold text-white font-outfit text-base border-b border-emerald-900 pb-3">
               Estado de Integraciones
             </h3>
 
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex items-center justify-between">
+              <div className="p-3 bg-emerald-950 rounded-xl border border-emerald-900 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-200 block">Mercado Pago (Checkout Pro)</span>
                   <span className="text-slate-500">SDK + Webhook con verificación backend</span>
@@ -180,7 +180,7 @@ export default async function AdminDashboardPage() {
                 <Badge variant="emerald" size="sm">Activo</Badge>
               </div>
 
-              <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex items-center justify-between">
+              <div className="p-3 bg-emerald-950 rounded-xl border border-emerald-900 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-200 block">Base de Datos PostgreSQL</span>
                   <span className="text-slate-500">Prisma ORM con esquema relacional</span>
@@ -193,8 +193,8 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Recent Orders Preview */}
-        <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800 space-y-4">
-          <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900 space-y-4">
+          <div className="flex justify-between items-center border-b border-emerald-900 pb-3">
             <h3 className="font-bold text-white font-outfit text-base">Últimos Pedidos Recibidos</h3>
             <Link href="/admin/pedidos" className="text-xs text-emerald-400 font-semibold hover:underline">
               Ver Todos los Pedidos
@@ -204,7 +204,7 @@ export default async function AdminDashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px] tracking-wider">
+                <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider">
                   <th className="py-3 px-3">Orden</th>
                   <th className="py-3 px-3">Cliente</th>
                   <th className="py-3 px-3">Correo</th>
@@ -213,9 +213,9 @@ export default async function AdminDashboardPage() {
                   <th className="py-3 px-3">Fecha</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-emerald-900/60">
                 {allOrders.slice(0, 5).map((order: typeof allOrders[number]) => (
-                  <tr key={order.id} className="hover:bg-slate-900/50 transition">
+                  <tr key={order.id} className="hover:bg-emerald-950/50 transition">
                     <td className="py-3 px-3 font-mono font-bold text-emerald-400">{order.orderNumber}</td>
                     <td className="py-3 px-3 font-semibold text-slate-200">
                       {order.customer.firstName} {order.customer.lastName}

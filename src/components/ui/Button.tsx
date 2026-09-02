@@ -20,11 +20,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 border border-emerald-400/30',
-      secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 shadow-md',
-      accent: 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-500/20',
-      outline: 'bg-transparent hover:bg-slate-800/60 text-slate-200 border border-slate-700 hover:border-slate-500',
+      secondary: 'bg-emerald-900 hover:bg-emerald-800 text-slate-100 border border-emerald-800 shadow-md',
+      accent: 'bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold shadow-lg shadow-amber-500/20',
+      outline: 'bg-transparent hover:bg-emerald-900/60 text-slate-200 border border-emerald-800 hover:border-slate-500',
       danger: 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20',
-      ghost: 'bg-transparent hover:bg-slate-800/40 text-slate-300 hover:text-white',
+      ghost: 'bg-transparent hover:bg-emerald-900/40 text-slate-300 hover:text-white',
     }
 
     return (

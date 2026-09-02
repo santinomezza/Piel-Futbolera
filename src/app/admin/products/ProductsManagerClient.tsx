@@ -130,7 +130,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
     <div className="space-y-6">
       
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-900 pb-5">
         <div>
           <h1 className="text-2xl font-bold text-white font-outfit">Gestión de Catálogo de Productos</h1>
           <p className="text-xs text-slate-400 mt-1">
@@ -148,7 +148,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 bg-[#0F1622] rounded-2xl border border-slate-800/80 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="p-4 bg-[#0F2418] rounded-2xl border border-emerald-900/80 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -156,7 +156,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             placeholder="Buscar por nombre, liga o país..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#141C2B] border border-slate-800 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            className="w-full bg-[#141C2B] border border-emerald-900 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
           />
         </div>
 
@@ -167,7 +167,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+              className="bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
             >
               <option value="ALL">Todas las Categorías</option>
               <option value="TITULAR">Titular</option>
@@ -181,7 +181,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
           <select
             value={countryFilter}
             onChange={(e) => setCountryFilter(e.target.value)}
-            className="bg-[#141C2B] border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+            className="bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
           >
             <option value="ALL">Todos los Países</option>
             {countries.map((c) => (
@@ -194,11 +194,11 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       </div>
 
       {/* Products Table */}
-      <div className="p-6 bg-[#0F1622] rounded-3xl border border-slate-800/80 shadow-xl overflow-hidden">
+      <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 uppercase text-[10px] tracking-wider">
+              <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider">
                 <th className="py-3 px-3">Producto</th>
                 <th className="py-3 px-3">Categoría</th>
                 <th className="py-3 px-3">País / Liga</th>
@@ -208,7 +208,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                 <th className="py-3 px-3 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-emerald-900/60">
               {filteredProducts.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">
@@ -221,14 +221,14 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                   return (
                     <tr
                       key={prod.id}
-                      className={`hover:bg-slate-900/50 transition ${
+                      className={`hover:bg-emerald-950/50 transition ${
                         prod.isDeleted ? 'opacity-50 bg-rose-950/10' : ''
                       }`}
                     >
                       {/* Product Name & Thumbnail */}
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden shrink-0">
+                          <div className="w-12 h-12 rounded-xl bg-emerald-950 border border-emerald-900 overflow-hidden shrink-0">
                             {prod.images[0] ? (
                               <img
                                 src={prod.images[0]}
@@ -259,7 +259,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
 
                       {/* Category */}
                       <td className="py-3 px-3">
-                        <span className="px-2.5 py-1 bg-slate-900 border border-slate-800 text-slate-300 rounded-lg font-semibold text-[11px]">
+                        <span className="px-2.5 py-1 bg-emerald-950 border border-emerald-900 text-slate-300 rounded-lg font-semibold text-[11px]">
                           {prod.category}
                         </span>
                       </td>
@@ -294,7 +294,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                                   ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
                                   : v.stock <= 5
                                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                                  : 'bg-slate-900 border-slate-800 text-slate-300'
+                                  : 'bg-emerald-950 border-emerald-900 text-slate-300'
                               }`}
                             >
                               {v.size}: {v.stock}
@@ -331,7 +331,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleOpenEditModal(prod)}
-                            className="p-2 bg-slate-900 hover:bg-slate-800 text-emerald-400 rounded-xl border border-slate-800 transition"
+                            className="p-2 bg-emerald-950 hover:bg-emerald-900 text-emerald-400 rounded-xl border border-emerald-900 transition"
                             title="Editar producto"
                           >
                             <Edit2 className="w-4 h-4" />
@@ -340,7 +340,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                             <button
                               onClick={() => handleSoftDelete(prod.id, prod.name)}
                               disabled={deletingId === prod.id}
-                              className="p-2 bg-slate-900 hover:bg-rose-950 text-rose-400 hover:text-rose-300 rounded-xl border border-slate-800 transition"
+                              className="p-2 bg-emerald-950 hover:bg-rose-950 text-rose-400 hover:text-rose-300 rounded-xl border border-emerald-900 transition"
                               title="Ocultar de la tienda (Soft delete)"
                             >
                               <Trash2 className="w-4 h-4" />

@@ -92,7 +92,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
         </div>
       )}
 
-      <div className="bg-[#0F1622] rounded-3xl border border-slate-800 p-6 shadow-xl space-y-6">
+      <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 p-6 shadow-xl space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-white font-outfit">Mercado Pago</h2>
@@ -117,7 +117,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
               value={publicKey}
               onChange={(e) => setPublicKey(e.target.value)}
               placeholder="APP_USR-xxxxxxxx-xxxxxx-xxxxxx-xxxxxxxx"
-              className="flex-1 px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono"
+              className="flex-1 px-3.5 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono"
             />
             {mpAccessTokenSet && (
               <Button type="button" variant="outline" size="md" onClick={clearPublicKey}>
@@ -141,7 +141,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
                 value={accessToken}
                 onChange={(e) => setAccessToken(e.target.value)}
                 placeholder={mpAccessTokenSet ? '••••••••••••••••' : 'APP_USR-xxxxxxxx'}
-                className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono pr-10"
+                className="w-full px-3.5 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono pr-10"
               />
               <button
                 type="button"

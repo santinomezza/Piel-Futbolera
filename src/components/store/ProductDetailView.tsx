@@ -95,7 +95,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
         
         {/* Left: Image Gallery */}
         <div className="space-y-4">
-          <div className="relative aspect-[4/5] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+          <div className="relative aspect-[4/5] bg-emerald-950 rounded-3xl overflow-hidden border border-emerald-900 shadow-2xl">
             <Image
               src={activeImage}
               alt={product.name}
@@ -117,8 +117,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                 <button
                   key={idx}
                   onClick={() => setActiveImage(img)}
-                  className={`relative w-20 h-24 bg-slate-900 rounded-xl overflow-hidden border-2 transition ${
-                    activeImage === img ? 'border-emerald-500 shadow-md shadow-emerald-500/20' : 'border-slate-800 opacity-60 hover:opacity-100'
+                  className={`relative w-20 h-24 bg-emerald-950 rounded-xl overflow-hidden border-2 transition ${
+                    activeImage === img ? 'border-emerald-500 shadow-md shadow-emerald-500/20' : 'border-emerald-900 opacity-60 hover:opacity-100'
                   }`}
                 >
                   <Image src={img} alt={`Vista ${idx + 1}`} fill className="object-cover" />
@@ -139,7 +139,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
             </p>
           </div>
 
-          <p className="text-sm text-slate-300 leading-relaxed border-t border-b border-slate-800/80 py-4">
+          <p className="text-sm text-slate-300 leading-relaxed border-t border-b border-emerald-900/80 py-4">
             {product.description}
           </p>
 
@@ -174,8 +174,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                       isSelected
                         ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg shadow-emerald-600/30'
                         : hasStock
-                        ? 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-800 hover:border-slate-700'
-                        : 'bg-slate-950 text-slate-600 border-slate-900 cursor-not-allowed opacity-40 line-through'
+                        ? 'bg-emerald-950 hover:bg-emerald-900 text-slate-200 border-emerald-900 hover:border-emerald-800'
+                        : 'bg-emerald-950 text-slate-600 border-emerald-900 cursor-not-allowed opacity-40 line-through'
                     }`}
                   >
                     <span>{size}</span>
@@ -189,11 +189,11 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">Cantidad</label>
             <div className="flex items-center gap-4">
-              <div className="flex items-center border border-slate-800 rounded-xl bg-slate-900 overflow-hidden">
+              <div className="flex items-center border border-emerald-900 rounded-xl bg-emerald-950 overflow-hidden">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1 || isOutOfStock}
-                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30"
+                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-emerald-900 disabled:opacity-30"
                 >
                   -
                 </button>
@@ -201,7 +201,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   disabled={!activeVariant || quantity >= activeVariant.stock || isOutOfStock}
-                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30"
+                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-emerald-900 disabled:opacity-30"
                 >
                   +
                 </button>
@@ -234,12 +234,12 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           </Button>
 
           {/* Value props */}
-          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800 text-xs text-slate-400">
-            <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex items-center gap-2.5">
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-emerald-900 text-xs text-slate-400">
+            <div className="p-3 bg-emerald-950/60 rounded-xl border border-emerald-900 flex items-center gap-2.5">
               <Truck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Cotización real de envíos por Andreani & Correo Arg.</span>
             </div>
-            <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex items-center gap-2.5">
+            <div className="p-3 bg-emerald-950/60 rounded-xl border border-emerald-900 flex items-center gap-2.5">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Pago oficial con Mercado Pago.</span>
             </div>
