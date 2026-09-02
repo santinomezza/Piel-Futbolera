@@ -96,11 +96,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover scale-110 blur-2xl"
-                style={{ filter: 'blur(18px)' }}
+                className="object-cover scale-105"
+                style={{ filter: 'blur(6px)' }}
               />
-              <div className="absolute inset-0 bg-emerald-950/70" />
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/40 via-emerald-950/30 to-emerald-950/60" />
+              <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-black/55 to-transparent" />
             </div>
             <div className="relative z-10 p-8 sm:p-12">
             <div className="max-w-2xl space-y-6">
