@@ -126,8 +126,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#0F2418] p-6 rounded-3xl border border-emerald-900 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="bg-[#0F2418] p-6 rounded-3xl border border-emerald-900 space-y-4">
             <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-emerald-900 pb-3 text-sm">
               <Truck className="w-4 h-4 text-emerald-400" />
               <span>Datos del Envío ({order.courier})</span>

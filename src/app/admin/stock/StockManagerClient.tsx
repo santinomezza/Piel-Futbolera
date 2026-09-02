@@ -56,6 +56,12 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
     }
   }
 
+  const renderBadge = (currentStock: number) => {
+    if (currentStock === 0) return <Badge variant="rose" size="sm">Agotado</Badge>
+    if (currentStock <= 5) return <Badge variant="amber" size="sm">Bajo (&le;5)</Badge>
+    return <Badge variant="emerald" size="sm">OK ({currentStock})</Badge>
+  }
+
   return (
     <div className="space-y-4">
       {feedback && (
@@ -65,68 +71,109 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
         </div>
       )}
 
-      <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
-        <table className="w-full text-left text-xs">
-          <thead>
-            <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
-              <th className="py-3.5 px-4">Camiseta</th>
-              <th className="py-3.5 px-4">Categoría</th>
-              <th className="py-3.5 px-4">Talle</th>
-              <th className="py-3.5 px-4">SKU</th>
-              <th className="py-3.5 px-4">Stock Actual</th>
-              <th className="py-3.5 px-4">Alerta</th>
-              <th className="py-3.5 px-4 text-right">Acción</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-emerald-900/60">
-            {initialVariants.map((variant) => {
-              const currentStock = stockMap[variant.id]
-              const isLowStock = currentStock <= 5
+      {/* Mobile cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:hidden">
+        {initialVariants.map((variant) => {
+          const currentStock = stockMap[variant.id]
+          return (
+            <div
+              key={variant.id}
+              className="bg-[#0F2418] rounded-2xl border border-emerald-900 p-4 space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-sm text-slate-100 truncate">{variant.product.name}</h3>
+                  <p className="text-[11px] text-slate-400 mt-0.5">{variant.product.category}</p>
+                </div>
+                <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900 text-xs shrink-0">
+                  {variant.size}
+                </span>
+              </div>
 
-              return (
-                <tr key={variant.id} className="hover:bg-emerald-950/40 transition">
-                  <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
-                  <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
-                  <td className="py-3 px-4">
-                    <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900">
-                      {variant.size}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 font-mono text-slate-400">{variant.sku}</td>
-                  <td className="py-3 px-4">
-                    <input
-                      type="number"
-                      min="0"
-                      value={currentStock}
-                      onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                      className="w-20 px-2.5 py-1 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
-                    />
-                  </td>
-                  <td className="py-3 px-4">
-                    {currentStock === 0 ? (
-                      <Badge variant="rose" size="sm">Agotado</Badge>
-                    ) : isLowStock ? (
-                      <Badge variant="amber" size="sm">Bajo Stock (&le;5)</Badge>
-                    ) : (
-                      <Badge variant="emerald" size="sm">OK ({currentStock})</Badge>
-                    )}
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      isLoading={savingId === variant.id}
-                      onClick={() => saveStock(variant.id)}
-                    >
-                      <Save className="w-3.5 h-3.5" />
-                      <span>Guardar</span>
-                    </Button>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="font-mono text-slate-400">{variant.sku}</span>
+                {renderBadge(currentStock)}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <label className="text-[11px] font-semibold text-slate-400 shrink-0">Stock:</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={currentStock}
+                  onChange={(e) => handleStockChange(variant.id, e.target.value)}
+                  className="flex-1 min-w-0 px-2.5 py-1.5 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-sm focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                />
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  isLoading={savingId === variant.id}
+                  onClick={() => saveStock(variant.id)}
+                >
+                  <Save className="w-3.5 h-3.5" />
+                </Button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden md:block bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
+                <th className="py-3.5 px-4">Camiseta</th>
+                <th className="py-3.5 px-4">Categoría</th>
+                <th className="py-3.5 px-4">Talle</th>
+                <th className="py-3.5 px-4">SKU</th>
+                <th className="py-3.5 px-4">Stock Actual</th>
+                <th className="py-3.5 px-4">Alerta</th>
+                <th className="py-3.5 px-4 text-right">Acción</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-emerald-900/60">
+              {initialVariants.map((variant) => {
+                const currentStock = stockMap[variant.id]
+
+                return (
+                  <tr key={variant.id} className="hover:bg-emerald-950/40 transition">
+                    <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
+                    <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
+                    <td className="py-3 px-4">
+                      <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900">
+                        {variant.size}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 font-mono text-slate-400">{variant.sku}</td>
+                    <td className="py-3 px-4">
+                      <input
+                        type="number"
+                        min="0"
+                        value={currentStock}
+                        onChange={(e) => handleStockChange(variant.id, e.target.value)}
+                        className="w-20 px-2.5 py-1 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                      />
+                    </td>
+                    <td className="py-3 px-4">{renderBadge(currentStock)}</td>
+                    <td className="py-3 px-4 text-right">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        isLoading={savingId === variant.id}
+                        onClick={() => saveStock(variant.id)}
+                      >
+                        <Save className="w-3.5 h-3.5" />
+                        <span>Guardar</span>
+                      </Button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )

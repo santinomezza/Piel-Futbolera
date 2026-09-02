@@ -93,7 +93,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
       )}
 
       <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 p-6 shadow-xl space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-bold text-white font-outfit">Mercado Pago</h2>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -173,8 +173,8 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
           </p>
         </div>
 
-        <div className="flex justify-end">
-          <Button type="submit" variant="primary" size="md" isLoading={saving}>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+          <Button type="submit" variant="primary" size="md" isLoading={saving} className="w-full sm:w-auto">
             <Save className="w-3.5 h-3.5" />
             <span>Guardar configuración</span>
           </Button>

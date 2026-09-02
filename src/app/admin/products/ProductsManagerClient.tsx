@@ -126,9 +126,18 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
     }
   }
 
+  const renderStatusBadge = (status: string) => (
+    <Badge
+      variant={status === 'IN_STOCK' ? 'emerald' : status === 'LOW_STOCK' ? 'amber' : 'rose'}
+      size="sm"
+    >
+      {status === 'IN_STOCK' ? 'En Stock' : status === 'LOW_STOCK' ? 'Últimas U.' : 'Agotado'}
+    </Badge>
+  )
+
   return (
     <div className="space-y-6">
-      
+
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-900 pb-5">
         <div>
@@ -148,7 +157,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 bg-[#0F2418] rounded-2xl border border-emerald-900/80 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="p-4 bg-[#0F2418] rounded-2xl border border-emerald-900/80 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -161,13 +170,12 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-          {/* Category Filter */}
-          <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+            <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+              className="flex-1 sm:flex-initial bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
             >
               <option value="ALL">Todas las Categorías</option>
               <option value="TITULAR">Titular</option>
@@ -177,11 +185,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             </select>
           </div>
 
-          {/* Country Filter */}
           <select
             value={countryFilter}
             onChange={(e) => setCountryFilter(e.target.value)}
-            className="bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+            className="flex-1 sm:flex-initial bg-[#141C2B] border border-emerald-900 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
           >
             <option value="ALL">Todos los Países</option>
             {countries.map((c) => (
@@ -193,8 +200,109 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
         </div>
       </div>
 
-      {/* Products Table */}
-      <div className="p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl overflow-hidden">
+      {/* Mobile cards */}
+      {filteredProducts.length === 0 ? (
+        <div className="md:hidden p-12 text-center text-slate-500 text-sm bg-[#0F2418] rounded-3xl border border-emerald-900/80">
+          No se encontraron productos en el catálogo con los filtros aplicados.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-3 md:hidden">
+          {filteredProducts.map((prod) => {
+            const totalStock = prod.variants.reduce((sum, v) => sum + v.stock, 0)
+            return (
+              <div
+                key={prod.id}
+                className={`p-4 bg-[#0F2418] rounded-2xl border border-emerald-900 space-y-3 ${
+                  prod.isDeleted ? 'opacity-50' : ''
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-14 h-14 rounded-xl bg-emerald-950 border border-emerald-900 overflow-hidden shrink-0">
+                    {prod.images[0] ? (
+                      <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-slate-600 text-[10px]">Sin imagen</div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-sm text-white flex items-center gap-2 flex-wrap">
+                      <span>{prod.name}</span>
+                      {prod.isDeleted && (
+                        <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">
+                          Oculto
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-[11px] text-slate-400 line-clamp-2 mt-0.5">{prod.description}</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div>
+                    <span className="text-slate-500 block">Categoría</span>
+                    <span className="px-2 py-0.5 bg-emerald-950 border border-emerald-900 text-slate-200 rounded font-semibold inline-block mt-0.5">
+                      {prod.category}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">Precio</span>
+                    <span className="font-bold text-white font-outfit">${prod.price.toLocaleString('es-AR')}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">País / Liga</span>
+                    <div className="text-slate-200 font-semibold mt-0.5">{prod.country?.name || 'Sin país'}</div>
+                    {prod.league && <div className="text-[10px] text-slate-400">{prod.league.name}</div>}
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">Estado</span>
+                    <div className="mt-1">{renderStatusBadge(prod.status)}</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-1">
+                  {prod.variants.map((v) => (
+                    <span
+                      key={v.size}
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${
+                        v.stock === 0
+                          ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                          : v.stock <= 5
+                          ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                          : 'bg-emerald-950 border-emerald-900 text-slate-300'
+                      }`}
+                    >
+                      {v.size}: {v.stock}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex gap-2 pt-2 border-t border-emerald-900">
+                  <button
+                    onClick={() => handleOpenEditModal(prod)}
+                    className="flex-1 px-3 py-2 bg-emerald-950 hover:bg-emerald-900 text-emerald-400 rounded-lg border border-emerald-900 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                  >
+                    <Edit2 className="w-3.5 h-3.5" />
+                    Editar
+                  </button>
+                  {!prod.isDeleted && (
+                    <button
+                      onClick={() => handleSoftDelete(prod.id, prod.name)}
+                      disabled={deletingId === prod.id}
+                      className="flex-1 px-3 py-2 bg-emerald-950 hover:bg-rose-950 text-rose-400 rounded-lg border border-emerald-900 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Ocultar
+                    </button>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
+      {/* Desktop table */}
+      <div className="hidden md:block p-6 bg-[#0F2418] rounded-3xl border border-emerald-900/80 shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -225,20 +333,13 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         prod.isDeleted ? 'opacity-50 bg-rose-950/10' : ''
                       }`}
                     >
-                      {/* Product Name & Thumbnail */}
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-xl bg-emerald-950 border border-emerald-900 overflow-hidden shrink-0">
                             {prod.images[0] ? (
-                              <img
-                                src={prod.images[0]}
-                                alt={prod.name}
-                                className="w-full h-full object-cover"
-                              />
+                              <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center text-slate-600">
-                                Camiseta
-                              </div>
+                              <div className="w-full h-full flex items-center justify-center text-slate-600">Camiseta</div>
                             )}
                           </div>
                           <div>
@@ -250,21 +351,17 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                                 </span>
                               )}
                             </div>
-                            <div className="text-[11px] text-slate-400 truncate max-w-xs">
-                              {prod.description}
-                            </div>
+                            <div className="text-[11px] text-slate-400 truncate max-w-xs">{prod.description}</div>
                           </div>
                         </div>
                       </td>
 
-                      {/* Category */}
                       <td className="py-3 px-3">
                         <span className="px-2.5 py-1 bg-emerald-950 border border-emerald-900 text-slate-300 rounded-lg font-semibold text-[11px]">
                           {prod.category}
                         </span>
                       </td>
 
-                      {/* Country & League */}
                       <td className="py-3 px-3 space-y-1">
                         <div className="flex items-center gap-1.5 text-slate-300 font-semibold">
                           <Globe className="w-3.5 h-3.5 text-emerald-400" />
@@ -278,12 +375,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         )}
                       </td>
 
-                      {/* Price */}
                       <td className="py-3 px-3 font-bold text-white font-outfit">
                         ${prod.price.toLocaleString('es-AR')}
                       </td>
 
-                      {/* Stock Variants */}
                       <td className="py-3 px-3">
                         <div className="flex flex-wrap gap-1">
                           {prod.variants.map((v) => (
@@ -306,27 +401,8 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         </div>
                       </td>
 
-                      {/* Status */}
-                      <td className="py-3 px-3">
-                        <Badge
-                          variant={
-                            prod.status === 'IN_STOCK'
-                              ? 'emerald'
-                              : prod.status === 'LOW_STOCK'
-                              ? 'amber'
-                              : 'rose'
-                          }
-                          size="sm"
-                        >
-                          {prod.status === 'IN_STOCK'
-                            ? 'En Stock'
-                            : prod.status === 'LOW_STOCK'
-                            ? 'Últimas U.'
-                            : 'Agotado'}
-                        </Badge>
-                      </td>
+                      <td className="py-3 px-3">{renderStatusBadge(prod.status)}</td>
 
-                      {/* Actions */}
                       <td className="py-3 px-3 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button

@@ -100,14 +100,30 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
     }
   }
 
+  const renderStatusBadge = (status: string) => (
+    <Badge
+      variant={
+        status === 'PAID' || status === 'DELIVERED'
+          ? 'emerald'
+          : status === 'SHIPPED'
+          ? 'primary'
+          : status === 'PENDING'
+          ? 'amber'
+          : 'rose'
+      }
+      size="sm"
+    >
+      {status}
+    </Badge>
+  )
+
   return (
     <div className="space-y-6">
-      
+
       {/* Filters Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-[#0F2418] p-4 rounded-2xl border border-emerald-900">
         <div className="flex flex-wrap items-center gap-3">
-          
-          {/* Status filter */}
+
           <div>
             <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Filtrar por Estado</label>
             <select
@@ -124,7 +140,6 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
             </select>
           </div>
 
-          {/* Courier filter */}
           <div>
             <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Filtrar por Correo</label>
             <select
@@ -145,73 +160,106 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
         </div>
       </div>
 
-      {/* Orders Table */}
-      <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
-        <table className="w-full text-left text-xs">
-          <thead>
-            <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
-              <th className="py-3.5 px-4">Orden</th>
-              <th className="py-3.5 px-4">Cliente</th>
-              <th className="py-3.5 px-4">Correo</th>
-              <th className="py-3.5 px-4">Seguimiento</th>
-              <th className="py-3.5 px-4">Estado</th>
-              <th className="py-3.5 px-4">Total</th>
-              <th className="py-3.5 px-4 text-right">Acciones</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-emerald-900/60">
-            {filteredOrders.map((order) => (
-              <tr key={order.id} className="hover:bg-emerald-950/40 transition">
-                <td className="py-3 px-4 font-mono font-bold text-emerald-400">{order.orderNumber}</td>
-                <td className="py-3 px-4">
-                  <div className="font-semibold text-slate-100">{order.customer.firstName} {order.customer.lastName}</div>
-                  <div className="text-[11px] text-slate-400">{order.customer.email}</div>
-                </td>
-                <td className="py-3 px-4 text-slate-300">{order.courier}</td>
-                <td className="py-3 px-4 font-mono text-xs text-slate-400">
-                  {order.trackingCode || <span className="text-slate-600">Sin asignar</span>}
-                </td>
-                <td className="py-3 px-4">
-                  <Badge
-                    variant={
-                      order.status === 'PAID'
-                        ? 'emerald'
-                        : order.status === 'SHIPPED'
-                        ? 'primary'
-                        : order.status === 'DELIVERED'
-                        ? 'emerald'
-                        : order.status === 'PENDING'
-                        ? 'amber'
-                        : 'rose'
-                    }
-                    size="sm"
-                  >
-                    {order.status}
-                  </Badge>
-                </td>
-                <td className="py-3 px-4 font-bold text-slate-100 font-outfit">
+      {/* Mobile cards */}
+      <div className="grid grid-cols-1 gap-3 md:hidden">
+        {filteredOrders.map((order) => (
+          <div key={order.id} className="bg-[#0F2418] rounded-2xl border border-emerald-900 p-4 space-y-3">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <div className="font-mono font-bold text-sm text-emerald-400">{order.orderNumber}</div>
+                <div className="font-semibold text-sm text-slate-100 mt-1">
+                  {order.customer.firstName} {order.customer.lastName}
+                </div>
+                <div className="text-[11px] text-slate-400 truncate">{order.customer.email}</div>
+              </div>
+              <div className="text-right shrink-0">
+                {renderStatusBadge(order.status)}
+                <div className="text-base font-bold text-slate-100 font-outfit mt-2">
                   ${order.totalAmount.toLocaleString('es-AR')}
-                </td>
-                <td className="py-3 px-4 text-right flex justify-end gap-2">
-                  <button
-                    onClick={() => setActiveModalOrder(order)}
-                    className="p-2 bg-emerald-950 hover:bg-emerald-900 text-slate-300 rounded-lg border border-emerald-900 transition"
-                    title="Ver detalle del pedido"
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => handleOpenStatusModal(order)}
-                    className="p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/20 transition"
-                    title="Actualizar estado / seguimiento"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                  </button>
-                </td>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-emerald-900">
+              <span>{order.courier}</span>
+              <span className="font-mono">{order.trackingCode || 'Sin asignar'}</span>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setActiveModalOrder(order)}
+                className="flex-1 px-3 py-2 bg-emerald-950 hover:bg-emerald-900 text-slate-200 rounded-lg border border-emerald-900 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                Ver detalle
+              </button>
+              <button
+                onClick={() => handleOpenStatusModal(order)}
+                className="flex-1 px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/20 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+              >
+                <Edit3 className="w-3.5 h-3.5" />
+                Cambiar estado
+              </button>
+            </div>
+          </div>
+        ))}
+        {filteredOrders.length === 0 && (
+          <div className="p-8 text-center text-slate-400 text-sm bg-[#0F2418] rounded-2xl border border-emerald-900">
+            No hay pedidos que coincidan con los filtros.
+          </div>
+        )}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden md:block bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
+                <th className="py-3.5 px-4">Orden</th>
+                <th className="py-3.5 px-4">Cliente</th>
+                <th className="py-3.5 px-4">Correo</th>
+                <th className="py-3.5 px-4">Seguimiento</th>
+                <th className="py-3.5 px-4">Estado</th>
+                <th className="py-3.5 px-4">Total</th>
+                <th className="py-3.5 px-4 text-right">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-emerald-900/60">
+              {filteredOrders.map((order) => (
+                <tr key={order.id} className="hover:bg-emerald-950/40 transition">
+                  <td className="py-3 px-4 font-mono font-bold text-emerald-400">{order.orderNumber}</td>
+                  <td className="py-3 px-4">
+                    <div className="font-semibold text-slate-100">{order.customer.firstName} {order.customer.lastName}</div>
+                    <div className="text-[11px] text-slate-400">{order.customer.email}</div>
+                  </td>
+                  <td className="py-3 px-4 text-slate-300">{order.courier}</td>
+                  <td className="py-3 px-4 font-mono text-xs text-slate-400">
+                    {order.trackingCode || <span className="text-slate-600">Sin asignar</span>}
+                  </td>
+                  <td className="py-3 px-4">{renderStatusBadge(order.status)}</td>
+                  <td className="py-3 px-4 font-bold text-slate-100 font-outfit">
+                    ${order.totalAmount.toLocaleString('es-AR')}
+                  </td>
+                  <td className="py-3 px-4 text-right flex justify-end gap-2">
+                    <button
+                      onClick={() => setActiveModalOrder(order)}
+                      className="p-2 bg-emerald-950 hover:bg-emerald-900 text-slate-300 rounded-lg border border-emerald-900 transition"
+                      title="Ver detalle del pedido"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleOpenStatusModal(order)}
+                      className="p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg border border-emerald-500/20 transition"
+                      title="Actualizar estado / seguimiento"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Order Detail Modal */}
@@ -227,11 +275,11 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div className="p-3 bg-emerald-950 rounded-xl space-y-1">
                 <span className="font-bold text-slate-200 block mb-1">Comprador</span>
                 <p>{activeModalOrder.customer.firstName} {activeModalOrder.customer.lastName}</p>
-                <p className="text-slate-400">{activeModalOrder.customer.email}</p>
+                <p className="text-slate-400 break-all">{activeModalOrder.customer.email}</p>
                 <p className="text-slate-400">{activeModalOrder.customer.phone}</p>
               </div>
 
@@ -306,11 +354,11 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-2">
-              <Button variant="outline" size="sm" onClick={() => setUpdatingOrder(null)}>
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-2">
+              <Button variant="outline" size="sm" onClick={() => setUpdatingOrder(null)} className="w-full sm:w-auto">
                 Cancelar
               </Button>
-              <Button variant="primary" size="sm" isLoading={isUpdating} onClick={handleSaveStatus}>
+              <Button variant="primary" size="sm" isLoading={isUpdating} onClick={handleSaveStatus} className="w-full sm:w-auto">
                 Guardar Cambios
               </Button>
             </div>
