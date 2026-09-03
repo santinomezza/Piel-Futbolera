@@ -61,7 +61,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const featured = products.slice(0, 6)
   const heroProduct = products[0]
-  const heroImage = heroProduct?.images[0] || '/hero-bg.avif'
+  const heroImage = heroProduct?.images[0] || '/hero-jersey.png'
 
   const selectedCountryObj = countries.find((c) => c.id === countryFilter)
   const selectedLeagueObj = leagues.find((l) => l.id === leagueFilter)
@@ -114,7 +114,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
                     <div className="grid grid-cols-3 gap-3 pt-4">
                       {[
-                        { v: '+200', l: 'Modelos' },
+                        { v: '+200', l: 'Ventas' },
                         { v: '24h', l: 'Despacho' },
                         { v: '4.9★', l: 'Reviews' },
                       ].map((s) => (
@@ -135,26 +135,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
                     {/* Floating card top-left */}
                     <div className="absolute top-4 left-0 z-20 bg-lime-400 text-ink-900 p-4 rounded-2xl border-2 border-ink-900 shadow-[6px_6px_0_0_rgba(10,10,10,1)] max-w-[220px] hidden sm:block">
-                      <Badge variant="ink" size="sm" className="mb-2">NUEVO</Badge>
-                      <p className="font-black text-sm leading-tight">Edición limitada 2026</p>
-                      <p className="text-[11px] mt-1 opacity-80">Diseños exclusivos que no vas a encontrar en otro lugar.</p>
+                      <Badge variant="ink" size="sm" className="mb-2">---UNA PASION---</Badge>
+                      <p className="font-black text-sm leading-tight">-QUE SE VISTE-</p>
                     </div>
 
-                    {/* Floating card bottom-right */}
-                    <div className="absolute bottom-0 right-8 z-20 bg-white p-4 rounded-2xl border-2 border-ink-900 shadow-[-6px_6px_0_0_rgba(10,10,10,1)] max-w-[200px] hidden sm:block">
-                      <div className="flex items-center gap-1.5 text-amber-500 mb-1">
-                        {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-3 h-3 fill-current" />)}
-                      </div>
-                      <p className="text-[11px] text-ink-700 font-medium leading-snug">
-                        "La calidad de las camisetas es increíble, envío rapidísimo."
-                      </p>
-                      <p className="text-[10px] text-ink-500 mt-2 font-bold">— Mateo, CABA</p>
-                    </div>
 
-                    {/* Vertical text marker */}
-                    <div className="absolute top-8 right-0 z-0 hidden lg:flex items-center gap-2 text-[10px] uppercase font-black tracking-[0.3em] text-ink-500 -rotate-90 origin-top-right translate-y-32 translate-x-2">
-                      <span className="w-12 h-px bg-ink-900" /> Est. 2026 · ARG
-                    </div>
                   </div>
 
                 </div>
@@ -164,7 +149,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             {/* === MARQUEE === */}
             <section className="bg-ink-900 py-5 overflow-hidden border-y-2 border-ink-900">
               <div className="flex items-center gap-12 animate-marquee whitespace-nowrap">
-                {[...countries, ...countries, ...countries].map((c, i) => (
+                {[...countries, ...countries, ...countries, ...countries].map((c, i) => (
                   <span key={`${c.id}-${i}`} className="flex items-center gap-3 text-cream-50/40 font-black text-2xl uppercase tracking-tight">
                     <Globe2 className="w-5 h-5 text-lime-400" />
                     {c.name}
@@ -183,9 +168,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     description="No somos una tienda más. Cada camiseta pasa por un proceso de curaduría y confección pensado para durar."
                     accentWord="premium"
                   />
-                </div>
-                <div className="lg:col-span-5 flex justify-end">
-                  <Badge variant="outline" size="md" className="font-black">+ 5 años vistiendo hinchas</Badge>
                 </div>
               </div>
 
@@ -220,9 +202,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
                   {[
-                    {
-                      name: 'Titulares', cat: 'TITULAR', img: '/categorias/titulares.webp'
-                    },
+                    { name: 'Titulares', cat: 'TITULAR', img: '/categorias/titulares.webp' },
                     { name: 'Suplentes', cat: 'SUPLENTE', img: '/categorias/suplentes.webp' },
                     { name: 'Retro', cat: 'RETRO', img: '/categorias/retro.webp' },
                     { name: 'Arquero', cat: 'ARQUERO', img: '/categorias/arquero.webp' },
@@ -239,7 +219,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 p-5 text-cream-50">
                         <h3 className="text-2xl font-black font-outfit leading-none">{c.name}</h3>
-
                         <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-black text-lime-400 uppercase tracking-wider">
                           Ver más
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -275,75 +254,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </div>
               </section>
             )}
-
-            {/* === TESTIMONIOS === */}
-            <section className="bg-ink-900 text-cream-50 py-20 overflow-hidden">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col items-center text-center mb-12">
-                  <Badge variant="primary" size="md" className="mb-4">Comunidad</Badge>
-                  <h2 className="text-3xl sm:text-5xl font-black font-outfit leading-[1.05] tracking-tight max-w-2xl">
-                    Lo que dicen los que <span className="text-lime-400">ya vistieron</span> PielFutbolera.
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {[
-                    { name: 'Mateo G.', city: 'CABA', text: 'Pedí tres camisetas para toda la familia. Llegaron en 48h y la calidad es excelente. Recomendados.', stars: 5 },
-                    { name: 'Camila R.', city: 'Córdoba', text: 'El talle real es real. Por fin una tienda que no miente con las medidas. Ya quiero pedir la próxima.', stars: 5 },
-                    { name: 'Lucas P.', city: 'Rosario', text: 'El proceso de checkout con Mercado Pago fue rapidísimo. La camiseta retro es una obra de arte.', stars: 5 },
-                  ].map((t) => (
-                    <div key={t.name} className="bg-ink-800 rounded-2xl p-6 border border-white/5 relative">
-                      <Quote className="w-7 h-7 text-lime-400 absolute -top-3 -left-3 fill-lime-400" />
-                      <div className="flex items-center gap-1 text-amber-400 mb-3">
-                        {Array.from({ length: t.stars }).map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
-                      </div>
-                      <p className="text-sm text-cream-50/80 leading-relaxed">"{t.text}"</p>
-                      <div className="mt-4 pt-4 border-t border-white/5 flex items-center gap-3">
-                        <div className="w-9 h-9 bg-lime-400 text-ink-900 rounded-full flex items-center justify-center font-black text-sm">
-                          {t.name[0]}
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold">{t.name}</p>
-                          <p className="text-[10px] uppercase tracking-wider text-cream-50/50">{t.city}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* === CTA FINAL === */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-              <div className="relative bg-lime-400 rounded-3xl border-2 border-ink-900 p-10 sm:p-16 overflow-hidden shadow-[8px_8px_0_0_rgba(10,10,10,1)]">
-                <div className="absolute inset-0 bg-dots opacity-30" />
-                <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 space-y-4">
-                    <p className="text-[11px] uppercase tracking-[0.18em] font-black text-ink-900">Sumate a la comunidad</p>
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-ink-900 font-outfit leading-[0.95] tracking-tight">
-                      Encontrá la camiseta <br />
-                      que cuenta tu historia.
-                    </h2>
-                    <p className="text-base text-ink-900/80 max-w-md">
-                      Más de 200 modelos en stock. Envíos a todo el país. Pagá en cuotas sin interés.
-                    </p>
-                  </div>
-                  <div className="lg:col-span-5 flex flex-col gap-3">
-                    <a href="#catalogo" className="block">
-                      <Button variant="secondary" size="lg" className="w-full">
-                        Empezar a comprar
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </a>
-                    <Link href="/admin" className="block">
-                      <Button variant="outline" size="md" className="w-full border-ink-900">
-                        ¿Sos revendedor? Hablá con nosotros
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </section>
           </>
         )}
 
