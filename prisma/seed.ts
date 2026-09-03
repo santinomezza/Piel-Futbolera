@@ -83,6 +83,12 @@ async function main() {
   const catOasis = await prisma.category.create({
     data: { slug: 'coleccion-oasis-25', name: "Colección Oasis '25", sectionId: secCamisetas.id, order: 6, description: 'Colección cápsula Oasis 2025' },
   })
+  const catSuplentes = await prisma.category.create({
+    data: { slug: 'suplentes', name: 'Suplentes', sectionId: secCamisetas.id, order: 7, description: 'Camisetas alternativas y suplentes' },
+  })
+  const catArquero = await prisma.category.create({
+    data: { slug: 'arquero', name: 'Arquero', sectionId: secCamisetas.id, order: 8, description: 'Equipación de arquero' },
+  })
 
   // Sub-categorías para Shorts
   await prisma.category.create({ data: { slug: 'shorts-juego', name: 'Shorts de Juego', sectionId: secShorts.id, order: 1 } })
@@ -207,6 +213,43 @@ async function main() {
         { size: 'S', stock: 6, sku: 'OAS-25-S' },
         { size: 'M', stock: 9, sku: 'OAS-25-M' },
         { size: 'L', stock: 7, sku: 'OAS-25-L' },
+      ],
+    },
+    {
+      name: 'Camiseta Suplente 2026',
+      slug: 'camiseta-suplente-2026',
+      description: 'Camiseta alternativa para el banco. Diseño en tonos oscuros con detalles fluorescentes y tejido dry-fit de alto rendimiento.',
+      price: 42999.00,
+      badge: 'NUEVO',
+      countryId: countryArg.id,
+      leagueId: leagueArg.id,
+      categoryId: catSuplentes.id,
+      images: JSON.stringify(['/categorias/suplentes.webp']),
+      featured: true,
+      variants: [
+        { size: 'S', stock: 12, sku: 'SUP-26-S' },
+        { size: 'M', stock: 18, sku: 'SUP-26-M' },
+        { size: 'L', stock: 14, sku: 'SUP-26-L' },
+        { size: 'XL', stock: 6, sku: 'SUP-26-XL' },
+        { size: 'XXL', stock: 3, sku: 'SUP-26-XXL' },
+      ],
+    },
+    {
+      name: 'Camiseta Arquero Pro 2026',
+      slug: 'camiseta-arquero-pro-2026',
+      description: 'Equipación profesional de arquero. Corte oversize, padding ligero en codos, gráfico geométrico high-visibility.',
+      price: 47500.00,
+      badge: 'DESTACADO',
+      countryId: countryBra.id,
+      leagueId: null,
+      categoryId: catArquero.id,
+      images: JSON.stringify(['/categorias/arquero.webp']),
+      featured: true,
+      variants: [
+        { size: 'S', stock: 8, sku: 'ARQ-26-S' },
+        { size: 'M', stock: 11, sku: 'ARQ-26-M' },
+        { size: 'L', stock: 9, sku: 'ARQ-26-L' },
+        { size: 'XL', stock: 5, sku: 'ARQ-26-XL' },
       ],
     },
   ]

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Sparkles, ShieldCheck, Truck, Ruler, Award, Zap, ArrowRight, Quote, Star, Globe2 } from 'lucide-react'
+import { getNavSections } from '@/lib/navSections'
 
 interface HomePageProps {
   searchParams: Promise<{
@@ -48,6 +49,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           OR: [{ id: categoryFilter }, { slug: categoryFilter }],
           ...(selectedSection ? { sectionId: selectedSection.id } : {}),
         },
+        include: { section: true },
       })
     : null
 
@@ -95,9 +97,20 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const selectedCategoryObj = categoryFilterResolved
   const isFiltering = Boolean(sectionFilter || categoryFilter || countryFilter || leagueFilter || searchQuery)
 
+  const navSections = await getNavSections()
+
+  const CATEGORY_HERO: Record<string, string> = {
+    'version-jugador': '/categorias/titulares.webp',
+    'suplentes': '/categorias/suplentes.webp',
+    'retro': '/categorias/retro.webp',
+    'arquero': '/categorias/arquero.webp',
+    'hincha': '/categorias/hincha.webp',
+  }
+  const categoryHeroImage = selectedCategoryObj?.slug ? CATEGORY_HERO[selectedCategoryObj.slug] : null
+
   return (
     <div className="min-h-screen flex flex-col bg-cream-50">
-      <Header />
+      <Header sections={navSections} />
 
       <main className="flex-1">
 
@@ -275,6 +288,33 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         )}
 
         {/* === CATÁLOGO + FILTROS === */}
+        {categoryHeroImage && selectedCategoryObj && (
+          <section className="relative h-[280px] sm:h-[360px] lg:h-[420px] overflow-hidden bg-ink-900">
+            <Image
+              src={categoryHeroImage}
+              alt={selectedCategoryObj.name}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover opacity-70"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent" />
+            <div className="absolute inset-0 flex items-end">
+              <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+                <Badge variant="primary" size="md" className="mb-3">
+                  {selectedCategoryObj.section?.name || 'Camisetas'}
+                </Badge>
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-cream-50 font-outfit leading-none">
+                  {selectedCategoryObj.name}
+                </h2>
+                <p className="text-cream-50/80 mt-3 text-sm sm:text-base max-w-2xl">
+                  {selectedCategoryObj.description || `Explorá nuestra colección de ${selectedCategoryObj.name.toLowerCase()}.`}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
         <section id="catalogo" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8 scroll-mt-24">
           <SectionHeading
             eyebrow={isFiltering ? 'Búsqueda' : 'Catálogo'}

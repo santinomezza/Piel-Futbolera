@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { Header } from '@/components/store/Header'
 import { Footer } from '@/components/store/Footer'
 import { ProductDetailView } from '@/components/store/ProductDetailView'
+import { getNavSections } from '@/lib/navSections'
 import type { Metadata } from 'next'
 
 interface ProductPageProps {
@@ -58,9 +59,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
     sectionName: rawProduct.category?.section?.name ?? null,
   }
 
+  const navSections = await getNavSections()
+
   return (
     <div className="min-h-screen flex flex-col bg-cream-50">
-      <Header />
+      <Header sections={navSections} />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ProductDetailView product={product} />
       </main>

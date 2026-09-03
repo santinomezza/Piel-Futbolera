@@ -44,3 +44,9 @@ next-env.d.ts
 prisma/dev.db
 prisma/dev.db-journal
 prisma/migrations/dev/
+
+# runtime uploads (admin product images)
+/public/uploads/*.jpg
+/public/uploads/*.jpeg
+/public/uploads/*.png
+/public/uploads/*.webp
