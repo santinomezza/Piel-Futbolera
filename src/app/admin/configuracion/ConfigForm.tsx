@@ -83,7 +83,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
         <div
           className={`p-3 rounded-xl text-xs font-semibold flex items-center gap-2 ${
             feedback.type === 'ok'
-              ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+              ? 'bg-white/5 border border-white/15 text-zinc-300'
               : 'bg-rose-500/10 border border-rose-500/30 text-rose-400'
           }`}
         >
@@ -92,7 +92,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
         </div>
       )}
 
-      <div className="bg-[#0F2418] rounded-3xl border border-emerald-900 p-6 shadow-xl space-y-6">
+      <div className="bg-[#161616] rounded-3xl border border-zinc-800 p-6 shadow-xl space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-bold text-white font-outfit">Mercado Pago</h2>
@@ -117,7 +117,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
               value={publicKey}
               onChange={(e) => setPublicKey(e.target.value)}
               placeholder="APP_USR-xxxxxxxx-xxxxxx-xxxxxx-xxxxxxxx"
-              className="flex-1 px-3.5 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono"
+              className="flex-1 px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 font-mono"
             />
             {mpAccessTokenSet && (
               <Button type="button" variant="outline" size="md" onClick={clearPublicKey}>
@@ -141,7 +141,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
                 value={accessToken}
                 onChange={(e) => setAccessToken(e.target.value)}
                 placeholder={mpAccessTokenSet ? '••••••••••••••••' : 'APP_USR-xxxxxxxx'}
-                className="w-full px-3.5 py-2.5 bg-emerald-950 border border-emerald-900 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono pr-10"
+                className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 font-mono pr-10"
               />
               <button
                 type="button"

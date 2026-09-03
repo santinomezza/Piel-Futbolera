@@ -84,7 +84,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
       <div>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-emerald-400 transition"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-zinc-300 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Volver al Catálogo</span>
@@ -95,7 +95,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
         
         {/* Left: Image Gallery */}
         <div className="space-y-4">
-          <div className="relative aspect-[4/5] bg-emerald-950 rounded-3xl overflow-hidden border border-emerald-900 shadow-2xl">
+          <div className="relative aspect-[4/5] bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
             <Image
               src={activeImage}
               alt={product.name}
@@ -117,8 +117,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                 <button
                   key={idx}
                   onClick={() => setActiveImage(img)}
-                  className={`relative w-20 h-24 bg-emerald-950 rounded-xl overflow-hidden border-2 transition ${
-                    activeImage === img ? 'border-emerald-500 shadow-md shadow-emerald-500/20' : 'border-emerald-900 opacity-60 hover:opacity-100'
+                  className={`relative w-20 h-24 bg-zinc-900 rounded-xl overflow-hidden border-2 transition ${
+                    activeImage === img ? 'border-zinc-100 shadow-md shadow-white/10' : 'border-zinc-800 opacity-60 hover:opacity-100'
                   }`}
                 >
                   <Image src={img} alt={`Vista ${idx + 1}`} fill className="object-cover" />
@@ -134,12 +134,12 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
             <h1 className="text-3xl font-extrabold text-white font-outfit leading-tight">
               {product.name}
             </h1>
-            <p className="text-2xl font-bold text-emerald-400 font-outfit">
+            <p className="text-2xl font-bold text-zinc-300 font-outfit">
               ${product.price.toLocaleString('es-AR')}
             </p>
           </div>
 
-          <p className="text-sm text-slate-300 leading-relaxed border-t border-b border-emerald-900/80 py-4">
+          <p className="text-sm text-slate-300 leading-relaxed border-t border-b border-zinc-800/80 py-4">
             {product.description}
           </p>
 
@@ -148,7 +148,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
             <div className="flex justify-between items-center text-xs">
               <span className="font-bold uppercase tracking-wider text-slate-400">Seleccionar Talle</span>
               {activeVariant && (
-                <span className={`font-semibold ${activeVariant.stock > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                <span className={`font-semibold ${activeVariant.stock > 0 ? 'text-zinc-300' : 'text-rose-400'}`}>
                   {activeVariant.stock > 0 ? `${activeVariant.stock} unidades en stock` : 'Sin Stock'}
                 </span>
               )}
@@ -172,10 +172,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                     disabled={!hasStock}
                     className={`py-3 rounded-xl font-bold text-sm border transition flex flex-col items-center justify-center ${
                       isSelected
-                        ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg shadow-emerald-600/30'
+                        ? 'bg-zinc-200 text-white border-zinc-300 shadow-lg shadow-zinc-200/30'
                         : hasStock
-                        ? 'bg-emerald-950 hover:bg-emerald-900 text-slate-200 border-emerald-900 hover:border-emerald-800'
-                        : 'bg-emerald-950 text-slate-600 border-emerald-900 cursor-not-allowed opacity-40 line-through'
+                        ? 'bg-zinc-900 hover:bg-zinc-800 text-slate-200 border-zinc-800 hover:border-zinc-700'
+                        : 'bg-zinc-900 text-slate-600 border-zinc-800 cursor-not-allowed opacity-40 line-through'
                     }`}
                   >
                     <span>{size}</span>
@@ -189,11 +189,11 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">Cantidad</label>
             <div className="flex items-center gap-4">
-              <div className="flex items-center border border-emerald-900 rounded-xl bg-emerald-950 overflow-hidden">
+              <div className="flex items-center border border-zinc-800 rounded-xl bg-zinc-900 overflow-hidden">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1 || isOutOfStock}
-                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-emerald-900 disabled:opacity-30"
+                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-zinc-800 disabled:opacity-30"
                 >
                   -
                 </button>
@@ -201,7 +201,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   disabled={!activeVariant || quantity >= activeVariant.stock || isOutOfStock}
-                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-emerald-900 disabled:opacity-30"
+                  className="px-3.5 py-2 text-slate-400 hover:text-white hover:bg-zinc-800 disabled:opacity-30"
                 >
                   +
                 </button>
@@ -215,8 +215,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
 
           {/* Toast Notification */}
           {addedMessage && (
-            <div className="p-3 bg-emerald-500/15 border border-emerald-500/30 rounded-xl text-xs font-semibold text-emerald-300 flex items-center gap-2 animate-fade-in">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="p-3 bg-zinc-100/15 border border-white/15 rounded-xl text-xs font-semibold text-zinc-400 flex items-center gap-2 animate-fade-in">
+              <Check className="w-4 h-4 text-zinc-300 shrink-0" />
               <span>{addedMessage}</span>
             </div>
           )}
@@ -234,13 +234,13 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           </Button>
 
           {/* Value props */}
-          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-emerald-900 text-xs text-slate-400">
-            <div className="p-3 bg-emerald-950/60 rounded-xl border border-emerald-900 flex items-center gap-2.5">
-              <Truck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-zinc-800 text-xs text-slate-400">
+            <div className="p-3 bg-zinc-900/60 rounded-xl border border-zinc-800 flex items-center gap-2.5">
+              <Truck className="w-4 h-4 text-zinc-300 shrink-0" />
               <span>Cotización real de envíos por Andreani & Correo Arg.</span>
             </div>
-            <div className="p-3 bg-emerald-950/60 rounded-xl border border-emerald-900 flex items-center gap-2.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="p-3 bg-zinc-900/60 rounded-xl border border-zinc-800 flex items-center gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-zinc-300 shrink-0" />
               <span>Pago oficial con Mercado Pago.</span>
             </div>
           </div>

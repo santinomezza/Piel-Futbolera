@@ -5,13 +5,13 @@ import { ShieldCheck, Truck, CreditCard, RefreshCw } from 'lucide-react'
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#08130D] border-t border-emerald-900 text-slate-400 mt-20">
+    <footer className="bg-[#0A0A0A] border-t border-zinc-800 text-slate-400 mt-20">
       
       {/* Guarantees bar */}
-      <div className="border-b border-emerald-900/80 py-8 bg-[#0F2418]">
+      <div className="border-b border-zinc-800/80 py-8 bg-[#161616]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3">
-            <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400">
+            <div className="p-2.5 bg-white/5 rounded-xl text-zinc-300">
               <Truck className="w-6 h-6" />
             </div>
             <div>
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-center md:justify-start gap-3">
-            <div className="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400">
+            <div className="p-2.5 bg-white/5 rounded-xl text-zinc-300">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
         
         <div className="space-y-4">
           <div className="flex items-center gap-2.5">
-            <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-emerald-950 border border-emerald-900">
+            <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800">
               <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
             </div>
             <span className="font-extrabold text-xl text-white font-outfit">PielFutbolera</span>
@@ -70,21 +70,21 @@ export const Footer: React.FC = () => {
         <div>
           <h4 className="text-sm font-bold text-slate-100 mb-4 uppercase tracking-wider text-xs">Categorías</h4>
           <ul className="space-y-2 text-xs">
-            <li><Link href="/?category=TITULAR" className="hover:text-emerald-400 transition">Camisetas Titulares</Link></li>
-            <li><Link href="/?category=SUPLENTE" className="hover:text-emerald-400 transition">Camisetas Suplentes</Link></li>
-            <li><Link href="/?category=RETRO" className="hover:text-emerald-400 transition">Colección Retro</Link></li>
-            <li><Link href="/?category=ARQUERO" className="hover:text-emerald-400 transition">Edición Arquero</Link></li>
+            <li><Link href="/?category=TITULAR" className="hover:text-zinc-300 transition">Camisetas Titulares</Link></li>
+            <li><Link href="/?category=SUPLENTE" className="hover:text-zinc-300 transition">Camisetas Suplentes</Link></li>
+            <li><Link href="/?category=RETRO" className="hover:text-zinc-300 transition">Colección Retro</Link></li>
+            <li><Link href="/?category=ARQUERO" className="hover:text-zinc-300 transition">Edición Arquero</Link></li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-sm font-bold text-slate-100 mb-4 uppercase tracking-wider text-xs">Empresas de Correo</h4>
           <div className="space-y-2 text-xs">
-            <div className="p-2.5 bg-emerald-950 rounded-xl border border-emerald-900 flex items-center justify-between">
+            <div className="p-2.5 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center justify-between">
               <span className="font-semibold text-slate-200">Andreani</span>
-              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">API Real Time</span>
+              <span className="text-[10px] bg-white/5 text-zinc-300 px-2 py-0.5 rounded font-bold">API Real Time</span>
             </div>
-            <div className="p-2.5 bg-emerald-950 rounded-xl border border-emerald-900 flex items-center justify-between">
+            <div className="p-2.5 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center justify-between">
               <span className="font-semibold text-slate-200">Correo Argentino</span>
               <span className="text-[10px] bg-yellow-500/10 text-yellow-400 px-2 py-0.5 rounded font-bold">API Real Time</span>
             </div>
@@ -94,14 +94,14 @@ export const Footer: React.FC = () => {
         <div>
           <h4 className="text-sm font-bold text-slate-100 mb-4 uppercase tracking-wider text-xs">Administración</h4>
           <p className="text-xs text-slate-400 mb-3">Acceso exclusivo para el dueño del negocio.</p>
-          <Link href="/admin/login" className="inline-block px-4 py-2 bg-emerald-950 hover:bg-emerald-900 border border-emerald-900 rounded-xl text-xs font-semibold text-emerald-400 transition">
+          <Link href="/admin/login" className="inline-block px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl text-xs font-semibold text-zinc-300 transition">
             Iniciar Sesión Admin
           </Link>
         </div>
 
       </div>
 
-      <div className="border-t border-emerald-900 py-6 text-center text-xs text-slate-500">
+      <div className="border-t border-zinc-800 py-6 text-center text-xs text-slate-500">
         © {new Date().getFullYear()} PielFutbolera. Todos los derechos reservados. Argentina.
       </div>
     </footer>

@@ -65,7 +65,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
   return (
     <div className="space-y-4">
       {feedback && (
-        <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs font-semibold flex items-center gap-2">
+        <div className="p-3 bg-white/5 border border-white/15 rounded-xl text-zinc-300 text-xs font-semibold flex items-center gap-2">
           <Check className="w-4 h-4 shrink-0" />
           <span>{feedback}</span>
         </div>
@@ -78,14 +78,14 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
           return (
             <div
               key={variant.id}
-              className="bg-[#0F2418] rounded-2xl border border-emerald-900 p-4 space-y-3"
+              className="bg-[#161616] rounded-2xl border border-zinc-800 p-4 space-y-3"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h3 className="font-semibold text-sm text-slate-100 truncate">{variant.product.name}</h3>
                   <p className="text-[11px] text-slate-400 mt-0.5">{variant.product.category}</p>
                 </div>
-                <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900 text-xs shrink-0">
+                <span className="font-bold text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 text-xs shrink-0">
                   {variant.size}
                 </span>
               </div>
@@ -102,7 +102,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                   min="0"
                   value={currentStock}
                   onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                  className="flex-1 min-w-0 px-2.5 py-1.5 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-sm focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                  className="flex-1 min-w-0 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg font-bold text-white text-sm focus:ring-1 focus:ring-zinc-100 focus:outline-none"
                 />
                 <Button
                   variant="secondary"
@@ -119,11 +119,11 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-[#0F2418] rounded-3xl border border-emerald-900 overflow-hidden shadow-xl">
+      <div className="hidden md:block bg-[#161616] rounded-3xl border border-zinc-800 overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-emerald-900 text-slate-400 uppercase text-[10px] tracking-wider bg-emerald-950/60">
+              <tr className="border-b border-zinc-800 text-slate-400 uppercase text-[10px] tracking-wider bg-zinc-900/60">
                 <th className="py-3.5 px-4">Camiseta</th>
                 <th className="py-3.5 px-4">Categoría</th>
                 <th className="py-3.5 px-4">Talle</th>
@@ -133,16 +133,16 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                 <th className="py-3.5 px-4 text-right">Acción</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-emerald-900/60">
+            <tbody className="divide-y divide-zinc-800/60">
               {initialVariants.map((variant) => {
                 const currentStock = stockMap[variant.id]
 
                 return (
-                  <tr key={variant.id} className="hover:bg-emerald-950/40 transition">
+                  <tr key={variant.id} className="hover:bg-zinc-900/40 transition">
                     <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
                     <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
                     <td className="py-3 px-4">
-                      <span className="font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-900">
+                      <span className="font-bold text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
                         {variant.size}
                       </span>
                     </td>
@@ -153,7 +153,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                         min="0"
                         value={currentStock}
                         onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                        className="w-20 px-2.5 py-1 bg-emerald-950 border border-emerald-900 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                        className="w-20 px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-zinc-100 focus:outline-none"
                       />
                     </td>
                     <td className="py-3 px-4">{renderBadge(currentStock)}</td>

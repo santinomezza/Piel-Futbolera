@@ -43,10 +43,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const mainImage = product.images[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
 
   return (
-    <div className="group relative bg-[#0F2418] rounded-xl sm:rounded-2xl border border-emerald-900/80 hover:border-emerald-500/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 flex flex-col justify-between">
+    <div className="group relative bg-[#161616] rounded-xl sm:rounded-2xl border border-zinc-800/80 hover:border-white/20 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-white/5 flex flex-col justify-between">
 
       {/* Top Image Container */}
-      <div className="relative aspect-[4/5] bg-emerald-950 overflow-hidden">
+      <div className="relative aspect-[4/5] bg-zinc-900 overflow-hidden">
         <Image
           src={mainImage}
           alt={product.name}
@@ -70,10 +70,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Quick View Hover Overlay */}
-        <div className="absolute inset-0 bg-emerald-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex items-center justify-center">
+        <div className="absolute inset-0 bg-zinc-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex items-center justify-center">
           <Link
             href={`/producto/${product.slug}`}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
+            className="px-4 py-2 bg-zinc-200 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
           >
             <Eye className="w-4 h-4" />
             <span>Ver Detalle</span>
@@ -85,7 +85,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-1.5 sm:space-y-3">
         <div>
           <Link href={`/producto/${product.slug}`} className="block">
-            <h3 className="font-semibold text-slate-100 text-xs sm:text-base group-hover:text-emerald-400 transition line-clamp-1">
+            <h3 className="font-semibold text-slate-100 text-xs sm:text-base group-hover:text-zinc-300 transition line-clamp-1">
               {product.name}
             </h3>
           </Link>
@@ -95,7 +95,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Stock & Price */}
-        <div className="pt-2 sm:pt-3 border-t border-emerald-900/80 flex items-center justify-between gap-1">
+        <div className="pt-2 sm:pt-3 border-t border-zinc-800/80 flex items-center justify-between gap-1">
           <div className="min-w-0">
             <span className="hidden sm:block text-[10px] uppercase font-bold text-slate-500 tracking-wider">Precio</span>
             <span className="text-sm sm:text-lg font-bold text-slate-100 font-outfit">
@@ -105,7 +105,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           <div className="text-right shrink-0">
             {totalStock > 0 ? (
-              <span className={`text-[9px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-md ${isLowStock ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>
+              <span className={`text-[9px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-md ${isLowStock ? 'bg-amber-500/10 text-amber-400' : 'bg-white/5 text-zinc-300'}`}>
                 <span className="sm:hidden">{isLowStock ? `¡${totalStock}!` : 'Stock'}</span>
                 <span className="hidden sm:inline">{isLowStock ? `¡Solo ${totalStock} disponibles!` : 'Stock disponible'}</span>
               </span>

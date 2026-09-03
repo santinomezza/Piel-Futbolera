@@ -22,13 +22,13 @@ export const Badge: React.FC<BadgeProps> = ({
   }
 
   const variantStyles = {
-    primary: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
-    secondary: 'bg-emerald-900 text-slate-300 border border-emerald-800',
+    primary: 'bg-zinc-100/15 text-zinc-300 border border-white/15',
+    secondary: 'bg-zinc-800 text-slate-300 border border-zinc-700',
     gold: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
+    emerald: 'bg-zinc-100/15 text-zinc-300 border border-white/15',
     rose: 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
     amber: 'bg-amber-500/20 text-amber-300 border border-amber-500/40',
-    outline: 'border border-emerald-800 text-slate-300 bg-transparent',
+    outline: 'border border-zinc-700 text-slate-300 bg-transparent',
   }
 
   return (

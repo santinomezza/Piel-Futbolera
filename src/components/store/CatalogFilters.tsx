@@ -70,12 +70,12 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
   const hasActiveFilters = Boolean(activeCountry || activeLeague || activeCategory || activeQuery)
 
   return (
-    <div className="space-y-4 bg-[#0F2418] border border-emerald-900/80 rounded-3xl p-5 sm:p-6 shadow-xl">
+    <div className="space-y-4 bg-[#161616] border border-zinc-800/80 rounded-3xl p-5 sm:p-6 shadow-xl">
       
       {/* Header & Quick Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-emerald-500/10 rounded-xl text-emerald-400">
+          <div className="p-2 bg-white/5 rounded-xl text-zinc-300">
             <Filter className="w-5 h-5" />
           </div>
           <div>
@@ -91,7 +91,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
             placeholder="Buscar equipo, jugador o año (ej: 1986)..."
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
-            className="w-full pl-9 pr-10 py-2.5 bg-emerald-950 border border-emerald-900 focus:border-emerald-500 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition"
+            className="w-full pl-9 pr-10 py-2.5 bg-zinc-900 border border-zinc-800 focus:border-zinc-100 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition"
           />
           <Search className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
           {searchInputValue && (
@@ -115,7 +115,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         {/* Country Selector */}
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <Globe className="w-3.5 h-3.5 text-zinc-300" />
             <span>País</span>
           </label>
           <select
@@ -125,7 +125,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
               // Reset league if selected country doesn't match current league
               updateFilters({ country: countryId, league: null })
             }}
-            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
           >
             <option value="">Todos los Países</option>
             {countries.map((c) => (
@@ -145,7 +145,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
           <select
             value={activeLeague}
             onChange={(e) => updateFilters({ league: e.target.value })}
-            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
           >
             <option value="">Todas las Ligas</option>
             {availableLeagues.map((l) => (
@@ -159,13 +159,13 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         {/* Category Selector */}
         <div className="space-y-1">
           <label className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-            <Filter className="w-3.5 h-3.5 text-emerald-400" />
+            <Filter className="w-3.5 h-3.5 text-zinc-300" />
             <span>Categoría</span>
           </label>
           <select
             value={activeCategory}
             onChange={(e) => updateFilters({ category: e.target.value })}
-            className="w-full bg-emerald-950 border border-emerald-900 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition font-medium"
+            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
           >
             <option value="">Todas las Categorías</option>
             <option value="TITULAR">Titulares</option>
@@ -179,15 +179,15 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
 
       {/* Active Filter Badges & Reset */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-emerald-900/60">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-zinc-800/60">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-semibold text-slate-400">Filtros activos:</span>
             
             {activeCountry && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-400 text-xs font-semibold">
                 <Globe className="w-3 h-3" />
                 {countries.find((c) => c.id === activeCountry)?.name || 'País'}
-                <button onClick={() => updateFilters({ country: null })} className="ml-1 text-emerald-400 hover:text-white">
+                <button onClick={() => updateFilters({ country: null })} className="ml-1 text-zinc-300 hover:text-white">
                   <X className="w-3 h-3" />
                 </button>
               </span>
@@ -204,9 +204,9 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
             )}
 
             {activeCategory && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-400 text-xs font-semibold">
                 {activeCategory}
-                <button onClick={() => updateFilters({ category: null })} className="ml-1 text-emerald-400 hover:text-white">
+                <button onClick={() => updateFilters({ category: null })} className="ml-1 text-zinc-300 hover:text-white">
                   <X className="w-3 h-3" />
                 </button>
               </span>
@@ -224,7 +224,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
 
           <button
             onClick={clearAllFilters}
-            className="text-xs font-bold text-slate-400 hover:text-emerald-400 flex items-center gap-1 transition ml-auto"
+            className="text-xs font-bold text-slate-400 hover:text-zinc-300 flex items-center gap-1 transition ml-auto"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Limpiar todos los filtros</span>

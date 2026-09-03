@@ -10,7 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', isLoading = false, children, className, disabled, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]'
+    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]'
 
     const sizeStyles = {
       sm: 'px-3 py-1.5 text-xs gap-1.5',
@@ -19,12 +19,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const variantStyles = {
-      primary: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 border border-emerald-400/30',
-      secondary: 'bg-emerald-900 hover:bg-emerald-800 text-slate-100 border border-emerald-800 shadow-md',
-      accent: 'bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold shadow-lg shadow-amber-500/20',
-      outline: 'bg-transparent hover:bg-emerald-900/60 text-slate-200 border border-emerald-800 hover:border-slate-500',
+      primary: 'bg-white text-black hover:bg-slate-200 shadow-md hover:shadow-lg',
+      secondary: 'bg-zinc-800 hover:bg-zinc-700 text-slate-100 border border-zinc-700 shadow-md',
+      accent: 'bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold shadow-lg shadow-amber-500/20',
+      outline: 'bg-transparent hover:bg-white/5 text-slate-200 border border-white/15 hover:border-white/30',
       danger: 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20',
-      ghost: 'bg-transparent hover:bg-emerald-900/40 text-slate-300 hover:text-white',
+      ghost: 'bg-transparent hover:bg-white/5 text-slate-300 hover:text-white',
     }
 
     return (

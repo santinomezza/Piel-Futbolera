@@ -83,13 +83,13 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
   const isPending = order.status === 'PENDING' && !isApproved
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A1A12]">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
       <Header />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-        <div className="text-center space-y-4 bg-[#0F2418] p-8 rounded-3xl border border-emerald-900 shadow-xl">
+        <div className="text-center space-y-4 bg-[#161616] p-8 rounded-3xl border border-zinc-800 shadow-xl">
           {isApproved ? (
-            <div className="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
+            <div className="w-16 h-16 bg-white/5 text-zinc-300 rounded-full flex items-center justify-center mx-auto border border-white/10">
               <CheckCircle2 className="w-10 h-10" />
             </div>
           ) : isPending ? (
@@ -111,7 +111,7 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
                 : 'Pago No Completado'}
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Número de Orden: <strong className="text-emerald-400 font-mono">{order.orderNumber}</strong>
+              Número de Orden: <strong className="text-zinc-300 font-mono">{order.orderNumber}</strong>
             </p>
           </div>
 
@@ -126,9 +126,9 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="bg-[#0F2418] p-6 rounded-3xl border border-emerald-900 space-y-4">
-            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-emerald-900 pb-3 text-sm">
-              <Truck className="w-4 h-4 text-emerald-400" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
+            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
+              <Truck className="w-4 h-4 text-zinc-300" />
               <span>Datos del Envío ({order.courier})</span>
             </div>
             <div className="space-y-2 text-xs text-slate-300">
@@ -137,17 +137,17 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               <p><strong>Teléfono:</strong> {order.customer.phone}</p>
               <p><strong>Domicilio:</strong> {addressData.address || order.customer.address}, {addressData.city || order.customer.city} ({addressData.postalCode || order.customer.postalCode})</p>
               {order.trackingCode && (
-                <div className="pt-3 border-t border-emerald-900 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20">
-                  <span className="text-[11px] uppercase font-bold text-emerald-400 block">Código de Seguimiento {order.courier}:</span>
+                <div className="pt-3 border-t border-zinc-800 bg-white/5 p-3 rounded-xl border border-white/10">
+                  <span className="text-[11px] uppercase font-bold text-zinc-300 block">Código de Seguimiento {order.courier}:</span>
                   <span className="font-mono font-bold text-sm text-white">{order.trackingCode}</span>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-[#0F2418] p-6 rounded-3xl border border-emerald-900 space-y-4">
-            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-emerald-900 pb-3 text-sm">
-              <Package className="w-4 h-4 text-emerald-400" />
+          <div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
+            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
+              <Package className="w-4 h-4 text-zinc-300" />
               <span>Resumen Financiero</span>
             </div>
             <div className="space-y-2 text-xs">
@@ -159,16 +159,16 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
                 <span>Costo de envío:</span>
                 <span className="text-slate-200">${order.shippingFee.toLocaleString('es-AR')}</span>
               </div>
-              <div className="pt-2 border-t border-emerald-900 flex justify-between text-base font-bold text-white">
+              <div className="pt-2 border-t border-zinc-800 flex justify-between text-base font-bold text-white">
                 <span>Total Abonado:</span>
-                <span className="text-emerald-400 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
+                <span className="text-zinc-300 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#0F2418] p-6 rounded-3xl border border-emerald-900 space-y-4">
-          <h3 className="font-bold text-slate-200 border-b border-emerald-900 pb-3 text-sm">
+        <div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
+          <h3 className="font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
             Productos en la Orden
           </h3>
           <div className="space-y-3">
@@ -181,8 +181,8 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               }
               const mainImg = imgs[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
               return (
-                <div key={item.id} className="flex gap-4 items-center p-3 bg-emerald-950/60 rounded-2xl border border-emerald-900">
-                  <div className="relative w-14 h-16 bg-emerald-950 rounded-xl overflow-hidden shrink-0 border border-emerald-900">
+                <div key={item.id} className="flex gap-4 items-center p-3 bg-zinc-900/60 rounded-2xl border border-zinc-800">
+                  <div className="relative w-14 h-16 bg-zinc-900 rounded-xl overflow-hidden shrink-0 border border-zinc-800">
                     <Image src={mainImg} alt={item.variant.product.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1">

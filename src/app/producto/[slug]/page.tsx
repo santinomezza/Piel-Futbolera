@@ -55,7 +55,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A1A12]">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
       <Header />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ProductDetailView product={product} />

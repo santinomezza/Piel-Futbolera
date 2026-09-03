@@ -42,21 +42,21 @@ function HeaderContent() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 glass-nav border-b border-emerald-900">
+      <header className="sticky top-0 z-40 glass-nav border-b border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
             {/* Brand Logo */}
             <div className="flex items-center gap-8">
               <Link href="/" className="flex items-center gap-3 group">
-                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition bg-emerald-950 border border-emerald-900">
+                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-white/10 group-hover:scale-105 transition bg-zinc-900 border border-zinc-800">
                   <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="44px" />
                 </div>
                 <div>
                   <span className="font-extrabold text-xl tracking-tight text-white font-outfit leading-none block">
                     PielFutbolera
                   </span>
-                  <span className="block text-[10px] uppercase font-bold text-emerald-400 mt-1 tracking-widest">
+                  <span className="block text-[10px] uppercase font-bold text-zinc-300 mt-1 tracking-widest">
                     Camisetas
                   </span>
                 </div>
@@ -68,7 +68,7 @@ function HeaderContent() {
                   <Link
                     key={cat.name}
                     href={cat.href}
-                    className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-emerald-900/60 rounded-lg transition"
+                    className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-zinc-800/60 rounded-lg transition"
                   >
                     {cat.name}
                   </Link>
@@ -84,7 +84,7 @@ function HeaderContent() {
                   placeholder="Buscar camiseta (ej. Albiceleste, 1986)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-emerald-950/80 border border-emerald-900 focus:border-emerald-500 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition"
+                  className="w-full pl-10 pr-4 py-2 bg-zinc-900/80 border border-zinc-800 focus:border-zinc-100 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 transition"
                 />
                 <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500" />
               </div>
@@ -95,23 +95,23 @@ function HeaderContent() {
               {/* Admin Panel button */}
               <Link
                 href="/admin"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 border border-emerald-900 hover:border-emerald-800 rounded-xl transition"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 border border-zinc-800 hover:border-zinc-700 rounded-xl transition"
                 title="Panel de Administración"
               >
-                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                <Shield className="w-3.5 h-3.5 text-zinc-300" />
                 <span>Panel Dueño</span>
               </Link>
 
               {/* Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2.5 bg-emerald-950 hover:bg-emerald-900 border border-emerald-900 hover:border-emerald-800 text-slate-200 rounded-xl transition flex items-center gap-2"
+                className="relative p-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-slate-200 rounded-xl transition flex items-center gap-2"
                 aria-label="Abrir carrito"
               >
-                <ShoppingBag className="w-5 h-5 text-emerald-400" />
+                <ShoppingBag className="w-5 h-5 text-zinc-300" />
                 <span className="text-xs font-bold hidden sm:inline">Carrito</span>
                 {totalItems > 0 && (
-                  <span className="w-5 h-5 bg-emerald-500 text-emerald-950 text-[11px] font-black rounded-full flex items-center justify-center animate-pulse-glow">
+                  <span className="w-5 h-5 bg-zinc-100 text-zinc-900 text-[11px] font-black rounded-full flex items-center justify-center animate-pulse-glow">
                     {totalItems}
                   </span>
                 )}
@@ -130,7 +130,7 @@ function HeaderContent() {
 
         {/* Mobile Dropdown Nav */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-emerald-900 bg-[#0F2418] px-4 py-4 space-y-3">
+          <div className="md:hidden border-t border-zinc-800 bg-[#161616] px-4 py-4 space-y-3">
             <form onSubmit={handleSearchSubmit} className="mb-3">
               <div className="relative">
                 <input
@@ -138,7 +138,7 @@ function HeaderContent() {
                   placeholder="Buscar camiseta..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-emerald-950 border border-emerald-900 rounded-lg text-xs text-slate-200 placeholder-slate-500"
+                  className="w-full pl-9 pr-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-slate-200 placeholder-slate-500"
                 />
                 <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
               </div>
@@ -150,7 +150,7 @@ function HeaderContent() {
                   key={cat.name}
                   href={cat.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-medium text-slate-300 hover:bg-emerald-900 rounded-lg"
+                  className="px-3 py-2 text-sm font-medium text-slate-300 hover:bg-zinc-800 rounded-lg"
                 >
                   {cat.name}
                 </Link>
@@ -158,7 +158,7 @@ function HeaderContent() {
               <Link
                 href="/admin"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-900 rounded-lg flex items-center gap-2"
+                className="px-3 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-800 rounded-lg flex items-center gap-2"
               >
                 <Shield className="w-4 h-4" />
                 Panel Admin
@@ -177,9 +177,9 @@ function HeaderContent() {
 export const Header: React.FC = () => {
   return (
     <Suspense fallback={
-      <header className="sticky top-0 z-40 glass-nav border-b border-emerald-900 h-20 flex items-center justify-between px-8 text-white font-bold font-outfit">
+      <header className="sticky top-0 z-40 glass-nav border-b border-zinc-800 h-20 flex items-center justify-between px-8 text-white font-bold font-outfit">
         <Link href="/" className="flex items-center gap-2">
-          <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-emerald-950 border border-emerald-900">
+          <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800">
             <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
           </div>
           <span className="text-2xl font-black">PielFutbolera</span>

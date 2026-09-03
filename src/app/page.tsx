@@ -81,14 +81,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const selectedLeagueObj = leagues.find((l) => l.id === leagueFilter)
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A1A12]">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
         
         {/* Hero Section */}
         {!categoryFilter && !countryFilter && !leagueFilter && !searchQuery && (
-          <section className="relative rounded-3xl overflow-hidden border border-emerald-900 shadow-2xl">
+          <section className="relative rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
             <div className="absolute inset-0 z-0">
               <Image
                 src="/hero-bg.avif"
@@ -103,13 +103,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
             <div className="relative z-10 p-8 sm:p-12">
             <div className="max-w-2xl space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 text-zinc-300 text-xs font-semibold">
                 <Sparkles className="w-4 h-4" />
                 <span>Ediciones Especiales & Ligas Mundiales 2026</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-outfit leading-tight">
-                Camisetas de Fútbol con <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300">Identidad Única</span>
+                Camisetas de Fútbol con <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">Identidad Única</span>
               </h1>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
@@ -119,12 +119,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <a
                   href="#catalogo"
-                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/25 transition"
+                  className="px-6 py-3 bg-zinc-200 hover:bg-zinc-100 text-white font-bold text-sm rounded-xl shadow-lg shadow-zinc-200/25 transition"
                 >
                   Explorar Catálogo
                 </a>
-                <div className="flex items-center gap-2 text-xs text-slate-400 bg-emerald-950/60 px-4 py-3 rounded-xl border border-emerald-900">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="flex items-center gap-2 text-xs text-slate-400 bg-zinc-900/60 px-4 py-3 rounded-xl border border-zinc-800">
+                  <ShieldCheck className="w-4 h-4 text-zinc-300 shrink-0" />
                   <span>Envíos Nacionales Andreani & Correo Arg</span>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
             {/* Background glow element */}
-            <div className="absolute top-1/2 right-10 -translate-y-1/2 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 right-10 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
           </section>
         )}
 
@@ -143,7 +143,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
         {/* Catalog Section & Product Grid */}
         <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-900 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
             <div>
               <h2 className="text-xl font-bold text-white font-outfit">
                 {selectedLeagueObj
@@ -162,10 +162,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {/* Product Grid */}
           {products.length === 0 ? (
-            <div className="p-12 text-center bg-[#0F2418] rounded-3xl border border-emerald-900 space-y-3">
+            <div className="p-12 text-center bg-[#161616] rounded-3xl border border-zinc-800 space-y-3">
               <p className="text-slate-300 font-semibold">No encontramos camisetas que coincidan con los filtros aplicados.</p>
               <p className="text-xs text-slate-500">Probá modificando o limpiando los filtros seleccionados.</p>
-              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-emerald-900 hover:bg-emerald-800 text-xs font-bold text-emerald-400 rounded-xl transition">
+              <Link href="/" className="inline-block mt-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-xs font-bold text-zinc-300 rounded-xl transition">
                 Ver Todas las Camisetas
               </Link>
             </div>
