@@ -12,7 +12,10 @@ interface Variant {
   sku: string
   product: {
     name: string
-    category: string
+    category?: {
+      name: string
+      section?: { name: string } | null
+    } | null
   }
 }
 
@@ -83,7 +86,10 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h3 className="font-semibold text-sm text-ink-900 truncate">{variant.product.name}</h3>
-                  <p className="text-[11px] text-ink-500 mt-0.5">{variant.product.category}</p>
+                  <p className="text-[11px] text-ink-500 mt-0.5">
+                    {variant.product.category?.section?.name ? `${variant.product.category.section.name} · ` : ''}
+                    {variant.product.category?.name || 'Sin categoría'}
+                  </p>
                 </div>
                 <span className="font-bold text-ink-700 bg-cream-50 px-2 py-0.5 rounded border border-ink-900/10 text-xs shrink-0">
                   {variant.size}
@@ -140,7 +146,10 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                 return (
                   <tr key={variant.id} className="hover:bg-cream-50/40 transition">
                     <td className="py-3 px-4 font-semibold text-ink-900">{variant.product.name}</td>
-                    <td className="py-3 px-4 text-ink-500">{variant.product.category}</td>
+                    <td className="py-3 px-4 text-ink-500">
+                      <div>{variant.product.category?.section?.name || '—'}</div>
+                      <div className="text-[10px] text-ink-500">{variant.product.category?.name || 'Sin categoría'}</div>
+                    </td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-ink-700 bg-cream-50 px-2 py-0.5 rounded border border-ink-900/10">
                         {variant.size}

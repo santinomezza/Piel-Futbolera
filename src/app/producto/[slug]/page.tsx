@@ -35,6 +35,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           size: 'asc',
         },
       },
+      category: { include: { section: true } },
     },
   })
 
@@ -52,6 +53,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const product = {
     ...rawProduct,
     images,
+    categoryId: rawProduct.categoryId,
+    categoryName: rawProduct.category?.name ?? null,
+    sectionName: rawProduct.category?.section?.name ?? null,
   }
 
   return (

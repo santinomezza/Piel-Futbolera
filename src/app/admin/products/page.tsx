@@ -22,6 +22,7 @@ export default async function AdminProductsPage() {
       country: true,
       league: true,
       variants: true,
+      category: { include: { section: true } },
     },
   })
 
@@ -32,6 +33,14 @@ export default async function AdminProductsPage() {
   const leagues = await prisma.league.findMany({
     orderBy: { name: 'asc' },
     include: { country: true },
+  })
+
+  const sections = await prisma.section.findMany({
+    orderBy: { order: 'asc' },
+  })
+
+  const categories = await prisma.category.findMany({
+    orderBy: { order: 'asc' },
   })
 
   const products = rawProducts.map((p: typeof rawProducts[number]) => {
@@ -56,9 +65,11 @@ export default async function AdminProductsPage() {
       <AdminHeader />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <ProductsManagerClient
-          initialProducts={products as any}
-          initialCountries={countries as any}
-          initialLeagues={leagues as any}
+          initialProducts={products as unknown as React.ComponentProps<typeof ProductsManagerClient>['initialProducts']}
+          initialCountries={countries as unknown as React.ComponentProps<typeof ProductsManagerClient>['initialCountries']}
+          initialLeagues={leagues as unknown as React.ComponentProps<typeof ProductsManagerClient>['initialLeagues']}
+          initialSections={sections as unknown as React.ComponentProps<typeof ProductsManagerClient>['initialSections']}
+          initialCategories={categories as unknown as React.ComponentProps<typeof ProductsManagerClient>['initialCategories']}
         />
       </main>
     </div>

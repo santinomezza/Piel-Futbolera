@@ -17,6 +17,19 @@ export interface LeagueItem {
   logoUrl?: string | null
 }
 
+export interface SectionItem {
+  id: string
+  slug: string
+  name: string
+}
+
+export interface CategoryItem {
+  id: string
+  slug: string
+  name: string
+  sectionId: string
+}
+
 export interface ProductVariantItem {
   size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
   stock: number
@@ -27,7 +40,7 @@ export interface ProductFullData {
   name: string
   description: string
   price: number
-  category: 'TITULAR' | 'SUPLENTE' | 'RETRO' | 'ARQUERO'
+  categoryId?: string | null
   badge?: string | null
   countryId: string
   leagueId?: string | null
@@ -44,6 +57,8 @@ interface ProductModalProps {
   initialProduct?: ProductFullData | null
   countries: CountryItem[]
   leagues: LeagueItem[]
+  sections: SectionItem[]
+  categories: CategoryItem[]
   onRefreshMetadata: () => Promise<void>
 }
 
@@ -56,13 +71,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   initialProduct,
   countries,
   leagues,
+  sections,
+  categories,
   onRefreshMetadata,
 }) => {
   const [formData, setFormData] = useState<ProductFullData>({
     name: '',
     description: '',
     price: 45000,
-    category: 'TITULAR',
+    categoryId: '',
     badge: '',
     countryId: '',
     leagueId: '',
@@ -87,8 +104,13 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [newLeagueColor, setNewLeagueColor] = useState('#00A3E0')
   const [creatingLeague, setCreatingLeague] = useState(false)
 
+  // Section + category selection (cascading)
+  const [selectedSectionId, setSelectedSectionId] = useState<string>('')
+
   useEffect(() => {
     if (initialProduct) {
+      const cat = initialProduct.categoryId ? categories.find((c) => c.id === initialProduct.categoryId) : null
+      setSelectedSectionId(cat?.sectionId || '')
       setFormData({
         ...initialProduct,
         badge: initialProduct.badge || '',
@@ -101,11 +123,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     } else {
       const defaultCountry = countries[0]?.id || ''
       const filteredLeagues = leagues.filter((l) => l.countryId === defaultCountry)
+      setSelectedSectionId(sections[0]?.id || '')
       setFormData({
         name: '',
         description: '',
-        price: 45999,
-        category: 'TITULAR',
+        price: 45000,
+        categoryId: categories.find((c) => c.sectionId === sections[0]?.id)?.id || '',
         badge: '',
         countryId: defaultCountry,
         leagueId: filteredLeagues[0]?.id || '',
@@ -116,11 +139,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       })
     }
     setErrorMsg('')
-  }, [initialProduct, isOpen, countries, leagues])
+  }, [initialProduct, isOpen, countries, leagues, sections, categories])
 
   if (!isOpen) return null
 
   const availableLeaguesForCountry = leagues.filter((l) => l.countryId === formData.countryId)
+  const availableCategoriesForSection = categories.filter((c) => c.sectionId === selectedSectionId)
 
   // Handle Country Selection
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -360,17 +384,36 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-ink-700">Categoría *</label>
+              <label className="text-xs font-bold text-ink-700">Sección *</label>
               <select
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                value={selectedSectionId}
+                onChange={(e) => {
+                  setSelectedSectionId(e.target.value)
+                  setFormData({ ...formData, categoryId: '' })
+                }}
                 className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
               >
-                <option value="TITULAR">Camiseta Titular</option>
-                <option value="SUPLENTE">Camiseta Suplente</option>
-                <option value="RETRO">Edición Retro</option>
-                <option value="ARQUERO">Equipación Arquero</option>
+                <option value="" disabled>Seleccionar Sección</option>
+                {sections.map((s) => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
               </select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-ink-700">Categoría</label>
+              <select
+                value={formData.categoryId || ''}
+                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                disabled={!selectedSectionId}
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 disabled:opacity-50"
+              >
+                <option value="">Sin categoría</option>
+                {availableCategoriesForSection.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+              <p className="text-[10px] text-ink-500">Tip: gestioná secciones y categorías en <code className="font-mono">/admin/catalog</code></p>
             </div>
           </div>
 

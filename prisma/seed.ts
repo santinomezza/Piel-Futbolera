@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Starting database seed for PielFutbolera...')
 
-  // Clean existing database
   await prisma.payment.deleteMany()
   await prisma.shipment.deleteMany()
   await prisma.orderItem.deleteMany()
@@ -13,11 +12,13 @@ async function main() {
   await prisma.customer.deleteMany()
   await prisma.productVariant.deleteMany()
   await prisma.product.deleteMany()
+  await prisma.category.deleteMany()
+  await prisma.section.deleteMany()
   await prisma.league.deleteMany()
   await prisma.country.deleteMany()
   await prisma.adminUser.deleteMany()
 
-  // 1. Create Admin User (admin@pielfutbolera.com.ar / admin123)
+  // 1. Admin
   await prisma.adminUser.create({
     data: {
       email: 'admin@pielfutbolera.com.ar',
@@ -26,71 +27,90 @@ async function main() {
       role: 'ADMIN',
     },
   })
-  console.log('✅ Created Admin User: admin@pielfutbolera.com.ar')
+  console.log('✅ Admin user: admin@pielfutbolera.com.ar / admin123')
 
-  // 2. Create Initial Countries
-  const countryArg = await prisma.country.create({
-    data: { name: 'Argentina', code: 'AR' },
-  })
-  const countryEsp = await prisma.country.create({
-    data: { name: 'España', code: 'ES' },
-  })
-  const countryIng = await prisma.country.create({
-    data: { name: 'Inglaterra', code: 'GB' },
-  })
-  const countryIta = await prisma.country.create({
-    data: { name: 'Italia', code: 'IT' },
-  })
-  const countryBra = await prisma.country.create({
-    data: { name: 'Brasil', code: 'BR' },
-  })
-  console.log('✅ Created 5 Countries (Argentina, España, Inglaterra, Italia, Brasil)')
+  // 2. Countries
+  const countryArg = await prisma.country.create({ data: { name: 'Argentina', code: 'AR' } })
+  const countryEsp = await prisma.country.create({ data: { name: 'España', code: 'ES' } })
+  const countryIng = await prisma.country.create({ data: { name: 'Inglaterra', code: 'GB' } })
+  const countryIta = await prisma.country.create({ data: { name: 'Italia', code: 'IT' } })
+  const countryBra = await prisma.country.create({ data: { name: 'Brasil', code: 'BR' } })
+  console.log('✅ 5 countries')
 
-  // 3. Create Initial Leagues
-  const leagueArg = await prisma.league.create({
-    data: {
-      name: 'Liga Profesional Argentina',
-      countryId: countryArg.id,
-      color: '#00A3E0',
-    },
-  })
-  const leagueEsp = await prisma.league.create({
-    data: {
-      name: 'LaLiga',
-      countryId: countryEsp.id,
-      color: '#EA580C',
-    },
-  })
-  const leagueIng = await prisma.league.create({
-    data: {
-      name: 'Premier League',
-      countryId: countryIng.id,
-      color: '#7C3AED',
-    },
-  })
-  const leagueIta = await prisma.league.create({
-    data: {
-      name: 'Serie A',
-      countryId: countryIta.id,
-      color: '#0284C7',
-    },
-  })
-  console.log('✅ Created 4 Leagues (Liga Profesional, LaLiga, Premier League, Serie A)')
+  // 3. Leagues
+  const leagueArg = await prisma.league.create({ data: { name: 'Liga Profesional Argentina', countryId: countryArg.id, color: '#00A3E0' } })
+  const leagueEsp = await prisma.league.create({ data: { name: 'LaLiga', countryId: countryEsp.id, color: '#EA580C' } })
+  const leagueIng = await prisma.league.create({ data: { name: 'Premier League', countryId: countryIng.id, color: '#7C3AED' } })
+  const leagueIta = await prisma.league.create({ data: { name: 'Serie A', countryId: countryIta.id, color: '#0284C7' } })
+  console.log('✅ 4 leagues')
 
-  // 4. Sample Products with Generic Football Theme, Countries and Leagues
-  const products = [
+  // 4. Sections (top-level)
+  const secCamisetas = await prisma.section.create({
+    data: {
+      slug: 'camisetas',
+      name: 'Camisetas',
+      description: 'Camisetas de juego, hincha y ediciones especiales',
+      order: 1,
+    },
+  })
+  const secShorts = await prisma.section.create({
+    data: { slug: 'shorts', name: 'Shorts', description: 'Shorts de juego y entrenamiento', order: 2 },
+  })
+  const secCamperas = await prisma.section.create({
+    data: { slug: 'camperas', name: 'Camperas', description: 'Camperas, buzos y abrigos deportivos', order: 3 },
+  })
+  const secConjuntos = await prisma.section.create({
+    data: { slug: 'conjuntos', name: 'Conjuntos', description: 'Conjuntos completos de entrenamiento y match-day', order: 4 },
+  })
+  console.log('✅ 4 sections: Camisetas, Shorts, Camperas, Conjuntos')
+
+  // 5. Categories (sub-categorías dentro de cada sección)
+  const catJugador = await prisma.category.create({
+    data: { slug: 'version-jugador', name: 'Versión Jugador', sectionId: secCamisetas.id, order: 1, description: 'Camisetas de juego profesional' },
+  })
+  const catHincha = await prisma.category.create({
+    data: { slug: 'hincha', name: 'Hincha', sectionId: secCamisetas.id, order: 2, description: 'Camisetas para el día a día' },
+  })
+  const catRetro = await prisma.category.create({
+    data: { slug: 'retro', name: 'Retro', sectionId: secCamisetas.id, order: 3, description: 'Ediciones retro y homenaje' },
+  })
+  const catMangaLarga = await prisma.category.create({
+    data: { slug: 'manga-larga', name: 'Manga Larga', sectionId: secCamisetas.id, order: 4, description: 'Camisetas de manga larga' },
+  })
+  const catIconTerrace = await prisma.category.create({
+    data: { slug: 'icon-terrace', name: 'Icon Terrace', sectionId: secCamisetas.id, order: 5, description: 'Edición terrace lifestyle' },
+  })
+  const catOasis = await prisma.category.create({
+    data: { slug: 'coleccion-oasis-25', name: "Colección Oasis '25", sectionId: secCamisetas.id, order: 6, description: 'Colección cápsula Oasis 2025' },
+  })
+
+  // Sub-categorías para Shorts
+  await prisma.category.create({ data: { slug: 'shorts-juego', name: 'Shorts de Juego', sectionId: secShorts.id, order: 1 } })
+  await prisma.category.create({ data: { slug: 'shorts-entrenamiento', name: 'Shorts de Entrenamiento', sectionId: secShorts.id, order: 2 } })
+
+  // Sub-categorías para Camperas
+  await prisma.category.create({ data: { slug: 'camperas-stadium', name: 'Camperas Stadium', sectionId: secCamperas.id, order: 1 } })
+  await prisma.category.create({ data: { slug: 'buzos', name: 'Buzos', sectionId: secCamperas.id, order: 2 } })
+
+  // Sub-categorías para Conjuntos
+  await prisma.category.create({ data: { slug: 'conjuntos-entrenamiento', name: 'Conjuntos de Entrenamiento', sectionId: secConjuntos.id, order: 1 } })
+  await prisma.category.create({ data: { slug: 'conjuntos-match-day', name: 'Conjuntos Match Day', sectionId: secConjuntos.id, order: 2 } })
+
+  console.log('✅ 6 categorías en Camisetas + sub-categorías en Shorts, Camperas y Conjuntos')
+
+  // 6. Sample products (uno por cada categoría de Camisetas para tener data en el admin)
+  const productsSeed = [
     {
       name: 'Camiseta Albiceleste Titular 2026',
       slug: 'albiceleste-titular-2026',
       description: 'Camiseta de juego de edición limitada. Confeccionada con poliéster técnico respirable, franjas verticales celestes y blancas con acabado premium, cuello en V y detalles dorados en costuras.',
       price: 45999.00,
-      category: 'TITULAR',
       badge: 'DESTACADO',
       countryId: countryArg.id,
       leagueId: leagueArg.id,
+      categoryId: catJugador.id,
       images: JSON.stringify([
         'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80'
       ]),
       featured: true,
       variants: [
@@ -102,197 +122,106 @@ async function main() {
       ],
     },
     {
-      name: 'Camiseta Nocturna Suplente Azul Midnight',
-      slug: 'nocturna-suplente-azul-midnight',
-      description: 'Modelo visitante elegante en tono azul noche profundo con finos micro-patrones geométricos sublimados y bordes plateados en mangas.',
-      price: 43999.00,
-      category: 'SUPLENTE',
+      name: 'Camiseta Albiceleste Hincha 2026',
+      slug: 'albiceleste-hincha-2026',
+      description: 'Versión para el hincha del día a día. Tela suave y respirable, corte clásico con escudo bordado.',
+      price: 38999.00,
       badge: 'NUEVO',
-      countryId: countryEsp.id,
-      leagueId: leagueEsp.id,
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1580086319619-3ed498161c77?auto=format&fit=crop&w=800&q=80'
-      ]),
-      featured: true,
+      countryId: countryArg.id,
+      leagueId: leagueArg.id,
+      categoryId: catHincha.id,
+      images: JSON.stringify(['https://images.unsplash.com/photo-1580086319619-3ed498161c77?auto=format&fit=crop&w=800&q=80']),
+      featured: false,
       variants: [
-        { size: 'S', stock: 8, sku: 'NOC-SUP-S' },
-        { size: 'M', stock: 14, sku: 'NOC-SUP-M' },
-        { size: 'L', stock: 12, sku: 'NOC-SUP-L' },
-        { size: 'XL', stock: 6, sku: 'NOC-SUP-XL' },
-        { size: 'XXL', stock: 2, sku: 'NOC-SUP-XXL' },
+        { size: 'S', stock: 20, sku: 'ALB-HIN-S' },
+        { size: 'M', stock: 25, sku: 'ALB-HIN-M' },
+        { size: 'L', stock: 22, sku: 'ALB-HIN-L' },
+        { size: 'XL', stock: 12, sku: 'ALB-HIN-XL' },
       ],
     },
     {
       name: 'Camiseta Retrópolis México 1986',
       slug: 'retropolis-mexico-1986',
-      description: 'Homenaje retro a la era dorada del fútbol mundial. Algodón/poliéster ultra suave de época, cuello piqué blanco de botones y número 10 estampado en felpa gruesa.',
+      description: 'Homenaje retro a la era dorada del fútbol mundial. Algodón/poliéster ultra suave, cuello piqué blanco de botones.',
       price: 49999.00,
-      category: 'RETRO',
       badge: 'RETRO',
-      countryId: countryArg.id, // Selección / Retro
-      leagueId: null, // Sin liga (Selección)
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80'
-      ]),
+      countryId: countryArg.id,
+      leagueId: null,
+      categoryId: catRetro.id,
+      images: JSON.stringify(['https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80']),
       featured: true,
       variants: [
         { size: 'S', stock: 5, sku: 'RET-86-S' },
         { size: 'M', stock: 9, sku: 'RET-86-M' },
         { size: 'L', stock: 7, sku: 'RET-86-L' },
         { size: 'XL', stock: 3, sku: 'RET-86-XL' },
-        { size: 'XXL', stock: 0, sku: 'RET-86-XXL' },
       ],
     },
     {
-      name: 'Camiseta Arquero Neón Shield',
-      slug: 'arquero-neon-shield',
-      description: 'Diseñada para destacar bajo los tres palos. Color verde neón vibrante con acolchado estratégico de protección en codos y tejido Dri-Mesh lateral.',
-      price: 47999.00,
-      category: 'ARQUERO',
+      name: 'Camiseta Manga Larga Premium',
+      slug: 'manga-larga-premium',
+      description: 'Camiseta de manga larga para entretiempo. Cuello alto con cierre, tela térmica.',
+      price: 42500.00,
       badge: 'NUEVO',
+      countryId: countryEsp.id,
+      leagueId: leagueEsp.id,
+      categoryId: catMangaLarga.id,
+      images: JSON.stringify(['https://images.unsplash.com/photo-1541252260730-0412e8e2108e?auto=format&fit=crop&w=800&q=80']),
+      featured: false,
+      variants: [
+        { size: 'M', stock: 10, sku: 'ML-PRE-M' },
+        { size: 'L', stock: 12, sku: 'ML-PRE-L' },
+        { size: 'XL', stock: 6, sku: 'ML-PRE-XL' },
+      ],
+    },
+    {
+      name: 'Camiseta Icon Terrace Heritage',
+      slug: 'icon-terrace-heritage',
+      description: 'Edición terrace lifestyle. Inspirada en las camisetas icónicas que se ven en las tribunas europeas.',
+      price: 41500.00,
+      badge: 'DESTACADO',
       countryId: countryIng.id,
       leagueId: leagueIng.id,
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80'
-      ]),
-      featured: false,
+      categoryId: catIconTerrace.id,
+      images: JSON.stringify(['https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80']),
+      featured: true,
       variants: [
-        { size: 'S', stock: 4, sku: 'ARQ-NEO-S' },
-        { size: 'M', stock: 6, sku: 'ARQ-NEO-M' },
-        { size: 'L', stock: 8, sku: 'ARQ-NEO-L' },
-        { size: 'XL', stock: 5, sku: 'ARQ-NEO-XL' },
-        { size: 'XXL', stock: 1, sku: 'ARQ-NEO-XXL' },
+        { size: 'S', stock: 8, sku: 'IC-TER-S' },
+        { size: 'M', stock: 12, sku: 'IC-TER-M' },
+        { size: 'L', stock: 10, sku: 'IC-TER-L' },
+        { size: 'XL', stock: 4, sku: 'IC-TER-XL' },
       ],
     },
     {
-      name: 'Camiseta Retrópolis Italia 1990',
-      slug: 'retropolis-italia-1990',
-      description: 'Diseño clásico retro de los 90. Cuello redondo con ribete tricolor, tejido jacquard brillante y ajuste holgado vintage tradicional.',
-      price: 48999.00,
-      category: 'RETRO',
+      name: "Camiseta Colección Oasis '25",
+      slug: 'coleccion-oasis-25',
+      description: 'Colección cápsula de verano con colores cálidos y materiales livianos. Edición limitada.',
+      price: 39999.00,
       badge: 'RETRO',
-      countryId: countryIta.id,
-      leagueId: leagueIta.id,
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?auto=format&fit=crop&w=800&q=80'
-      ]),
+      countryId: countryBra.id,
+      leagueId: null,
+      categoryId: catOasis.id,
+      images: JSON.stringify(['https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80']),
       featured: false,
       variants: [
-        { size: 'S', stock: 6, sku: 'RET-90-S' },
-        { size: 'M', stock: 11, sku: 'RET-90-M' },
-        { size: 'L', stock: 10, sku: 'RET-90-L' },
-        { size: 'XL', stock: 4, sku: 'RET-90-XL' },
-        { size: 'XXL', stock: 2, sku: 'RET-90-XXL' },
-      ],
-    },
-    {
-      name: 'Camiseta Arquero Negro Azabache',
-      slug: 'arquero-negro-azabache',
-      description: 'Presencia imponente en el arco. Edición total black con detalles sutiles en antracita mate y refuerzo en puños.',
-      price: 46999.00,
-      category: 'ARQUERO',
-      badge: 'OPORTUNIDAD',
-      countryId: countryArg.id,
-      leagueId: leagueArg.id,
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80'
-      ]),
-      featured: false,
-      variants: [
-        { size: 'S', stock: 3, sku: 'ARQ-BLK-S' },
-        { size: 'M', stock: 8, sku: 'ARQ-BLK-M' },
-        { size: 'L', stock: 5, sku: 'ARQ-BLK-L' },
-        { size: 'XL', stock: 2, sku: 'ARQ-BLK-XL' },
-        { size: 'XXL', stock: 1, sku: 'ARQ-BLK-XXL' },
+        { size: 'S', stock: 6, sku: 'OAS-25-S' },
+        { size: 'M', stock: 9, sku: 'OAS-25-M' },
+        { size: 'L', stock: 7, sku: 'OAS-25-L' },
       ],
     },
   ]
 
-  for (const prodData of products) {
+  for (const prodData of productsSeed) {
     const { variants, ...productInfo } = prodData
-    const createdProduct = await prisma.product.create({
-      data: {
-        ...productInfo,
-        variants: {
-          create: variants,
-        },
-      },
+    const created = await prisma.product.create({
+      data: { ...productInfo, variants: { create: variants } },
     })
-    console.log(`👕 Created Product: ${createdProduct.name} (${variants.length} variants)`)
+    console.log(`👕 ${created.name} (${variants.length} talles)`)
   }
 
-  // 5. Create Sample Initial Orders
-  const customer = await prisma.customer.create({
-    data: {
-      email: 'juan.perez@example.com',
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      dni: '38123456',
-      phone: '1198765432',
-      address: 'Av. Corrientes 1234, 4to B',
-      city: 'Ciudad Autónoma de Buenos Aires',
-      province: 'CABA',
-      postalCode: 'C1043',
-    },
-  })
-
-  const sampleVariant = await prisma.productVariant.findFirst()
-  if (sampleVariant) {
-    const order = await prisma.order.create({
-      data: {
-        orderNumber: 'PF-1001',
-        customerId: customer.id,
-        status: 'PAID',
-        subtotal: 45999.00,
-        shippingFee: 3500.00,
-        totalAmount: 49499.00,
-        courier: 'ANDREANI',
-        trackingCode: 'AND-89472910',
-        shippingAddress: JSON.stringify({
-          address: 'Av. Corrientes 1234',
-          city: 'CABA',
-          postalCode: 'C1043',
-        }),
-        items: {
-          create: [
-            {
-              variantId: sampleVariant.id,
-              quantity: 1,
-              unitPrice: 45999.00,
-            },
-          ],
-        },
-        payments: {
-          create: [
-            {
-              mpPaymentId: 'MP-987654321',
-              status: 'approved',
-              paymentMethodId: 'account_money',
-            },
-          ],
-        },
-        shipments: {
-          create: [
-            {
-              courier: 'ANDREANI',
-              trackingNumber: 'AND-89472910',
-              status: 'GENERATED',
-            },
-          ],
-        },
-      },
-    })
-    console.log(`📦 Created Initial Sample Order: ${order.orderNumber}`)
-  }
-
-  console.log('✅ Database seed completed successfully!')
+  console.log('✅ Seed completo: admin, países, ligas, 4 secciones, 12 categorías, 6 productos de ejemplo')
 }
 
 main()
-  .catch((e) => {
-    console.error('❌ Error during database seed:', e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+  .catch((e) => { console.error('❌ Error during seed:', e); process.exit(1) })
+  .finally(async () => { await prisma.$disconnect() })

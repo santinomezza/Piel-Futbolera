@@ -12,7 +12,7 @@ const createProductSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   description: z.string().min(5, 'La descripción debe tener al menos 5 caracteres'),
   price: z.number().positive('El precio debe ser un número positivo'),
-  category: z.enum(['TITULAR', 'SUPLENTE', 'RETRO', 'ARQUERO']),
+  categoryId: z.string().nullable().optional(),
   badge: z.string().nullable().optional(),
   countryId: z.string().min(1, 'El país es obligatorio'),
   leagueId: z.string().nullable().optional(),
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
         slug,
         description: data.description,
         price: data.price,
-        category: data.category,
+        categoryId: data.categoryId || null,
         badge: data.badge || null,
         countryId: data.countryId,
         leagueId: data.leagueId || null,
@@ -91,6 +91,7 @@ export async function POST(req: Request) {
         country: true,
         league: true,
         variants: true,
+        category: { include: { section: true } },
       },
     })
 

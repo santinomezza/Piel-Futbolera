@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Eye, Plus } from 'lucide-react'
+import { Plus, Shirt } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 
 export interface SerializedProduct {
@@ -12,7 +12,9 @@ export interface SerializedProduct {
   slug: string
   description: string
   price: number
-  category: string
+  categoryId?: string | null
+  categoryName?: string | null
+  sectionName?: string | null
   badge: string | null
   images: string[]
   variants: {
@@ -31,16 +33,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const isLowStock = totalStock > 0 && totalStock <= 10
   const isSoldOut = totalStock === 0
 
-  const getCategoryLabel = (cat: string) => {
-    switch (cat) {
-      case 'TITULAR': return 'Titular'
-      case 'SUPLENTE': return 'Suplente'
-      case 'RETRO': return 'Retro'
-      case 'ARQUERO': return 'Arquero'
-      default: return cat
-    }
-  }
-
   const mainImage = product.images[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
 
   return (
@@ -58,9 +50,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
 
         <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3 sm:left-3 sm:right-3 flex justify-between items-start gap-1 z-10">
-          <Badge variant="ink" size="sm" className="text-[9px] sm:text-[10px]">
-            {getCategoryLabel(product.category)}
-          </Badge>
+          <div className="flex flex-col gap-1 items-start">
+            {product.sectionName && (
+              <Badge variant="ink" size="sm" className="text-[9px] sm:text-[10px]">
+                {product.sectionName}
+              </Badge>
+            )}
+            {product.categoryName && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-cream-50 border border-ink-900 text-ink-900 rounded-full text-[9px] sm:text-[10px] font-bold">
+                <Shirt className="w-2.5 h-2.5" />
+                {product.categoryName}
+              </span>
+            )}
+          </div>
           {product.badge && (
             <Badge variant="primary" size="sm" className="text-[9px] sm:text-[10px]">
               {product.badge}

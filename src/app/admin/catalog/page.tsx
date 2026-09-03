@@ -3,42 +3,40 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { AdminHeader } from '@/components/admin/AdminHeader'
-import { StockManagerClient } from './StockManagerClient'
+import { CatalogManager } from './CatalogManager'
 
 export const revalidate = 0
 
-export default async function AdminStockPage() {
+export default async function AdminCatalogPage() {
   const cookieStore = await cookies()
   const session = cookieStore.get('admin_session')
-
   if (!session || session.value !== 'authenticated_token_pielfutbolera_admin_2026') {
     redirect('/admin/login')
   }
 
-  const variants = await prisma.productVariant.findMany({
-    where: { stock: { gt: 0 } },
+  const sections = await prisma.section.findMany({
+    orderBy: { order: 'asc' },
     include: {
-      product: { include: { category: { include: { section: true } } } },
+      categories: {
+        orderBy: { order: 'asc' },
+        include: { _count: { select: { products: true } } },
+      },
     },
-    orderBy: [
-      { product: { name: 'asc' } },
-      { size: 'asc' },
-    ],
   })
 
   return (
     <div className="min-h-screen bg-cream-50 text-ink-900 flex flex-col">
       <AdminHeader />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-ink-900 font-outfit">Control de Stock por Variante</h1>
+          <h1 className="text-2xl sm:text-3xl font-black text-ink-900 font-outfit">Estructura del Catálogo</h1>
           <p className="text-xs text-ink-500 mt-1">
-            Actualizá en tiempo real las existencias por talle para evitar sobreventas.
+            Gestioná las secciones (camisetas, shorts, camperas, conjuntos) y las sub-categorías de cada una.
           </p>
         </div>
 
-        <StockManagerClient variants={variants} />
+        <CatalogManager initialSections={sections} />
       </main>
     </div>
   )

@@ -14,6 +14,7 @@ import { Sparkles, ShieldCheck, Truck, Ruler, Award, Zap, ArrowRight, Quote, Sta
 interface HomePageProps {
   searchParams: Promise<{
     category?: string
+    section?: string
     country?: string
     league?: string
     q?: string
@@ -24,6 +25,7 @@ export const revalidate = 0
 
 export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedParams = await searchParams
+  const sectionFilter = resolvedParams.section
   const categoryFilter = resolvedParams.category
   const countryFilter = resolvedParams.country
   const leagueFilter = resolvedParams.league
@@ -31,11 +33,29 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const countries = await prisma.country.findMany({ orderBy: { name: 'asc' } })
   const leagues = await prisma.league.findMany({ orderBy: { name: 'asc' } })
+  const sections = await prisma.section.findMany({
+    orderBy: { order: 'asc' },
+    include: { categories: { orderBy: { order: 'asc' } } },
+  })
+
+  const selectedSection = sectionFilter
+    ? sections.find((s) => s.id === sectionFilter || s.slug === sectionFilter)
+    : null
+
+  const categoryFilterResolved = categoryFilter
+    ? await prisma.category.findFirst({
+        where: {
+          OR: [{ id: categoryFilter }, { slug: categoryFilter }],
+          ...(selectedSection ? { sectionId: selectedSection.id } : {}),
+        },
+      })
+    : null
 
   const rawProducts = await prisma.product.findMany({
     where: {
       isDeleted: false,
-      ...(categoryFilter ? { category: categoryFilter } : {}),
+      ...(selectedSection ? { category: { sectionId: selectedSection.id } } : {}),
+      ...(categoryFilterResolved ? { categoryId: categoryFilterResolved.id } : {}),
       ...(countryFilter ? { countryId: countryFilter } : {}),
       ...(leagueFilter ? { leagueId: leagueFilter } : {}),
       ...(searchQuery
@@ -45,18 +65,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             { description: { contains: searchQuery } },
             { country: { name: { contains: searchQuery } } },
             { league: { name: { contains: searchQuery } } },
+            { category: { name: { contains: searchQuery } } },
           ],
         }
         : {}),
     },
-    include: { variants: true, country: true, league: true },
+    include: { variants: true, country: true, league: true, category: { include: { section: true } } },
     orderBy: { createdAt: 'desc' },
   })
 
   const products: SerializedProduct[] = rawProducts.map((p: typeof rawProducts[number]) => {
     let parsed: string[] = []
     try { parsed = JSON.parse(p.images) } catch { parsed = [p.images] }
-    return { ...p, images: parsed }
+    return {
+      ...p,
+      images: parsed,
+      categoryId: p.categoryId,
+      categoryName: p.category?.name ?? null,
+      sectionName: p.category?.section?.name ?? null,
+    }
   })
 
   const featured = products.slice(0, 6)
@@ -65,7 +92,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const selectedCountryObj = countries.find((c) => c.id === countryFilter)
   const selectedLeagueObj = leagues.find((l) => l.id === leagueFilter)
-  const isFiltering = Boolean(categoryFilter || countryFilter || leagueFilter || searchQuery)
+  const selectedCategoryObj = categoryFilterResolved
+  const isFiltering = Boolean(sectionFilter || categoryFilter || countryFilter || leagueFilter || searchQuery)
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50">
@@ -194,36 +222,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionHeading
                   eyebrow="Colecciones"
-                  title="Explorá por categoría"
-                  description="Titulares, suplentes, ediciones retro y modelos de arquero. Cada colección es una declaración de estilo."
+                  title="Explorá por sección"
+                  description="Camisetas, shorts, camperas y conjuntos: cada categoría con su propia curaduría editorial."
                   align="center"
-                  accentWord="categoría"
+                  accentWord="sección"
                 />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
-                  {[
-                    { name: 'Titulares', cat: 'TITULAR', img: '/categorias/titulares.webp' },
-                    { name: 'Suplentes', cat: 'SUPLENTE', img: '/categorias/suplentes.webp' },
-                    { name: 'Retro', cat: 'RETRO', img: '/categorias/retro.webp' },
-                    { name: 'Arquero', cat: 'ARQUERO', img: '/categorias/arquero.webp' },
-                  ].map((c, i) => (
+                <div className="flex gap-3 mt-12 overflow-x-auto pb-2 -mx-4 px-4 snap-x">
+                  {sections.map((s) => (
                     <Link
-                      key={c.cat}
-                      href={`/?category=${c.cat}`}
-                      className="group relative block aspect-[3/4] rounded-2xl overflow-hidden border-2 border-ink-900 hover:shadow-[8px_8px_0_0_rgba(10,10,10,1)] transition-all duration-300"
+                      key={s.id}
+                      href={`/?section=${s.slug}#catalogo`}
+                      className="group shrink-0 snap-start flex flex-col items-center gap-2 min-w-[140px]"
                     >
-                      <Image src={c.img} alt={c.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" sizes="(max-width: 768px) 50vw, 25vw" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent" />
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="primary" size="sm">0{i + 1}</Badge>
+                      <div className="w-28 h-28 rounded-full bg-white border-2 border-ink-900 flex items-center justify-center group-hover:bg-lime-400 transition-colors shadow-[4px_4px_0_0_rgba(10,10,10,1)]">
+                        <span className="text-3xl">⚽</span>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-5 text-cream-50">
-                        <h3 className="text-2xl font-black font-outfit leading-none">{c.name}</h3>
-                        <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-black text-lime-400 uppercase tracking-wider">
-                          Ver más
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
+                      <span className="text-xs font-black uppercase tracking-wider text-ink-900 text-center">
+                        {s.name}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -262,19 +279,28 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <SectionHeading
             eyebrow={isFiltering ? 'Búsqueda' : 'Catálogo'}
             title={
-              selectedLeagueObj
-                ? `Liga: ${selectedLeagueObj.name}`
-                : selectedCountryObj
-                  ? `País: ${selectedCountryObj.name}`
-                  : searchQuery
-                    ? `Resultados para "${searchQuery}"`
-                    : 'Explorá el catálogo'
+              selectedSection
+                ? `Sección: ${selectedSection.name}`
+                : selectedCategoryObj
+                  ? `Categoría: ${selectedCategoryObj.name}`
+                  : selectedLeagueObj
+                    ? `Liga: ${selectedLeagueObj.name}`
+                    : selectedCountryObj
+                      ? `País: ${selectedCountryObj.name}`
+                      : searchQuery
+                        ? `Resultados para "${searchQuery}"`
+                        : 'Explorá el catálogo'
             }
-            description={isFiltering ? `${products.length} ${products.length === 1 ? 'modelo encontrado' : 'modelos encontrados'}` : 'Filtrá por país, liga, categoría o búsqueda libre.'}
+            description={isFiltering ? `${products.length} ${products.length === 1 ? 'modelo encontrado' : 'modelos encontrados'}` : 'Filtrá por sección, categoría, país, liga o búsqueda libre.'}
             accentWord="catálogo"
           />
 
-          <CatalogFilters countries={countries} leagues={leagues} />
+          <CatalogFilters
+            countries={countries}
+            leagues={leagues}
+            sections={sections}
+            categories={sections.flatMap((s) => s.categories)}
+          />
 
           {products.length === 0 ? (
             <div className="p-12 text-center bg-white rounded-3xl border border-ink-900/8 space-y-3">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Search, Globe, Trophy, Filter, X, RotateCcw } from 'lucide-react'
+import { Search, Globe, Trophy, Filter, X, RotateCcw, Layers, FolderTree } from 'lucide-react'
 
 export interface CountryFilterData {
   id: string
@@ -17,17 +17,33 @@ export interface LeagueFilterData {
   color?: string | null
 }
 
+export interface SectionFilterData {
+  id: string
+  slug: string
+  name: string
+}
+
+export interface CategoryFilterData {
+  id: string
+  slug: string
+  name: string
+  sectionId: string
+}
+
 interface CatalogFiltersProps {
   countries: CountryFilterData[]
   leagues: LeagueFilterData[]
+  sections: SectionFilterData[]
+  categories: CategoryFilterData[]
 }
 
-export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagues }) => {
+export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagues, sections, categories }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const activeCountry = searchParams.get('country') || ''
   const activeLeague = searchParams.get('league') || ''
+  const activeSection = searchParams.get('section') || ''
   const activeCategory = searchParams.get('category') || ''
   const activeQuery = searchParams.get('q') || ''
 
@@ -40,6 +56,10 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
   const availableLeagues = activeCountry
     ? leagues.filter((l) => l.countryId === activeCountry)
     : leagues
+
+  const availableCategories = activeSection
+    ? categories.filter((c) => c.sectionId === activeSection)
+    : categories
 
   const updateFilters = (newParams: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -64,7 +84,10 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
     router.push('/', { scroll: false })
   }
 
-  const hasActiveFilters = Boolean(activeCountry || activeLeague || activeCategory || activeQuery)
+  const hasActiveFilters = Boolean(activeCountry || activeLeague || activeSection || activeCategory || activeQuery)
+
+  const activeSectionName = activeSection ? sections.find((s) => s.id === activeSection)?.name : ''
+  const activeCategoryName = activeCategory ? categories.find((c) => c.id === activeCategory)?.name : ''
 
   return (
     <div className="space-y-5 bg-white border border-ink-900/8 rounded-3xl p-5 sm:p-7 shadow-[0_4px_18px_rgba(10,10,10,0.04)]">
@@ -76,7 +99,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
           </div>
           <div>
             <h3 className="font-black text-ink-900 font-outfit text-lg">Explorá el catálogo</h3>
-            <p className="text-xs text-ink-500">Filtrá por país, liga, categoría o búsqueda libre.</p>
+            <p className="text-xs text-ink-500">Filtrá por sección, categoría, país, liga o búsqueda libre.</p>
           </div>
         </div>
 
@@ -104,7 +127,42 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         </form>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+            <Layers className="w-3.5 h-3.5" />
+            <span>Sección</span>
+          </label>
+          <select
+            value={activeSection}
+            onChange={(e) => updateFilters({ section: e.target.value, category: null })}
+            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
+          >
+            <option value="">Todas las Secciones</option>
+            {sections.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+            <FolderTree className="w-3.5 h-3.5" />
+            <span>Categoría</span>
+          </label>
+          <select
+            value={activeCategory}
+            onChange={(e) => updateFilters({ category: e.target.value })}
+            disabled={!availableCategories.length}
+            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold disabled:opacity-50"
+          >
+            <option value="">Todas</option>
+            {availableCategories.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
         <div className="space-y-1.5">
           <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
             <Globe className="w-3.5 h-3.5" />
@@ -138,30 +196,30 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
             ))}
           </select>
         </div>
-
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
-            <Filter className="w-3.5 h-3.5" />
-            <span>Categoría</span>
-          </label>
-          <select
-            value={activeCategory}
-            onChange={(e) => updateFilters({ category: e.target.value })}
-            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
-          >
-            <option value="">Todas</option>
-            <option value="TITULAR">Titulares</option>
-            <option value="SUPLENTE">Suplentes</option>
-            <option value="RETRO">Retro</option>
-            <option value="ARQUERO">Arquero</option>
-          </select>
-        </div>
       </div>
 
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-ink-900/8">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-black text-ink-500 uppercase tracking-wider">Filtros:</span>
+
+            {activeSectionName && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-lime-400 text-xs font-bold">
+                {activeSectionName}
+                <button onClick={() => updateFilters({ section: null, category: null })} className="hover:text-cream-50">
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+
+            {activeCategoryName && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">
+                {activeCategoryName}
+                <button onClick={() => updateFilters({ category: null })} className="hover:text-lime-400">
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
 
             {activeCountry && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">
@@ -176,15 +234,6 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
                 {leagues.find((l) => l.id === activeLeague)?.name}
                 <button onClick={() => updateFilters({ league: null })} className="hover:text-amber-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-
-            {activeCategory && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">
-                {activeCategory}
-                <button onClick={() => updateFilters({ category: null })} className="hover:text-lime-400">
                   <X className="w-3 h-3" />
                 </button>
               </span>

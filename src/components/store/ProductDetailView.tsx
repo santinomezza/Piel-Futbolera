@@ -21,7 +21,9 @@ interface Product {
   slug: string
   description: string
   price: number
-  category: string
+  categoryId?: string | null
+  categoryName?: string | null
+  sectionName?: string | null
   badge: string | null
   images: string[]
   variants: Variant[]
@@ -65,15 +67,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
     setTimeout(() => setAddedMessage(null), 3500)
   }
 
-  const getCategoryLabel = (cat: string) => {
-    switch (cat) {
-      case 'TITULAR': return 'Titular'
-      case 'SUPLENTE': return 'Suplente'
-      case 'RETRO': return 'Retro'
-      case 'ARQUERO': return 'Arquero'
-      default: return cat
-    }
-  }
+  const sectionLabel = product.sectionName || 'Colección'
+  const categoryLabel = product.categoryName || 'Modelo'
 
   return (
     <div className="space-y-8">
@@ -90,7 +85,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
           <div className="relative aspect-[4/5] bg-cream-100 rounded-3xl overflow-hidden border-2 border-ink-900">
             <Image src={activeImage} alt={product.name} fill priority className="object-cover" />
             <div className="absolute top-4 left-4 flex gap-2">
-              <Badge variant="ink" size="sm">{getCategoryLabel(product.category)}</Badge>
+              <Badge variant="ink" size="sm">{sectionLabel}</Badge>
+              <Badge variant="primary" size="sm">{categoryLabel}</Badge>
               {product.badge && <Badge variant="primary" size="sm">{product.badge}</Badge>}
             </div>
           </div>
@@ -115,7 +111,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product })
         <div className="space-y-6">
           <div className="space-y-3">
             <p className="text-[10px] uppercase tracking-[0.18em] font-black text-ink-500">
-              {getCategoryLabel(product.category)} · {product.variants.length} talles
+              {sectionLabel} · {categoryLabel} · {product.variants.length} talles
             </p>
             <h1 className="text-3xl sm:text-4xl font-black text-ink-900 font-outfit leading-tight">
               {product.name}

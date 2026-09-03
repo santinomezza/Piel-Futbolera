@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Plus, Edit2, Trash2, Search, Filter, Eye, EyeOff, Globe, Trophy, PackageCheck } from 'lucide-react'
-import { ProductModal, ProductFullData, CountryItem, LeagueItem } from '@/components/admin/ProductModal'
+import { ProductModal, ProductFullData, CountryItem, LeagueItem, SectionItem, CategoryItem } from '@/components/admin/ProductModal'
 import { Badge } from '@/components/ui/Badge'
 
 interface ProductRecord extends ProductFullData {
@@ -10,24 +10,32 @@ interface ProductRecord extends ProductFullData {
   isDeleted: boolean
   country?: CountryItem | null
   league?: LeagueItem | null
+  category?: (CategoryItem & { section?: SectionItem | null }) | null
 }
 
 interface ProductsManagerClientProps {
   initialProducts: ProductRecord[]
   initialCountries: CountryItem[]
   initialLeagues: LeagueItem[]
+  initialSections: SectionItem[]
+  initialCategories: CategoryItem[]
 }
 
 export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
   initialProducts,
   initialCountries,
   initialLeagues,
+  initialSections,
+  initialCategories,
 }) => {
   const [products, setProducts] = useState<ProductRecord[]>(initialProducts)
   const [countries, setCountries] = useState<CountryItem[]>(initialCountries)
   const [leagues, setLeagues] = useState<LeagueItem[]>(initialLeagues)
+  const [sections, setSections] = useState<SectionItem[]>(initialSections)
+  const [categories, setCategories] = useState<CategoryItem[]>(initialCategories)
 
   const [searchTerm, setSearchTerm] = useState('')
+  const [sectionFilter, setSectionFilter] = useState('ALL')
   const [categoryFilter, setCategoryFilter] = useState('ALL')
   const [countryFilter, setCountryFilter] = useState('ALL')
 
@@ -38,15 +46,22 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
   // Refresh data from server APIs
   const refreshAllData = async () => {
     try {
-      const [prodRes, countryRes, leagueRes] = await Promise.all([
+      const [prodRes, countryRes, leagueRes, sectionRes, categoryRes] = await Promise.all([
         fetch('/api/admin/products'),
         fetch('/api/admin/countries'),
         fetch('/api/admin/leagues'),
+        fetch('/api/admin/sections'),
+        fetch('/api/admin/categories'),
       ])
 
       if (prodRes.ok) {
         const prodData = await prodRes.json()
-        const parsed = prodData.products.map((p: any) => {
+        const parsed: ProductRecord[] = prodData.products.map((p: {
+          id: string
+          images: string
+          variants: Array<{ size: string; stock: number }>
+          [key: string]: unknown
+        }) => {
           let images: string[] = []
           try {
             images = JSON.parse(p.images)
@@ -54,10 +69,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             images = [p.images]
           }
           return {
-            ...p,
+            ...(p as unknown as ProductRecord),
             images,
-            variants: p.variants.map((v: any) => ({
-              size: v.size,
+            variants: p.variants.map((v) => ({
+              size: v.size as 'S' | 'M' | 'L' | 'XL' | 'XXL',
               stock: v.stock,
             })),
           }
@@ -74,10 +89,22 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
         const lData = await leagueRes.json()
         setLeagues(lData.leagues)
       }
+
+      if (sectionRes.ok) {
+        const sData = await sectionRes.json()
+        setSections(sData.sections)
+      }
+
+      if (categoryRes.ok) {
+        const catData = await categoryRes.json()
+        setCategories(catData.categories)
+      }
     } catch (error) {
       console.error('Error refreshing data:', error)
     }
   }
+
+  const availableCategoryFilter = categories.filter((c) => sectionFilter === 'ALL' || c.sectionId === sectionFilter)
 
   // Filter products locally for table view
   const filteredProducts = products.filter((p) => {
@@ -85,12 +112,15 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.country?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.league?.name.toLowerCase().includes(searchTerm.toLowerCase())
+      p.league?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category?.section?.name.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesCategory = categoryFilter === 'ALL' || p.category === categoryFilter
+    const matchesSection = sectionFilter === 'ALL' || p.category?.section?.id === sectionFilter
+    const matchesCategory = categoryFilter === 'ALL' || p.categoryId === categoryFilter
     const matchesCountry = countryFilter === 'ALL' || p.countryId === countryFilter
 
-    return matchesSearch && matchesCategory && matchesCountry
+    return matchesSearch && matchesSection && matchesCategory && matchesCountry
   })
 
   const handleOpenCreateModal = () => {
@@ -173,17 +203,31 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
           <div className="flex items-center gap-2 flex-1 sm:flex-initial">
             <Filter className="w-3.5 h-3.5 text-ink-500 shrink-0" />
             <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
+              value={sectionFilter}
+              onChange={(e) => {
+                setSectionFilter(e.target.value)
+                setCategoryFilter('ALL')
+              }}
               className="flex-1 sm:flex-initial bg-white border border-ink-900/10 rounded-2xl px-3 py-2 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
             >
-              <option value="ALL">Todas las Categorías</option>
-              <option value="TITULAR">Titular</option>
-              <option value="SUPLENTE">Suplente</option>
-              <option value="RETRO">Retro</option>
-              <option value="ARQUERO">Arquero</option>
+              <option value="ALL">Todas las Secciones</option>
+              {sections.map((s) => (
+                <option key={s.id} value={s.id}>{s.name}</option>
+              ))}
             </select>
           </div>
+
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            disabled={!availableCategoryFilter.length}
+            className="flex-1 sm:flex-initial bg-white border border-ink-900/10 rounded-2xl px-3 py-2 text-xs text-ink-900 focus:outline-none focus:border-ink-900 disabled:opacity-50"
+          >
+            <option value="ALL">Todas las Categorías</option>
+            {availableCategoryFilter.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
 
           <select
             value={countryFilter}
@@ -239,10 +283,13 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
 
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
                   <div>
-                    <span className="text-ink-500 block">Categoría</span>
+                    <span className="text-ink-500 block">Sección / Categoría</span>
                     <span className="px-2 py-0.5 bg-cream-50 border border-ink-900/10 text-ink-900 rounded font-semibold inline-block mt-0.5">
-                      {prod.category}
+                      {prod.category?.section?.name || '—'}
                     </span>
+                    {prod.category && (
+                      <div className="text-[10px] text-ink-500 mt-0.5">{prod.category.name}</div>
+                    )}
                   </div>
                   <div>
                     <span className="text-ink-500 block">Precio</span>
@@ -358,8 +405,11 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
 
                       <td className="py-3 px-3">
                         <span className="px-2.5 py-1 bg-cream-50 border border-ink-900/10 text-ink-700 rounded-lg font-semibold text-[11px]">
-                          {prod.category}
+                          {prod.category?.section?.name || '—'}
                         </span>
+                        {prod.category && (
+                          <div className="text-[10px] text-ink-500 mt-1">{prod.category.name}</div>
+                        )}
                       </td>
 
                       <td className="py-3 px-3 space-y-1">
@@ -441,6 +491,8 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
         initialProduct={editingProduct}
         countries={countries}
         leagues={leagues}
+        sections={sections}
+        categories={categories}
         onRefreshMetadata={refreshAllData}
       />
     </div>

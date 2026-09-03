@@ -9,18 +9,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Section {
+  id          String     @id @default(uuid())
+  slug        String     @unique // CAMISETAS, SHORTS, CAMPERAS, CONJUNTOS
+  name        String     // "Camisetas", "Shorts", etc.
+  description String?
+  order       Int        @default(0)
+  imageUrl    String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categories  Category[]
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String    // "Versión Jugador", "Hincha", "Retro", etc.
+  description String?
+  order       Int       @default(0)
+  sectionId   String
+  section     Section   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([sectionId])
+}
+
 model Product {
   id          String           @id @default(uuid())
   name        String
   slug        String           @unique
   description String
   price       Float
-  category    String           // TITULAR, SUPLENTE, RETRO, ARQUERO
   badge       String?          // NUEVO, RETRO, POPULAR, DESTACADO
   images      String           // JSON string of image URLs
   featured    Boolean          @default(false)
   isDeleted   Boolean          @default(false)
   status      String           @default("IN_STOCK") // IN_STOCK, LOW_STOCK, OUT_OF_STOCK
+  categoryId  String?
+  category    Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   countryId   String?
   country     Country?         @relation(fields: [countryId], references: [id], onDelete: SetNull)
   leagueId    String?
@@ -28,6 +56,8 @@ model Product {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   variants    ProductVariant[]
+
+  @@index([categoryId])
 }
 
 model Country {

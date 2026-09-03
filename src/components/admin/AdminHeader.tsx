@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, ShoppingBag, Package, Download, Store, Settings, Menu, X } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, Download, Store, Settings, Menu, X, FolderTree } from 'lucide-react'
 
 export const AdminHeader: React.FC = () => {
   const pathname = usePathname()
@@ -12,6 +12,7 @@ export const AdminHeader: React.FC = () => {
 
   const links = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Catálogo', href: '/admin/catalog', icon: FolderTree },
     { name: 'Productos', href: '/admin/products', icon: Package },
     { name: 'Pedidos', href: '/admin/pedidos', icon: ShoppingBag },
     { name: 'Stock', href: '/admin/stock', icon: Package },
