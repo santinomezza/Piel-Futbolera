@@ -61,7 +61,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const featured = products.slice(0, 6)
   const heroProduct = products[0]
-  const heroImage = heroProduct?.images[0] || '/hero-jersey.png'
+  const heroImage = '/hero-jersey.png'
 
   const selectedCountryObj = countries.find((c) => c.id === countryFilter)
   const selectedLeagueObj = leagues.find((l) => l.id === leagueFilter)
