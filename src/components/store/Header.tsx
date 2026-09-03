@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ShoppingBag, Search, Shield, Menu, X, ChevronDown } from 'lucide-react'
+import { ShoppingBag, Search, Shield, Menu, X } from 'lucide-react'
 import { useCartStore } from '@/store/useCartStore'
 import { CartDrawer } from './CartDrawer'
 
@@ -12,7 +12,6 @@ export interface HeaderSection {
   id: string
   slug: string
   name: string
-  categories: { id: string; slug: string; name: string }[]
 }
 
 interface HeaderProps {
@@ -25,7 +24,6 @@ function HeaderContent({ sections = [] }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [openSectionId, setOpenSectionId] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
 
   const { getTotalItems } = useCartStore()
@@ -73,37 +71,13 @@ function HeaderContent({ sections = [] }: HeaderProps) {
                   Inicio
                 </Link>
                 {sections.map((section) => (
-                  <div
+                  <Link
                     key={section.id}
-                    className="relative"
-                    onMouseEnter={() => setOpenSectionId(section.id)}
-                    onMouseLeave={() => setOpenSectionId(null)}
+                    href={`/seccion/${section.slug}`}
+                    className="px-3.5 py-2 text-sm font-semibold text-ink-700 hover:text-ink-900 hover:bg-ink-900/[0.04] rounded-full transition"
                   >
-                    <Link
-                      href={`/?section=${section.slug}#catalogo`}
-                      className="inline-flex items-center gap-1 px-3.5 py-2 text-sm font-semibold text-ink-700 hover:text-ink-900 hover:bg-ink-900/[0.04] rounded-full transition"
-                    >
-                      {section.name}
-                      {section.categories.length > 0 && (
-                        <ChevronDown className="w-3.5 h-3.5" />
-                      )}
-                    </Link>
-                    {section.categories.length > 0 && openSectionId === section.id && (
-                      <div className="absolute left-0 top-full pt-1 z-50">
-                        <div className="min-w-[240px] bg-white border border-ink-900/10 rounded-2xl shadow-[0_18px_42px_-12px_rgba(10,10,10,0.25)] overflow-hidden">
-                          {section.categories.map((cat) => (
-                            <Link
-                              key={cat.id}
-                              href={`/?category=${cat.slug}#catalogo`}
-                              className="block px-4 py-2.5 text-sm font-semibold text-ink-700 hover:bg-cream-50 hover:text-ink-900 transition"
-                            >
-                              {cat.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                    {section.name}
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -179,27 +153,14 @@ function HeaderContent({ sections = [] }: HeaderProps) {
                 Inicio
               </Link>
               {sections.map((section) => (
-                <div key={section.id} className="space-y-1">
-                  <Link
-                    href={`/?section=${section.slug}#catalogo`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-2.5 text-sm font-bold text-ink-900 hover:bg-white rounded-full inline-block"
-                  >
-                    {section.name}
-                  </Link>
-                  <div className="ml-4 border-l-2 border-ink-900/10 pl-3 space-y-1">
-                    {section.categories.map((cat) => (
-                      <Link
-                        key={cat.id}
-                        href={`/?category=${cat.slug}#catalogo`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block px-3 py-1.5 text-xs font-semibold text-ink-500 hover:text-ink-900 hover:bg-white rounded-full"
-                      >
-                        {cat.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                <Link
+                  key={section.id}
+                  href={`/seccion/${section.slug}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2.5 text-sm font-bold text-ink-900 hover:bg-white rounded-full"
+                >
+                  {section.name}
+                </Link>
               ))}
               <Link
                 href="/admin"

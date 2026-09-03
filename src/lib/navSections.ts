@@ -13,20 +13,11 @@ export async function getNavSections(): Promise<HeaderSection[]> {
 
   const sections = await prisma.section.findMany({
     orderBy: { order: 'asc' },
-    include: {
-      categories: {
-        orderBy: { order: 'asc' },
-        select: { id: true, slug: true, name: true },
-      },
-    },
+    select: { id: true, slug: true, name: true },
   })
 
-  cachedSections = sections.map((s) => ({
-    id: s.id,
-    slug: s.slug,
-    name: s.name,
-    categories: s.categories,
-  }))
+  cachedSections = sections
   cacheTimestamp = now
   return cachedSections
 }
+

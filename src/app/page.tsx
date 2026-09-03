@@ -45,12 +45,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const categoryFilterResolved = categoryFilter
     ? await prisma.category.findFirst({
-        where: {
-          OR: [{ id: categoryFilter }, { slug: categoryFilter }],
-          ...(selectedSection ? { sectionId: selectedSection.id } : {}),
-        },
-        include: { section: true },
-      })
+      where: {
+        OR: [{ id: categoryFilter }, { slug: categoryFilter }],
+        ...(selectedSection ? { sectionId: selectedSection.id } : {}),
+      },
+      include: { section: true },
+    })
     : null
 
   const rawProducts = await prisma.product.findMany({
@@ -100,7 +100,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const navSections = await getNavSections()
 
   const CATEGORY_HERO: Record<string, string> = {
-    'version-jugador': '/categorias/titulares.webp',
+    'titulares': '/categorias/titulares.webp',
     'suplentes': '/categorias/suplentes.webp',
     'retro': '/categorias/retro.webp',
     'arquero': '/categorias/arquero.webp',

@@ -35,15 +35,16 @@ interface CatalogFiltersProps {
   leagues: LeagueFilterData[]
   sections: SectionFilterData[]
   categories: CategoryFilterData[]
+  basePath?: string
+  sectionSlug?: string
 }
 
-export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagues, sections, categories }) => {
+export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagues, sections, categories, basePath = '/', sectionSlug }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const activeCountry = searchParams.get('country') || ''
   const activeLeague = searchParams.get('league') || ''
-  const activeSection = searchParams.get('section') || ''
   const activeCategory = searchParams.get('category') || ''
   const activeQuery = searchParams.get('q') || ''
 
@@ -57,8 +58,11 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
     ? leagues.filter((l) => l.countryId === activeCountry)
     : leagues
 
-  const availableCategories = activeSection
-    ? categories.filter((c) => c.sectionId === activeSection)
+  const scopedSection = sectionSlug
+    ? sections.find((s) => s.slug === sectionSlug)
+    : null
+  const availableCategories = scopedSection
+    ? categories.filter((c) => c.sectionId === scopedSection.id)
     : categories
 
   const updateFilters = (newParams: Record<string, string | null>) => {
@@ -71,7 +75,8 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
       }
     })
     const queryString = params.toString()
-    router.push(queryString ? `/?${queryString}#catalogo` : '/#catalogo', { scroll: false })
+    const hash = basePath.includes('#') ? '' : '#catalogo'
+    router.push(queryString ? `${basePath}?${queryString}${hash}` : `${basePath}${hash}`, { scroll: false })
   }
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -81,13 +86,11 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
 
   const clearAllFilters = () => {
     setSearchInputValue('')
-    router.push('/', { scroll: false })
+    router.push(basePath, { scroll: false })
   }
 
-  const hasActiveFilters = Boolean(activeCountry || activeLeague || activeSection || activeCategory || activeQuery)
-
-  const activeSectionName = activeSection ? sections.find((s) => s.id === activeSection)?.name : ''
-  const activeCategoryName = activeCategory ? categories.find((c) => c.id === activeCategory)?.name : ''
+  const hasActiveFilters = Boolean(activeCountry || activeLeague || activeCategory || activeQuery)
+  const activeCategoryName = activeCategory ? categories.find((c) => c.slug === activeCategory || c.id === activeCategory)?.name : ''
 
   return (
     <div className="space-y-5 bg-white border border-ink-900/8 rounded-3xl p-5 sm:p-7 shadow-[0_4px_18px_rgba(10,10,10,0.04)]">
@@ -127,23 +130,24 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         </form>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Sección</span>
-          </label>
-          <select
-            value={activeSection}
-            onChange={(e) => updateFilters({ section: e.target.value, category: null })}
-            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
-          >
-            <option value="">Todas las Secciones</option>
-            {sections.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}</option>
-            ))}
-          </select>
-        </div>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${scopedSection ? 'lg:grid-cols-3' : 'lg:grid-cols-4'} gap-3 pt-1`}>
+        {!scopedSection && (
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Sección</span>
+            </label>
+            <select
+              value={activeCategory}
+              onChange={() => undefined}
+              disabled
+              className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold disabled:opacity-50"
+            >
+              <option value="">Elegí una sección</option>
+            </select>
+            <p className="text-[10px] text-ink-500">Andá a la sección desde el menú superior.</p>
+          </div>
+        )}
 
         <div className="space-y-1.5">
           <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
@@ -158,7 +162,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
           >
             <option value="">Todas</option>
             {availableCategories.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+              <option key={c.id} value={c.slug}>{c.name}</option>
             ))}
           </select>
         </div>
@@ -202,15 +206,6 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-ink-900/8">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-black text-ink-500 uppercase tracking-wider">Filtros:</span>
-
-            {activeSectionName && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-lime-400 text-xs font-bold">
-                {activeSectionName}
-                <button onClick={() => updateFilters({ section: null, category: null })} className="hover:text-cream-50">
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
 
             {activeCategoryName && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">

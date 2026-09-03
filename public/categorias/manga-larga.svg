@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0A0A"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="#C5F82A" opacity="0.18"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#C5F82A" opacity="0.9">
+    <text x="800" y="430" font-size="120" font-weight="900" letter-spacing="-4">MANGA</text>
+    <text x="800" y="570" font-size="120" font-weight="900" letter-spacing="-4">LARGA</text>
+  </g>
+</svg>
