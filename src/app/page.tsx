@@ -40,13 +40,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       ...(leagueFilter ? { leagueId: leagueFilter } : {}),
       ...(searchQuery
         ? {
-            OR: [
-              { name: { contains: searchQuery } },
-              { description: { contains: searchQuery } },
-              { country: { name: { contains: searchQuery } } },
-              { league: { name: { contains: searchQuery } } },
-            ],
-          }
+          OR: [
+            { name: { contains: searchQuery } },
+            { description: { contains: searchQuery } },
+            { country: { name: { contains: searchQuery } } },
+            { league: { name: { contains: searchQuery } } },
+          ],
+        }
         : {}),
     },
     include: { variants: true, country: true, league: true },
@@ -220,10 +220,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
                   {[
-                    { name: 'Titulares', cat: 'TITULAR', img: 'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?auto=format&fit=crop&w=800&q=80', count: '120+ modelos' },
-                    { name: 'Suplentes', cat: 'SUPLENTE', img: 'https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?auto=format&fit=crop&w=800&q=80', count: '85+ modelos' },
-                    { name: 'Retro', cat: 'RETRO', img: 'https://images.unsplash.com/photo-1606932968471-93b00e1c4b9d?auto=format&fit=crop&w=800&q=80', count: '60+ modelos' },
-                    { name: 'Arquero', cat: 'ARQUERO', img: 'https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80', count: '40+ modelos' },
+                    {
+                      name: 'Titulares', cat: 'TITULAR', img: '/categorias/titulares.webp'
+                    },
+                    { name: 'Suplentes', cat: 'SUPLENTE', img: '/categorias/suplentes.webp' },
+                    { name: 'Retro', cat: 'RETRO', img: '/categorias/retro.webp' },
+                    { name: 'Arquero', cat: 'ARQUERO', img: '/categorias/arquero.webp' },
                   ].map((c, i) => (
                     <Link
                       key={c.cat}
@@ -237,7 +239,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 p-5 text-cream-50">
                         <h3 className="text-2xl font-black font-outfit leading-none">{c.name}</h3>
-                        <p className="text-xs text-cream-50/80 mt-1 font-medium">{c.count}</p>
+
                         <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-black text-lime-400 uppercase tracking-wider">
                           Ver más
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -353,10 +355,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               selectedLeagueObj
                 ? `Liga: ${selectedLeagueObj.name}`
                 : selectedCountryObj
-                ? `País: ${selectedCountryObj.name}`
-                : searchQuery
-                ? `Resultados para "${searchQuery}"`
-                : 'Explorá el catálogo'
+                  ? `País: ${selectedCountryObj.name}`
+                  : searchQuery
+                    ? `Resultados para "${searchQuery}"`
+                    : 'Explorá el catálogo'
             }
             description={isFiltering ? `${products.length} ${products.length === 1 ? 'modelo encontrado' : 'modelos encontrados'}` : 'Filtrá por país, liga, categoría o búsqueda libre.'}
             accentWord="catálogo"
