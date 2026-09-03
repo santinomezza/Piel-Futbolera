@@ -121,15 +121,15 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
     <div className="space-y-6">
 
       {/* Filters Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 bg-[#161616] p-4 rounded-2xl border border-zinc-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-ink-900/10">
         <div className="flex flex-wrap items-center gap-3">
 
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Filtrar por Estado</label>
+            <label className="block text-[10px] uppercase font-bold text-ink-500 mb-1">Filtrar por Estado</label>
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-zinc-100 focus:outline-none"
+              className="bg-cream-50 border border-ink-900/10 text-xs text-ink-900 rounded-2xl px-3 py-2 focus:ring-1 focus:ring-lime-400 focus:outline-none"
             >
               <option value="ALL">Todos los Estados</option>
               <option value="PENDING">Pendiente de Pago</option>
@@ -141,11 +141,11 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Filtrar por Correo</label>
+            <label className="block text-[10px] uppercase font-bold text-ink-500 mb-1">Filtrar por Correo</label>
             <select
               value={selectedCourier}
               onChange={(e) => setSelectedCourier(e.target.value)}
-              className="bg-zinc-900 border border-zinc-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:ring-1 focus:ring-zinc-100 focus:outline-none"
+              className="bg-cream-50 border border-ink-900/10 text-xs text-ink-900 rounded-2xl px-3 py-2 focus:ring-1 focus:ring-lime-400 focus:outline-none"
             >
               <option value="ALL">Todos los Correos</option>
               <option value="ANDREANI">Andreani</option>
@@ -155,7 +155,7 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
 
         </div>
 
-        <div className="text-xs text-slate-400">
+        <div className="text-xs text-ink-500">
           Mostrando <strong>{filteredOrders.length}</strong> de {orders.length} pedidos
         </div>
       </div>
@@ -163,37 +163,37 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
       {/* Mobile cards */}
       <div className="grid grid-cols-1 gap-3 md:hidden">
         {filteredOrders.map((order) => (
-          <div key={order.id} className="bg-[#161616] rounded-2xl border border-zinc-800 p-4 space-y-3">
+          <div key={order.id} className="bg-white rounded-2xl border border-ink-900/10 p-4 space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <div className="font-mono font-bold text-sm text-zinc-300">{order.orderNumber}</div>
-                <div className="font-semibold text-sm text-slate-100 mt-1">
+                <div className="font-mono font-bold text-sm text-ink-700">{order.orderNumber}</div>
+                <div className="font-semibold text-sm text-ink-900 mt-1">
                   {order.customer.firstName} {order.customer.lastName}
                 </div>
-                <div className="text-[11px] text-slate-400 truncate">{order.customer.email}</div>
+                <div className="text-[11px] text-ink-500 truncate">{order.customer.email}</div>
               </div>
               <div className="text-right shrink-0">
                 {renderStatusBadge(order.status)}
-                <div className="text-base font-bold text-slate-100 font-outfit mt-2">
+                <div className="text-base font-bold text-ink-900 font-outfit mt-2">
                   ${order.totalAmount.toLocaleString('es-AR')}
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-zinc-800">
+            <div className="flex items-center justify-between text-[11px] text-ink-500 pt-2 border-t border-ink-900/10">
               <span>{order.courier}</span>
               <span className="font-mono">{order.trackingCode || 'Sin asignar'}</span>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setActiveModalOrder(order)}
-                className="flex-1 px-3 py-2 bg-zinc-900 hover:bg-zinc-800 text-slate-200 rounded-lg border border-zinc-800 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                className="flex-1 px-3 py-2 bg-cream-50 hover:bg-cream-200 text-ink-900 rounded-lg border border-ink-900/10 transition text-xs font-semibold flex items-center justify-center gap-1.5"
               >
                 <Eye className="w-3.5 h-3.5" />
                 Ver detalle
               </button>
               <button
                 onClick={() => handleOpenStatusModal(order)}
-                className="flex-1 px-3 py-2 bg-white/5 hover:bg-white/10 text-zinc-300 rounded-lg border border-white/10 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                className="flex-1 px-3 py-2 bg-ink-900/5 hover:bg-ink-900/5 text-ink-700 rounded-lg border border-ink-900/10 transition text-xs font-semibold flex items-center justify-center gap-1.5"
               >
                 <Edit3 className="w-3.5 h-3.5" />
                 Cambiar estado
@@ -202,18 +202,18 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
           </div>
         ))}
         {filteredOrders.length === 0 && (
-          <div className="p-8 text-center text-slate-400 text-sm bg-[#161616] rounded-2xl border border-zinc-800">
+          <div className="p-8 text-center text-ink-500 text-sm bg-white rounded-2xl border border-ink-900/10">
             No hay pedidos que coincidan con los filtros.
           </div>
         )}
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-[#161616] rounded-3xl border border-zinc-800 overflow-hidden shadow-xl">
+      <div className="hidden md:block bg-white rounded-3xl border border-ink-900/10 overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-zinc-800 text-slate-400 uppercase text-[10px] tracking-wider bg-zinc-900/60">
+              <tr className="border-b border-ink-900/10 text-ink-500 uppercase text-[10px] tracking-wider bg-cream-50/60">
                 <th className="py-3.5 px-4">Orden</th>
                 <th className="py-3.5 px-4">Cliente</th>
                 <th className="py-3.5 px-4">Correo</th>
@@ -223,33 +223,33 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
                 <th className="py-3.5 px-4 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/60">
+            <tbody className="divide-y divide-ink-900/8/60">
               {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-zinc-900/40 transition">
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-300">{order.orderNumber}</td>
+                <tr key={order.id} className="hover:bg-cream-50/40 transition">
+                  <td className="py-3 px-4 font-mono font-bold text-ink-700">{order.orderNumber}</td>
                   <td className="py-3 px-4">
-                    <div className="font-semibold text-slate-100">{order.customer.firstName} {order.customer.lastName}</div>
-                    <div className="text-[11px] text-slate-400">{order.customer.email}</div>
+                    <div className="font-semibold text-ink-900">{order.customer.firstName} {order.customer.lastName}</div>
+                    <div className="text-[11px] text-ink-500">{order.customer.email}</div>
                   </td>
-                  <td className="py-3 px-4 text-slate-300">{order.courier}</td>
-                  <td className="py-3 px-4 font-mono text-xs text-slate-400">
-                    {order.trackingCode || <span className="text-slate-600">Sin asignar</span>}
+                  <td className="py-3 px-4 text-ink-700">{order.courier}</td>
+                  <td className="py-3 px-4 font-mono text-xs text-ink-500">
+                    {order.trackingCode || <span className="text-ink-500">Sin asignar</span>}
                   </td>
                   <td className="py-3 px-4">{renderStatusBadge(order.status)}</td>
-                  <td className="py-3 px-4 font-bold text-slate-100 font-outfit">
+                  <td className="py-3 px-4 font-bold text-ink-900 font-outfit">
                     ${order.totalAmount.toLocaleString('es-AR')}
                   </td>
                   <td className="py-3 px-4 text-right flex justify-end gap-2">
                     <button
                       onClick={() => setActiveModalOrder(order)}
-                      className="p-2 bg-zinc-900 hover:bg-zinc-800 text-slate-300 rounded-lg border border-zinc-800 transition"
+                      className="p-2 bg-cream-50 hover:bg-cream-200 text-ink-700 rounded-lg border border-ink-900/10 transition"
                       title="Ver detalle del pedido"
                     >
                       <Eye className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleOpenStatusModal(order)}
-                      className="p-2 bg-white/5 hover:bg-white/10 text-zinc-300 rounded-lg border border-white/10 transition"
+                      className="p-2 bg-ink-900/5 hover:bg-ink-900/5 text-ink-700 rounded-lg border border-ink-900/10 transition"
                       title="Actualizar estado / seguimiento"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
@@ -264,48 +264,48 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
 
       {/* Order Detail Modal */}
       {activeModalOrder && (
-        <div className="fixed inset-0 z-50 bg-zinc-900/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl bg-[#161616] rounded-3xl border border-zinc-800 p-6 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
-              <h3 className="text-lg font-bold text-white font-outfit">
-                Detalle del Pedido <span className="text-zinc-300 font-mono">{activeModalOrder.orderNumber}</span>
+        <div className="fixed inset-0 z-50 bg-cream-50/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-white rounded-3xl border border-ink-900/10 p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-ink-900/10 pb-3">
+              <h3 className="text-lg font-bold text-ink-900 font-outfit">
+                Detalle del Pedido <span className="text-ink-700 font-mono">{activeModalOrder.orderNumber}</span>
               </h3>
-              <button onClick={() => setActiveModalOrder(null)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setActiveModalOrder(null)} className="text-ink-500 hover:text-ink-900">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-3 bg-zinc-900 rounded-xl space-y-1">
-                <span className="font-bold text-slate-200 block mb-1">Comprador</span>
+              <div className="p-3 bg-cream-50 rounded-2xl space-y-1">
+                <span className="font-bold text-ink-900 block mb-1">Comprador</span>
                 <p>{activeModalOrder.customer.firstName} {activeModalOrder.customer.lastName}</p>
-                <p className="text-slate-400 break-all">{activeModalOrder.customer.email}</p>
-                <p className="text-slate-400">{activeModalOrder.customer.phone}</p>
+                <p className="text-ink-500 break-all">{activeModalOrder.customer.email}</p>
+                <p className="text-ink-500">{activeModalOrder.customer.phone}</p>
               </div>
 
-              <div className="p-3 bg-zinc-900 rounded-xl space-y-1">
-                <span className="font-bold text-slate-200 block mb-1">Dirección de Entrega</span>
+              <div className="p-3 bg-cream-50 rounded-2xl space-y-1">
+                <span className="font-bold text-ink-900 block mb-1">Dirección de Entrega</span>
                 <p>{activeModalOrder.customer.address}</p>
-                <p className="text-slate-400">{activeModalOrder.customer.city} ({activeModalOrder.customer.postalCode})</p>
-                <p className="text-zinc-300 font-semibold">{activeModalOrder.courier}</p>
+                <p className="text-ink-500">{activeModalOrder.customer.city} ({activeModalOrder.customer.postalCode})</p>
+                <p className="text-ink-700 font-semibold">{activeModalOrder.courier}</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs font-bold text-slate-200">Productos:</span>
+              <span className="text-xs font-bold text-ink-900">Productos:</span>
               <div className="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
                 {activeModalOrder.items.map((i) => (
-                  <div key={i.id} className="p-2.5 bg-zinc-900/60 rounded-xl border border-zinc-800 flex justify-between text-xs">
+                  <div key={i.id} className="p-2.5 bg-cream-50/60 rounded-2xl border border-ink-900/10 flex justify-between text-xs">
                     <span>{i.variant.product.name} (Talle {i.variant.size}) x{i.quantity}</span>
-                    <span className="font-bold text-slate-100">${(i.unitPrice * i.quantity).toLocaleString('es-AR')}</span>
+                    <span className="font-bold text-ink-900">${(i.unitPrice * i.quantity).toLocaleString('es-AR')}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="pt-3 border-t border-zinc-800 flex justify-between items-center text-xs">
-              <span className="text-slate-400">Total acumulado:</span>
-              <span className="text-base font-bold text-zinc-300 font-outfit">
+            <div className="pt-3 border-t border-ink-900/10 flex justify-between items-center text-xs">
+              <span className="text-ink-500">Total acumulado:</span>
+              <span className="text-base font-bold text-ink-700 font-outfit">
                 ${activeModalOrder.totalAmount.toLocaleString('es-AR')}
               </span>
             </div>
@@ -315,24 +315,24 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
 
       {/* Edit Status Modal */}
       {updatingOrder && (
-        <div className="fixed inset-0 z-50 bg-zinc-900/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-[#161616] rounded-3xl border border-zinc-800 p-6 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
-              <h3 className="text-base font-bold text-white font-outfit">
+        <div className="fixed inset-0 z-50 bg-cream-50/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-white rounded-3xl border border-ink-900/10 p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-ink-900/10 pb-3">
+              <h3 className="text-base font-bold text-ink-900 font-outfit">
                 Cambiar Estado de {updatingOrder.orderNumber}
               </h3>
-              <button onClick={() => setUpdatingOrder(null)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setUpdatingOrder(null)} className="text-ink-500 hover:text-ink-900">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Estado del Pedido</label>
+                <label className="block text-xs font-semibold text-ink-700 mb-1">Estado del Pedido</label>
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-800 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:ring-1 focus:ring-zinc-100 focus:outline-none"
+                  className="w-full bg-cream-50 border border-ink-900/10 text-xs text-ink-900 rounded-2xl px-3 py-2.5 focus:ring-1 focus:ring-lime-400 focus:outline-none"
                 >
                   <option value="PENDING">PENDING (Pendiente)</option>
                   <option value="PAID">PAID (Pagado)</option>
@@ -343,13 +343,13 @@ export const OrdersManagerClient: React.FC<OrdersManagerClientProps> = ({ orders
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Código de Seguimiento ({updatingOrder.courier})</label>
+                <label className="block text-xs font-semibold text-ink-700 mb-1">Código de Seguimiento ({updatingOrder.courier})</label>
                 <input
                   type="text"
                   value={newTrackingCode}
                   onChange={(e) => setNewTrackingCode(e.target.value)}
                   placeholder="ej. AND-987654321"
-                  className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100"
+                  className="w-full px-3.5 py-2.5 bg-cream-50 border border-ink-900/10 rounded-2xl text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:ring-1 focus:ring-lime-400"
                 />
               </div>
             </div>

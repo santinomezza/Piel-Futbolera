@@ -65,7 +65,7 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
   return (
     <div className="space-y-4">
       {feedback && (
-        <div className="p-3 bg-white/5 border border-white/15 rounded-xl text-zinc-300 text-xs font-semibold flex items-center gap-2">
+        <div className="p-3 bg-ink-900/5 border border-ink-900/10 rounded-2xl text-ink-700 text-xs font-semibold flex items-center gap-2">
           <Check className="w-4 h-4 shrink-0" />
           <span>{feedback}</span>
         </div>
@@ -78,31 +78,31 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
           return (
             <div
               key={variant.id}
-              className="bg-[#161616] rounded-2xl border border-zinc-800 p-4 space-y-3"
+              className="bg-white rounded-2xl border border-ink-900/10 p-4 space-y-3"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-sm text-slate-100 truncate">{variant.product.name}</h3>
-                  <p className="text-[11px] text-slate-400 mt-0.5">{variant.product.category}</p>
+                  <h3 className="font-semibold text-sm text-ink-900 truncate">{variant.product.name}</h3>
+                  <p className="text-[11px] text-ink-500 mt-0.5">{variant.product.category}</p>
                 </div>
-                <span className="font-bold text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 text-xs shrink-0">
+                <span className="font-bold text-ink-700 bg-cream-50 px-2 py-0.5 rounded border border-ink-900/10 text-xs shrink-0">
                   {variant.size}
                 </span>
               </div>
 
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-mono text-slate-400">{variant.sku}</span>
+                <span className="font-mono text-ink-500">{variant.sku}</span>
                 {renderBadge(currentStock)}
               </div>
 
               <div className="flex items-center gap-2">
-                <label className="text-[11px] font-semibold text-slate-400 shrink-0">Stock:</label>
+                <label className="text-[11px] font-semibold text-ink-500 shrink-0">Stock:</label>
                 <input
                   type="number"
                   min="0"
                   value={currentStock}
                   onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                  className="flex-1 min-w-0 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg font-bold text-white text-sm focus:ring-1 focus:ring-zinc-100 focus:outline-none"
+                  className="flex-1 min-w-0 px-2.5 py-1.5 bg-cream-50 border border-ink-900/10 rounded-lg font-bold text-ink-900 text-sm focus:ring-1 focus:ring-lime-400 focus:outline-none"
                 />
                 <Button
                   variant="secondary"
@@ -119,11 +119,11 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-[#161616] rounded-3xl border border-zinc-800 overflow-hidden shadow-xl">
+      <div className="hidden md:block bg-white rounded-3xl border border-ink-900/10 overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-zinc-800 text-slate-400 uppercase text-[10px] tracking-wider bg-zinc-900/60">
+              <tr className="border-b border-ink-900/10 text-ink-500 uppercase text-[10px] tracking-wider bg-cream-50/60">
                 <th className="py-3.5 px-4">Camiseta</th>
                 <th className="py-3.5 px-4">Categoría</th>
                 <th className="py-3.5 px-4">Talle</th>
@@ -133,27 +133,27 @@ export const StockManagerClient: React.FC<StockManagerClientProps> = ({ variants
                 <th className="py-3.5 px-4 text-right">Acción</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/60">
+            <tbody className="divide-y divide-ink-900/8/60">
               {initialVariants.map((variant) => {
                 const currentStock = stockMap[variant.id]
 
                 return (
-                  <tr key={variant.id} className="hover:bg-zinc-900/40 transition">
-                    <td className="py-3 px-4 font-semibold text-slate-100">{variant.product.name}</td>
-                    <td className="py-3 px-4 text-slate-400">{variant.product.category}</td>
+                  <tr key={variant.id} className="hover:bg-cream-50/40 transition">
+                    <td className="py-3 px-4 font-semibold text-ink-900">{variant.product.name}</td>
+                    <td className="py-3 px-4 text-ink-500">{variant.product.category}</td>
                     <td className="py-3 px-4">
-                      <span className="font-bold text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
+                      <span className="font-bold text-ink-700 bg-cream-50 px-2 py-0.5 rounded border border-ink-900/10">
                         {variant.size}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-slate-400">{variant.sku}</td>
+                    <td className="py-3 px-4 font-mono text-ink-500">{variant.sku}</td>
                     <td className="py-3 px-4">
                       <input
                         type="number"
                         min="0"
                         value={currentStock}
                         onChange={(e) => handleStockChange(variant.id, e.target.value)}
-                        className="w-20 px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg font-bold text-white text-xs focus:ring-1 focus:ring-zinc-100 focus:outline-none"
+                        className="w-20 px-2.5 py-1 bg-cream-50 border border-ink-900/10 rounded-lg font-bold text-ink-900 text-xs focus:ring-1 focus:ring-lime-400 focus:outline-none"
                       />
                     </td>
                     <td className="py-3 px-4">{renderBadge(currentStock)}</td>

@@ -27,13 +27,13 @@ export default async function AdminStockPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#050505] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-cream-50 text-ink-900 flex flex-col">
       <AdminHeader />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-white font-outfit">Control de Stock por Variante</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-ink-900 font-outfit">Control de Stock por Variante</h1>
+          <p className="text-xs text-ink-500 mt-1">
             Actualizá en tiempo real las existencias por talle para evitar sobreventas.
           </p>
         </div>

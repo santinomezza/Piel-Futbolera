@@ -302,15 +302,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-[#161616] border border-zinc-800 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      <div className="bg-white border border-ink-900/10 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
         
         {/* Modal Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-zinc-800 bg-[#0A0A0A]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-ink-900/10 bg-cream-50">
           <div>
-            <h2 className="text-lg font-bold text-white font-outfit">
+            <h2 className="text-lg font-bold text-ink-900 font-outfit">
               {initialProduct?.id ? 'Editar Producto' : 'Alta de Producto Nuevo'}
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-ink-500">
               {initialProduct?.id
                 ? 'Modificá la información y stock que se muestran en la tienda pública.'
                 : 'Cargá los detalles del producto para publicarlo al instante.'}
@@ -318,7 +318,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-zinc-800 transition"
+            className="p-2 text-ink-500 hover:text-ink-900 rounded-2xl hover:bg-cream-200 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -335,19 +335,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Basic Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5 sm:col-span-2">
-              <label className="text-xs font-bold text-slate-300">Nombre del Producto *</label>
+              <label className="text-xs font-bold text-ink-700">Nombre del Producto *</label>
               <input
                 type="text"
                 required
                 placeholder="ej: Camiseta Albiceleste Titular 2026"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300">Precio (ARS $) *</label>
+              <label className="text-xs font-bold text-ink-700">Precio (ARS $) *</label>
               <input
                 type="number"
                 required
@@ -355,16 +355,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 step="100"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100 font-mono"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900 font-mono"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300">Categoría *</label>
+              <label className="text-xs font-bold text-ink-700">Categoría *</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
               >
                 <option value="TITULAR">Camiseta Titular</option>
                 <option value="SUPLENTE">Camiseta Suplente</option>
@@ -376,27 +376,27 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-300">Descripción del Producto *</label>
+            <label className="text-xs font-bold text-ink-700">Descripción del Producto *</label>
             <textarea
               required
               rows={3}
               placeholder="Detalles sobre materiales, tejido, escudos y confección..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100 resize-none"
+              className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900 resize-none"
             />
           </div>
 
           {/* Country & League with Inline Creation */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#121927] border border-zinc-800/80 rounded-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-cream-100 border border-ink-900/10/80 rounded-2xl">
             {/* Country Selector */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label className="text-xs font-bold text-slate-300">País *</label>
+                <label className="text-xs font-bold text-ink-700">País *</label>
                 <button
                   type="button"
                   onClick={() => setShowNewCountryModal(true)}
-                  className="text-[11px] text-zinc-300 hover:text-zinc-400 font-semibold flex items-center gap-1"
+                  className="text-[11px] text-ink-700 hover:text-ink-500 font-semibold flex items-center gap-1"
                 >
                   <Plus className="w-3 h-3" />
                   <span>Crear País</span>
@@ -405,7 +405,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.countryId}
                 onChange={handleCountryChange}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
               >
                 <option value="" disabled>Seleccionar País</option>
                 {countries.map((c) => (
@@ -413,7 +413,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     {c.name} {c.code ? `(${c.code})` : ''}
                   </option>
                 ))}
-                <option value="__NEW_COUNTRY__" className="text-zinc-300 font-bold">
+                <option value="__NEW_COUNTRY__" className="text-ink-700 font-bold">
                   + Crear Nuevo País...
                 </option>
               </select>
@@ -422,7 +422,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             {/* League Selector */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label className="text-xs font-bold text-slate-300">Liga (Opcional para Selección)</label>
+                <label className="text-xs font-bold text-ink-700">Liga (Opcional para Selección)</label>
                 <button
                   type="button"
                   onClick={() => {
@@ -432,7 +432,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     }
                     setShowNewLeagueModal(true)
                   }}
-                  className="text-[11px] text-zinc-300 hover:text-zinc-400 font-semibold flex items-center gap-1"
+                  className="text-[11px] text-ink-700 hover:text-ink-500 font-semibold flex items-center gap-1"
                 >
                   <Plus className="w-3 h-3" />
                   <span>Crear Liga</span>
@@ -441,7 +441,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <select
                 value={formData.leagueId || '__NONE__'}
                 onChange={handleLeagueChange}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
               >
                 <option value="__NONE__">Sin Liga / Selección Nacional</option>
                 {availableLeaguesForCountry.map((l) => (
@@ -449,7 +449,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     {l.name}
                   </option>
                 ))}
-                <option value="__NEW_LEAGUE__" className="text-zinc-300 font-bold">
+                <option value="__NEW_LEAGUE__" className="text-ink-700 font-bold">
                   + Crear Nueva Liga en este país...
                 </option>
               </select>
@@ -459,11 +459,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Status & Badge */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300">Estado de Disponibilidad</label>
+              <label className="text-xs font-bold text-ink-700">Estado de Disponibilidad</label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
               >
                 <option value="IN_STOCK">En Stock</option>
                 <option value="LOW_STOCK">Últimas Unidades</option>
@@ -472,24 +472,24 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300">Etiqueta Visual / Badge (Opcional)</label>
+              <label className="text-xs font-bold text-ink-700">Etiqueta Visual / Badge (Opcional)</label>
               <input
                 type="text"
                 placeholder="ej: NUEVO, RETRO, POPULAR, DESTACADO"
                 value={formData.badge || ''}
                 onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                className="w-full bg-[#161616] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100"
+                className="w-full bg-white border border-ink-900/10 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
               />
             </div>
           </div>
 
           {/* Stock Per Size Grid */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-300 block">Stock Disponible por Talle *</label>
+            <label className="text-xs font-bold text-ink-700 block">Stock Disponible por Talle *</label>
             <div className="grid grid-cols-5 gap-3">
               {formData.variants.map((v, index) => (
-                <div key={v.size} className="p-3 bg-[#121927] border border-zinc-800 rounded-2xl text-center space-y-1">
-                  <span className="text-xs font-black text-zinc-300 block">{v.size}</span>
+                <div key={v.size} className="p-3 bg-cream-100 border border-ink-900/10 rounded-2xl text-center space-y-1">
+                  <span className="text-xs font-black text-ink-700 block">{v.size}</span>
                   <input
                     type="number"
                     min="0"
@@ -500,7 +500,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       updatedVariants[index].stock = newStock
                       setFormData({ ...formData, variants: updatedVariants })
                     }}
-                    className="w-full bg-[#1A2333] border border-zinc-700 rounded-xl py-1 px-2 text-center text-xs text-white font-mono focus:outline-none focus:border-zinc-100"
+                    className="w-full bg-cream-50 border border-ink-900/15 rounded-2xl py-1 px-2 text-center text-xs text-ink-900 font-mono focus:outline-none focus:border-ink-900"
                   />
                 </div>
               ))}
@@ -509,12 +509,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
           {/* Images Upload & Previews */}
           <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-300 block">
+            <label className="text-xs font-bold text-ink-700 block">
               Imágenes del Producto (Subida a Almacenamiento con Preview) *
             </label>
 
             {/* Image Upload Area */}
-            <div className="relative border-2 border-dashed border-zinc-800 hover:border-white/50 rounded-2xl p-6 text-center transition bg-[#121927]/50 group">
+            <div className="relative border-2 border-dashed border-ink-900/10 hover:border-ink-900 rounded-2xl p-6 text-center transition bg-cream-100/50 group">
               <input
                 type="file"
                 multiple
@@ -525,14 +525,14 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               />
               <div className="flex flex-col items-center justify-center space-y-2 pointer-events-none">
                 {uploading ? (
-                  <Loader2 className="w-8 h-8 text-zinc-300 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-ink-700 animate-spin" />
                 ) : (
-                  <Upload className="w-8 h-8 text-slate-400 group-hover:text-zinc-300 transition" />
+                  <Upload className="w-8 h-8 text-ink-500 group-hover:text-ink-700 transition" />
                 )}
-                <p className="text-xs font-semibold text-slate-300">
+                <p className="text-xs font-semibold text-ink-700">
                   {uploading ? 'Subiendo imágenes...' : 'Hacé clic o arrastrá archivos de imagen aquí'}
                 </p>
-                <p className="text-[11px] text-slate-500">Formatos JPG, PNG, WebP (Máx 5MB por imagen)</p>
+                <p className="text-[11px] text-ink-500">Formatos JPG, PNG, WebP (Máx 5MB por imagen)</p>
               </div>
             </div>
 
@@ -542,7 +542,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 {formData.images.map((imgUrl, idx) => (
                   <div
                     key={idx}
-                    className="relative group aspect-square rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900"
+                    className="relative group aspect-square rounded-2xl overflow-hidden border border-ink-900/10 bg-cream-50"
                   >
                     <img
                       src={imgUrl}
@@ -553,7 +553,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(idx)}
-                        className="p-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl shadow-lg transition"
+                        className="p-2 bg-rose-600 hover:bg-rose-500 text-ink-900 rounded-2xl shadow-lg transition"
                         title="Eliminar imagen"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -566,18 +566,18 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           </div>
 
           {/* Modal Footer / Submit */}
-          <div className="pt-4 border-t border-zinc-800 flex justify-end gap-3">
+          <div className="pt-4 border-t border-ink-900/10 flex justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-slate-300 text-xs font-semibold rounded-xl transition border border-zinc-800"
+              className="px-5 py-2.5 bg-cream-50 hover:bg-cream-200 text-ink-700 text-xs font-semibold rounded-2xl transition border border-ink-900/10"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={saving || uploading}
-              className="px-6 py-2.5 bg-zinc-200 hover:bg-zinc-100 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-lg shadow-zinc-200/25 transition flex items-center gap-2"
+              className="px-6 py-2.5 bg-ink-900 hover:bg-ink-800 disabled:opacity-50 text-ink-900 text-xs font-bold rounded-2xl shadow-lg shadow-lime-400/30 transition flex items-center gap-2"
             >
               {saving ? (
                 <>
@@ -595,37 +595,37 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       {/* Inline Create Country Sub-Modal */}
       {showNewCountryModal && (
         <div className="fixed inset-0 z-60 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#121927] border border-zinc-800 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
-              <h3 className="text-sm font-bold text-white">Agregar Nuevo País</h3>
-              <button onClick={() => setShowNewCountryModal(false)} className="text-slate-400 hover:text-white">
+          <div className="bg-cream-100 border border-ink-900/10 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-ink-900/10 pb-3">
+              <h3 className="text-sm font-bold text-ink-900">Agregar Nuevo País</h3>
+              <button onClick={() => setShowNewCountryModal(false)} className="text-ink-500 hover:text-ink-900">
                 <X className="w-4 h-4" />
               </button>
             </div>
             <form onSubmit={handleCreateCountryInline} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Nombre del País *</label>
+                <label className="text-xs font-bold text-ink-700">Nombre del País *</label>
                 <input
                   type="text"
                   required
                   placeholder="ej: Alemania, Francia, Colombia"
                   value={newCountryName}
                   onChange={(e) => setNewCountryName(e.target.value)}
-                  className="w-full bg-[#1A2333] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100"
+                  className="w-full bg-cream-50 border border-ink-900/15 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
                 />
               </div>
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowNewCountryModal(false)}
-                  className="px-4 py-2 bg-zinc-900 text-slate-300 text-xs font-semibold rounded-xl"
+                  className="px-4 py-2 bg-cream-50 text-ink-700 text-xs font-semibold rounded-2xl"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={creatingCountry}
-                  className="px-4 py-2 bg-zinc-200 text-white text-xs font-bold rounded-xl"
+                  className="px-4 py-2 bg-ink-900 text-ink-900 text-xs font-bold rounded-2xl"
                 >
                   {creatingCountry ? 'Guardando...' : 'Crear País'}
                 </button>
@@ -638,33 +638,33 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       {/* Inline Create League Sub-Modal */}
       {showNewLeagueModal && (
         <div className="fixed inset-0 z-60 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#121927] border border-zinc-800 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
-              <h3 className="text-sm font-bold text-white">Agregar Nueva Liga</h3>
-              <button onClick={() => setShowNewLeagueModal(false)} className="text-slate-400 hover:text-white">
+          <div className="bg-cream-100 border border-ink-900/10 p-6 rounded-3xl w-full max-w-md space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-ink-900/10 pb-3">
+              <h3 className="text-sm font-bold text-ink-900">Agregar Nueva Liga</h3>
+              <button onClick={() => setShowNewLeagueModal(false)} className="text-ink-500 hover:text-ink-900">
                 <X className="w-4 h-4" />
               </button>
             </div>
             <form onSubmit={handleCreateLeagueInline} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Nombre de la Liga *</label>
+                <label className="text-xs font-bold text-ink-700">Nombre de la Liga *</label>
                 <input
                   type="text"
                   required
                   placeholder="ej: Bundesliga, Serie A, MLS"
                   value={newLeagueName}
                   onChange={(e) => setNewLeagueName(e.target.value)}
-                  className="w-full bg-[#1A2333] border border-zinc-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100"
+                  className="w-full bg-cream-50 border border-ink-900/15 rounded-2xl px-3.5 py-2.5 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300">Color Distintivo (Opcional)</label>
+                <label className="text-xs font-bold text-ink-700">Color Distintivo (Opcional)</label>
                 <input
                   type="color"
                   value={newLeagueColor}
                   onChange={(e) => setNewLeagueColor(e.target.value)}
-                  className="w-full h-10 bg-[#1A2333] border border-zinc-700 rounded-xl p-1 cursor-pointer"
+                  className="w-full h-10 bg-cream-50 border border-ink-900/15 rounded-2xl p-1 cursor-pointer"
                 />
               </div>
 
@@ -672,14 +672,14 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowNewLeagueModal(false)}
-                  className="px-4 py-2 bg-zinc-900 text-slate-300 text-xs font-semibold rounded-xl"
+                  className="px-4 py-2 bg-cream-50 text-ink-700 text-xs font-semibold rounded-2xl"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={creatingLeague}
-                  className="px-4 py-2 bg-zinc-200 text-white text-xs font-bold rounded-xl"
+                  className="px-4 py-2 bg-ink-900 text-ink-900 text-xs font-bold rounded-2xl"
                 >
                   {creatingLeague ? 'Guardando...' : 'Crear Liga'}
                 </button>

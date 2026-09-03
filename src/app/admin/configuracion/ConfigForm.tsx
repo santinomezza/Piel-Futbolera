@@ -81,10 +81,10 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
     <form onSubmit={handleSave} className="space-y-4">
       {feedback && (
         <div
-          className={`p-3 rounded-xl text-xs font-semibold flex items-center gap-2 ${
+          className={`p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 ${
             feedback.type === 'ok'
-              ? 'bg-white/5 border border-white/15 text-zinc-300'
-              : 'bg-rose-500/10 border border-rose-500/30 text-rose-400'
+              ? 'bg-ink-900/5 border border-ink-900/10 text-ink-700'
+              : 'bg-rose-50 border border-rose-300 text-rose-700'
           }`}
         >
           {feedback.type === 'ok' ? <Check className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
@@ -92,11 +92,11 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
         </div>
       )}
 
-      <div className="bg-[#161616] rounded-3xl border border-zinc-800 p-6 shadow-xl space-y-6">
+      <div className="bg-white rounded-3xl border border-ink-900/10 p-6 shadow-xl space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h2 className="text-lg font-bold text-white font-outfit">Mercado Pago</h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h2 className="text-lg font-bold text-ink-900 font-outfit">Mercado Pago</h2>
+            <p className="text-xs text-ink-500 mt-0.5">
               Credenciales de la cuenta de MP que procesará los cobros.
             </p>
           </div>
@@ -108,7 +108,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
         </div>
 
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-300">
+          <label className="block text-xs font-semibold text-ink-700">
             Public Key
           </label>
           <div className="flex gap-2">
@@ -117,7 +117,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
               value={publicKey}
               onChange={(e) => setPublicKey(e.target.value)}
               placeholder="APP_USR-xxxxxxxx-xxxxxx-xxxxxx-xxxxxxxx"
-              className="flex-1 px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 font-mono"
+              className="flex-1 px-3.5 py-2.5 bg-cream-50 border border-ink-900/10 rounded-2xl text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:ring-1 focus:ring-lime-400 font-mono"
             />
             {mpAccessTokenSet && (
               <Button type="button" variant="outline" size="md" onClick={clearPublicKey}>
@@ -125,13 +125,13 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
               </Button>
             )}
           </div>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-[11px] text-ink-500">
             Identifica tu cuenta públicamente. Se usa en el frontend para inicializar el SDK de MP.
           </p>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-300">
+          <label className="block text-xs font-semibold text-ink-700">
             Access Token (privado)
           </label>
           <div className="flex gap-2">
@@ -141,12 +141,12 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
                 value={accessToken}
                 onChange={(e) => setAccessToken(e.target.value)}
                 placeholder={mpAccessTokenSet ? '••••••••••••••••' : 'APP_USR-xxxxxxxx'}
-                className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 font-mono pr-10"
+                className="w-full px-3.5 py-2.5 bg-cream-50 border border-ink-900/10 rounded-2xl text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:ring-1 focus:ring-lime-400 font-mono pr-10"
               />
               <button
                 type="button"
                 onClick={() => setShowToken((v) => !v)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-slate-500 hover:text-slate-300"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-ink-500 hover:text-ink-700"
               >
                 {showToken ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
               </button>
@@ -157,17 +157,17 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ mpPublicKey, mpAccessTok
               </Button>
             )}
           </div>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-[11px] text-ink-500">
             Se guarda encriptado (AES-256-GCM) en la base de datos. Dejá vacío para mantener el actual.
           </p>
         </div>
 
-        <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] text-amber-300 space-y-1">
+        <div className="p-3 bg-amber-50 border border-amber-300 rounded-2xl text-[11px] text-amber-700 space-y-1">
           <p className="font-bold flex items-center gap-1.5">
             <AlertTriangle className="w-3.5 h-3.5" />
             Importante
           </p>
-          <p className="text-amber-200/80">
+          <p className="text-amber-700/80">
             Las credenciales de producción y test son distintas. Usá las de test (sandbox) para validar primero.
             Configurá el webhook en tu panel de MP apuntando a <code className="font-mono">/api/webhooks/mercadopago</code>.
           </p>

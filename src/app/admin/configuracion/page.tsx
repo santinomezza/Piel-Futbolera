@@ -20,13 +20,13 @@ export default async function AdminConfigPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#050505] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-cream-50 text-ink-900 flex flex-col">
       <AdminHeader />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-white font-outfit">Configuración de la Tienda</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-ink-900 font-outfit">Configuración de la Tienda</h1>
+          <p className="text-xs text-ink-500 mt-1">
             Gestioná las credenciales de Mercado Pago y otros ajustes del sistema.
           </p>
         </div>

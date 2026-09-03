@@ -2,7 +2,7 @@ import React from 'react'
 import { clsx } from 'clsx'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'danger' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline' | 'danger' | 'ghost' | 'inverse'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
   children: React.ReactNode
@@ -10,21 +10,22 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', isLoading = false, children, className, disabled, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]'
+    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-400 focus:ring-offset-cream-50 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.97]'
 
     const sizeStyles = {
-      sm: 'px-3 py-1.5 text-xs gap-1.5',
+      sm: 'px-4 py-2 text-xs gap-1.5',
       md: 'px-5 py-2.5 text-sm gap-2',
-      lg: 'px-7 py-3.5 text-base gap-2.5 font-semibold',
+      lg: 'px-7 py-3.5 text-sm gap-2.5',
     }
 
     const variantStyles = {
-      primary: 'bg-white text-black hover:bg-slate-200 shadow-md hover:shadow-lg',
-      secondary: 'bg-zinc-800 hover:bg-zinc-700 text-slate-100 border border-zinc-700 shadow-md',
-      accent: 'bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold shadow-lg shadow-amber-500/20',
-      outline: 'bg-transparent hover:bg-white/5 text-slate-200 border border-white/15 hover:border-white/30',
-      danger: 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20',
-      ghost: 'bg-transparent hover:bg-white/5 text-slate-300 hover:text-white',
+      primary: 'bg-lime-400 text-ink-900 hover:bg-lime-500 hover:shadow-[0_8px_24px_rgba(197,248,42,0.4)] hover:-translate-y-0.5',
+      secondary: 'bg-ink-900 text-cream-50 hover:bg-ink-800 hover:-translate-y-0.5',
+      accent: 'bg-ink-900 text-lime-400 border border-lime-400/40 hover:bg-ink-800',
+      outline: 'bg-transparent text-ink-900 border border-ink-900/15 hover:border-ink-900 hover:bg-ink-900/[0.03]',
+      danger: 'bg-rose-500 hover:bg-rose-600 text-ink-900 shadow-md',
+      ghost: 'bg-transparent text-ink-700 hover:bg-ink-100 hover:text-ink-900',
+      inverse: 'bg-cream-50 text-ink-900 hover:bg-white hover:-translate-y-0.5',
     }
 
     return (

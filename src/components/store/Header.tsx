@@ -42,33 +42,31 @@ function HeaderContent() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 glass-nav border-b border-zinc-800">
+      <header className="sticky top-0 z-40 glass-nav">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            
-            {/* Brand Logo */}
+
             <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center gap-3 group">
-                <div className="relative w-11 h-11 overflow-hidden rounded-xl shadow-lg shadow-white/10 group-hover:scale-105 transition bg-zinc-900 border border-zinc-800">
-                  <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="44px" />
+              <Link href="/" className="flex items-center gap-2.5 group">
+                <div className="relative w-10 h-10 overflow-hidden rounded-2xl shadow-sm border border-ink-900/10 group-hover:rotate-3 transition-transform">
+                  <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
                 </div>
                 <div>
-                  <span className="font-extrabold text-xl tracking-tight text-white font-outfit leading-none block">
-                    PielFutbolera
+                  <span className="font-black text-lg tracking-tight text-ink-900 font-outfit leading-none block">
+                    Piel<span className="text-lime-500">Futbolera</span>
                   </span>
-                  <span className="block text-[10px] uppercase font-bold text-zinc-300 mt-1 tracking-widest">
-                    Camisetas
+                  <span className="block text-[9px] uppercase font-bold text-ink-500 mt-0.5 tracking-[0.18em]">
+                    Premium Football Kits
                   </span>
                 </div>
               </Link>
 
-              {/* Desktop Category Nav */}
               <nav className="hidden md:flex items-center gap-1">
                 {categories.map((cat) => (
                   <Link
                     key={cat.name}
                     href={cat.href}
-                    className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-zinc-800/60 rounded-lg transition"
+                    className="px-3.5 py-2 text-sm font-semibold text-ink-700 hover:text-ink-900 hover:bg-ink-900/[0.04] rounded-full transition"
                   >
                     {cat.name}
                   </Link>
@@ -76,71 +74,65 @@ function HeaderContent() {
               </nav>
             </div>
 
-            {/* Search Bar */}
             <form onSubmit={handleSearchSubmit} className="hidden lg:flex flex-1 max-w-sm mx-6">
               <div className="relative w-full">
                 <input
                   type="text"
-                  placeholder="Buscar camiseta (ej. Albiceleste, 1986)..."
+                  placeholder="Buscar camiseta, liga, año..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-zinc-900/80 border border-zinc-800 focus:border-zinc-100 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-zinc-100 transition"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-ink-900/10 focus:border-ink-900 rounded-full text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:ring-2 focus:ring-lime-400/30 transition"
                 />
-                <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500" />
+                <Search className="absolute left-3.5 top-3 w-4 h-4 text-ink-500" />
               </div>
             </form>
 
-            {/* User Actions */}
-            <div className="flex items-center gap-3">
-              {/* Admin Panel button */}
+            <div className="flex items-center gap-2">
               <Link
                 href="/admin"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 border border-zinc-800 hover:border-zinc-700 rounded-xl transition"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-ink-700 hover:text-ink-900 rounded-full transition"
                 title="Panel de Administración"
               >
-                <Shield className="w-3.5 h-3.5 text-zinc-300" />
-                <span>Panel Dueño</span>
+                <Shield className="w-3.5 h-3.5" />
+                <span>Admin</span>
               </Link>
 
-              {/* Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-slate-200 rounded-xl transition flex items-center gap-2"
+                className="relative p-2.5 bg-ink-900 hover:bg-ink-800 text-cream-50 rounded-full transition flex items-center gap-2"
                 aria-label="Abrir carrito"
               >
-                <ShoppingBag className="w-5 h-5 text-zinc-300" />
+                <ShoppingBag className="w-4 h-4" />
                 <span className="text-xs font-bold hidden sm:inline">Carrito</span>
                 {totalItems > 0 && (
-                  <span className="w-5 h-5 bg-zinc-100 text-zinc-900 text-[11px] font-black rounded-full flex items-center justify-center animate-pulse-glow">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-lime-400 text-ink-900 text-[10px] font-black rounded-full flex items-center justify-center">
                     {totalItems}
                   </span>
                 )}
               </button>
 
-              {/* Mobile menu button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-slate-400 hover:text-white rounded-lg"
+                className="md:hidden p-2 text-ink-700 hover:text-ink-900 rounded-full"
               >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Dropdown Nav */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-zinc-800 bg-[#161616] px-4 py-4 space-y-3">
+          <div className="md:hidden border-t border-ink-900/10 bg-cream-50 px-4 py-4 space-y-3">
             <form onSubmit={handleSearchSubmit} className="mb-3">
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Buscar camiseta..."
+                  placeholder="Buscar..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-slate-200 placeholder-slate-500"
+                  className="w-full pl-9 pr-4 py-2.5 bg-white border border-ink-900/10 rounded-full text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
                 />
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
+                <Search className="absolute left-3.5 top-3 w-4 h-4 text-ink-500" />
               </div>
             </form>
 
@@ -150,7 +142,7 @@ function HeaderContent() {
                   key={cat.name}
                   href={cat.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-medium text-slate-300 hover:bg-zinc-800 rounded-lg"
+                  className="px-4 py-2.5 text-sm font-semibold text-ink-700 hover:bg-white hover:text-ink-900 rounded-full"
                 >
                   {cat.name}
                 </Link>
@@ -158,7 +150,7 @@ function HeaderContent() {
               <Link
                 href="/admin"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 text-sm font-semibold text-zinc-300 hover:bg-zinc-800 rounded-lg flex items-center gap-2"
+                className="px-4 py-2.5 text-sm font-semibold text-ink-700 hover:bg-white rounded-full flex items-center gap-2"
               >
                 <Shield className="w-4 h-4" />
                 Panel Admin
@@ -168,7 +160,6 @@ function HeaderContent() {
         )}
       </header>
 
-      {/* Slide-over Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   )
@@ -177,12 +168,12 @@ function HeaderContent() {
 export const Header: React.FC = () => {
   return (
     <Suspense fallback={
-      <header className="sticky top-0 z-40 glass-nav border-b border-zinc-800 h-20 flex items-center justify-between px-8 text-white font-bold font-outfit">
+      <header className="sticky top-0 z-40 glass-nav h-20 flex items-center px-8">
         <Link href="/" className="flex items-center gap-2">
-          <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800">
+          <div className="relative w-10 h-10 overflow-hidden rounded-2xl bg-white border border-ink-900/10">
             <Image src="/logo.jpg" alt="PielFutbolera" fill className="object-cover" sizes="40px" />
           </div>
-          <span className="text-2xl font-black">PielFutbolera</span>
+          <span className="text-lg font-black text-ink-900 font-outfit">Piel<span className="text-lime-500">Futbolera</span></span>
         </Link>
       </header>
     }>

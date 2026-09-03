@@ -83,35 +83,35 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
   const isPending = order.status === 'PENDING' && !isApproved
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
+    <div className="min-h-screen flex flex-col bg-cream-50">
       <Header />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-        <div className="text-center space-y-4 bg-[#161616] p-8 rounded-3xl border border-zinc-800 shadow-xl">
+        <div className="text-center space-y-4 bg-white p-8 rounded-3xl border border-ink-900/10 shadow-xl">
           {isApproved ? (
-            <div className="w-16 h-16 bg-white/5 text-zinc-300 rounded-full flex items-center justify-center mx-auto border border-white/10">
+            <div className="w-16 h-16 bg-white/5 text-ink-700 rounded-full flex items-center justify-center mx-auto border border-white/10">
               <CheckCircle2 className="w-10 h-10" />
             </div>
           ) : isPending ? (
-            <div className="w-16 h-16 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto border border-amber-500/20">
+            <div className="w-16 h-16 bg-amber-50 text-amber-700 rounded-full flex items-center justify-center mx-auto border border-amber-300">
               <Clock className="w-10 h-10" />
             </div>
           ) : (
-            <div className="w-16 h-16 bg-rose-500/10 text-rose-400 rounded-full flex items-center justify-center mx-auto border border-rose-500/20">
+            <div className="w-16 h-16 bg-rose-50 text-rose-700 rounded-full flex items-center justify-center mx-auto border border-rose-300">
               <XCircle className="w-10 h-10" />
             </div>
           )}
 
           <div>
-            <h1 className="text-3xl font-extrabold text-white font-outfit">
+            <h1 className="text-3xl font-extrabold text-ink-900 font-outfit">
               {isApproved
                 ? '¡Gracias por tu compra!'
                 : isPending
                 ? 'Pago Pendiente de Acreditación'
                 : 'Pago No Completado'}
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
-              Número de Orden: <strong className="text-zinc-300 font-mono">{order.orderNumber}</strong>
+            <p className="text-sm text-ink-500 mt-1">
+              Número de Orden: <strong className="text-ink-700 font-mono">{order.orderNumber}</strong>
             </p>
           </div>
 
@@ -126,49 +126,49 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
-            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
-              <Truck className="w-4 h-4 text-zinc-300" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="bg-white p-6 rounded-3xl border border-ink-900/10 space-y-4">
+            <div className="flex items-center gap-2 font-bold text-ink-700 border-b border-ink-900/10 pb-3 text-sm">
+              <Truck className="w-4 h-4 text-ink-700" />
               <span>Datos del Envío ({order.courier})</span>
             </div>
-            <div className="space-y-2 text-xs text-slate-300">
+            <div className="space-y-2 text-xs text-ink-700">
               <p><strong>Comprador:</strong> {order.customer.firstName} {order.customer.lastName}</p>
               <p><strong>Email:</strong> {order.customer.email}</p>
               <p><strong>Teléfono:</strong> {order.customer.phone}</p>
               <p><strong>Domicilio:</strong> {addressData.address || order.customer.address}, {addressData.city || order.customer.city} ({addressData.postalCode || order.customer.postalCode})</p>
               {order.trackingCode && (
-                <div className="pt-3 border-t border-zinc-800 bg-white/5 p-3 rounded-xl border border-white/10">
-                  <span className="text-[11px] uppercase font-bold text-zinc-300 block">Código de Seguimiento {order.courier}:</span>
-                  <span className="font-mono font-bold text-sm text-white">{order.trackingCode}</span>
+                <div className="pt-3 border-t border-ink-900/10 bg-white/5 p-3 rounded-2xl border border-white/10">
+                  <span className="text-[11px] uppercase font-bold text-ink-700 block">Código de Seguimiento {order.courier}:</span>
+                  <span className="font-mono font-bold text-sm text-ink-900">{order.trackingCode}</span>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
-            <div className="flex items-center gap-2 font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
-              <Package className="w-4 h-4 text-zinc-300" />
+          <div className="bg-white p-6 rounded-3xl border border-ink-900/10 space-y-4">
+            <div className="flex items-center gap-2 font-bold text-ink-700 border-b border-ink-900/10 pb-3 text-sm">
+              <Package className="w-4 h-4 text-ink-700" />
               <span>Resumen Financiero</span>
             </div>
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-ink-500">
                 <span>Subtotal productos:</span>
-                <span className="text-slate-200">${order.subtotal.toLocaleString('es-AR')}</span>
+                <span className="text-ink-700">${order.subtotal.toLocaleString('es-AR')}</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-ink-500">
                 <span>Costo de envío:</span>
-                <span className="text-slate-200">${order.shippingFee.toLocaleString('es-AR')}</span>
+                <span className="text-ink-700">${order.shippingFee.toLocaleString('es-AR')}</span>
               </div>
-              <div className="pt-2 border-t border-zinc-800 flex justify-between text-base font-bold text-white">
+              <div className="pt-2 border-t border-ink-900/10 flex justify-between text-base font-bold text-ink-900">
                 <span>Total Abonado:</span>
-                <span className="text-zinc-300 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
+                <span className="text-ink-700 font-outfit">${order.totalAmount.toLocaleString('es-AR')}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#161616] p-6 rounded-3xl border border-zinc-800 space-y-4">
-          <h3 className="font-bold text-slate-200 border-b border-zinc-800 pb-3 text-sm">
+        <div className="bg-white p-6 rounded-3xl border border-ink-900/10 space-y-4">
+          <h3 className="font-bold text-ink-700 border-b border-ink-900/10 pb-3 text-sm">
             Productos en la Orden
           </h3>
           <div className="space-y-3">
@@ -181,15 +181,15 @@ export default async function OrderConfirmationPage({ params, searchParams }: Co
               }
               const mainImg = imgs[0] || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80'
               return (
-                <div key={item.id} className="flex gap-4 items-center p-3 bg-zinc-900/60 rounded-2xl border border-zinc-800">
-                  <div className="relative w-14 h-16 bg-zinc-900 rounded-xl overflow-hidden shrink-0 border border-zinc-800">
+                <div key={item.id} className="flex gap-4 items-center p-3 bg-cream-50/60 rounded-2xl border border-ink-900/10">
+                  <div className="relative w-14 h-16 bg-cream-50 rounded-2xl overflow-hidden shrink-0 border border-ink-900/10">
                     <Image src={mainImg} alt={item.variant.product.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-sm text-slate-100">{item.variant.product.name}</h4>
-                    <span className="text-xs text-slate-400">Talle: <strong>{item.variant.size}</strong> | Cantidad: {item.quantity}</span>
+                    <h4 className="font-semibold text-sm text-ink-900">{item.variant.product.name}</h4>
+                    <span className="text-xs text-ink-500">Talle: <strong>{item.variant.size}</strong> | Cantidad: {item.quantity}</span>
                   </div>
-                  <span className="text-sm font-bold text-slate-200 font-outfit">
+                  <span className="text-sm font-bold text-ink-700 font-outfit">
                     ${(item.unitPrice * item.quantity).toLocaleString('es-AR')}
                   </span>
                 </div>

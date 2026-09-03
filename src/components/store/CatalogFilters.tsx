@@ -37,14 +37,12 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
     setSearchInputValue(activeQuery)
   }, [activeQuery])
 
-  // Filter leagues by active country if selected
   const availableLeagues = activeCountry
     ? leagues.filter((l) => l.countryId === activeCountry)
     : leagues
 
   const updateFilters = (newParams: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString())
-
     Object.entries(newParams).forEach(([key, val]) => {
       if (val && val !== 'ALL' && val.trim() !== '') {
         params.set(key, val)
@@ -52,7 +50,6 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         params.delete(key)
       }
     })
-
     const queryString = params.toString()
     router.push(queryString ? `/?${queryString}#catalogo` : '/#catalogo', { scroll: false })
   }
@@ -70,30 +67,28 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
   const hasActiveFilters = Boolean(activeCountry || activeLeague || activeCategory || activeQuery)
 
   return (
-    <div className="space-y-4 bg-[#161616] border border-zinc-800/80 rounded-3xl p-5 sm:p-6 shadow-xl">
-      
-      {/* Header & Quick Search */}
+    <div className="space-y-5 bg-white border border-ink-900/8 rounded-3xl p-5 sm:p-7 shadow-[0_4px_18px_rgba(10,10,10,0.04)]">
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-white/5 rounded-xl text-zinc-300">
-            <Filter className="w-5 h-5" />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-ink-900 text-lime-400 rounded-full flex items-center justify-center">
+            <Filter className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-bold text-white font-outfit text-lg">Explorador de Camisetas</h3>
-            <p className="text-xs text-slate-400">Filtrá por País, Liga, Categoría o Búsqueda Libre</p>
+            <h3 className="font-black text-ink-900 font-outfit text-lg">Explorá el catálogo</h3>
+            <p className="text-xs text-ink-500">Filtrá por país, liga, categoría o búsqueda libre.</p>
           </div>
         </div>
 
-        {/* Free text search bar */}
         <form onSubmit={handleSearchSubmit} className="relative w-full md:w-80">
           <input
             type="text"
-            placeholder="Buscar equipo, jugador o año (ej: 1986)..."
+            placeholder="Buscar equipo, jugador o año..."
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
-            className="w-full pl-9 pr-10 py-2.5 bg-zinc-900 border border-zinc-800 focus:border-zinc-100 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition"
+            className="w-full pl-10 pr-10 py-3 bg-cream-50 border border-ink-900/10 focus:border-ink-900 rounded-full text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:ring-2 focus:ring-lime-400/30 transition"
           />
-          <Search className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-ink-500" />
           {searchInputValue && (
             <button
               type="button"
@@ -101,7 +96,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
                 setSearchInputValue('')
                 updateFilters({ q: null })
               }}
-              className="absolute right-3 top-3 text-slate-500 hover:text-slate-200"
+              className="absolute right-3 top-3.5 text-ink-500 hover:text-ink-900"
             >
               <X className="w-4 h-4" />
             </button>
@@ -109,113 +104,96 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
         </form>
       </div>
 
-      {/* Selectors Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-        
-        {/* Country Selector */}
-        <div className="space-y-1">
-          <label className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-            <Globe className="w-3.5 h-3.5 text-zinc-300" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+            <Globe className="w-3.5 h-3.5" />
             <span>País</span>
           </label>
           <select
             value={activeCountry}
-            onChange={(e) => {
-              const countryId = e.target.value
-              // Reset league if selected country doesn't match current league
-              updateFilters({ country: countryId, league: null })
-            }}
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
+            onChange={(e) => updateFilters({ country: e.target.value, league: null })}
+            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
           >
             <option value="">Todos los Países</option>
             {countries.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
+              <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
         </div>
 
-        {/* League Selector */}
-        <div className="space-y-1">
-          <label className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-            <Trophy className="w-3.5 h-3.5 text-amber-400" />
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+            <Trophy className="w-3.5 h-3.5" />
             <span>Liga</span>
           </label>
           <select
             value={activeLeague}
             onChange={(e) => updateFilters({ league: e.target.value })}
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
+            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
           >
             <option value="">Todas las Ligas</option>
             {availableLeagues.map((l) => (
-              <option key={l.id} value={l.id}>
-                {l.name}
-              </option>
+              <option key={l.id} value={l.id}>{l.name}</option>
             ))}
           </select>
         </div>
 
-        {/* Category Selector */}
-        <div className="space-y-1">
-          <label className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-            <Filter className="w-3.5 h-3.5 text-zinc-300" />
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-black text-ink-500 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+            <Filter className="w-3.5 h-3.5" />
             <span>Categoría</span>
           </label>
           <select
             value={activeCategory}
             onChange={(e) => updateFilters({ category: e.target.value })}
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-zinc-100 transition font-medium"
+            className="w-full bg-cream-50 border border-ink-900/10 rounded-full px-4 py-2.5 text-xs text-ink-900 focus:outline-none focus:border-ink-900 transition font-semibold"
           >
-            <option value="">Todas las Categorías</option>
+            <option value="">Todas</option>
             <option value="TITULAR">Titulares</option>
             <option value="SUPLENTE">Suplentes</option>
-            <option value="RETRO">Ediciones Retro</option>
+            <option value="RETRO">Retro</option>
             <option value="ARQUERO">Arquero</option>
           </select>
         </div>
-
       </div>
 
-      {/* Active Filter Badges & Reset */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-zinc-800/60">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-ink-900/8">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-semibold text-slate-400">Filtros activos:</span>
-            
+            <span className="text-[10px] font-black text-ink-500 uppercase tracking-wider">Filtros:</span>
+
             {activeCountry && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-400 text-xs font-semibold">
-                <Globe className="w-3 h-3" />
-                {countries.find((c) => c.id === activeCountry)?.name || 'País'}
-                <button onClick={() => updateFilters({ country: null })} className="ml-1 text-zinc-300 hover:text-white">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">
+                {countries.find((c) => c.id === activeCountry)?.name}
+                <button onClick={() => updateFilters({ country: null })} className="hover:text-lime-400">
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
 
             {activeLeague && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                <Trophy className="w-3 h-3" />
-                {leagues.find((l) => l.id === activeLeague)?.name || 'Liga'}
-                <button onClick={() => updateFilters({ league: null })} className="ml-1 text-amber-400 hover:text-white">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+                {leagues.find((l) => l.id === activeLeague)?.name}
+                <button onClick={() => updateFilters({ league: null })} className="hover:text-amber-900">
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
 
             {activeCategory && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-400 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ink-900 text-cream-50 text-xs font-bold">
                 {activeCategory}
-                <button onClick={() => updateFilters({ category: null })} className="ml-1 text-zinc-300 hover:text-white">
+                <button onClick={() => updateFilters({ category: null })} className="hover:text-lime-400">
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
 
             {activeQuery && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-100 text-lime-700 text-xs font-bold">
                 "{activeQuery}"
-                <button onClick={() => updateFilters({ q: null })} className="ml-1 text-purple-400 hover:text-white">
+                <button onClick={() => updateFilters({ q: null })} className="hover:text-lime-900">
                   <X className="w-3 h-3" />
                 </button>
               </span>
@@ -224,10 +202,10 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({ countries, leagu
 
           <button
             onClick={clearAllFilters}
-            className="text-xs font-bold text-slate-400 hover:text-zinc-300 flex items-center gap-1 transition ml-auto"
+            className="text-xs font-bold text-ink-500 hover:text-ink-900 flex items-center gap-1 transition"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Limpiar todos los filtros</span>
+            <span>Limpiar</span>
           </button>
         </div>
       )}

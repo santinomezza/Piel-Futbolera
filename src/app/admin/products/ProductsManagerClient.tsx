@@ -139,17 +139,17 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
     <div className="space-y-6">
 
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ink-900/10 pb-5">
         <div>
-          <h1 className="text-2xl font-bold text-white font-outfit">Gestión de Catálogo de Productos</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-ink-900 font-outfit">Gestión de Catálogo de Productos</h1>
+          <p className="text-xs text-ink-500 mt-1">
             Altas, ediciones y bajas (soft delete) inmediatas para la tienda pública.
           </p>
         </div>
 
         <button
           onClick={handleOpenCreateModal}
-          className="px-5 py-2.5 bg-zinc-200 hover:bg-zinc-100 text-white text-xs font-bold rounded-xl shadow-lg shadow-zinc-200/20 transition flex items-center justify-center gap-2"
+          className="px-5 py-2.5 bg-ink-900 hover:bg-ink-800 text-ink-900 text-xs font-bold rounded-2xl shadow-lg shadow-lime-400/30 transition flex items-center justify-center gap-2"
         >
           <Plus className="w-4 h-4" />
           <span>Agregar Producto Nuevo</span>
@@ -157,25 +157,25 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 bg-[#161616] rounded-2xl border border-zinc-800/80 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+      <div className="p-4 bg-white rounded-2xl border border-ink-900/10 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-ink-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Buscar por nombre, liga o país..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#161616] border border-zinc-800 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-zinc-100"
+            className="w-full bg-white border border-ink-900/10 rounded-2xl pl-9 pr-3.5 py-2 text-xs text-ink-900 placeholder-ink-500 focus:outline-none focus:border-ink-900"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           <div className="flex items-center gap-2 flex-1 sm:flex-initial">
-            <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <Filter className="w-3.5 h-3.5 text-ink-500 shrink-0" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="flex-1 sm:flex-initial bg-[#161616] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-zinc-100"
+              className="flex-1 sm:flex-initial bg-white border border-ink-900/10 rounded-2xl px-3 py-2 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
             >
               <option value="ALL">Todas las Categorías</option>
               <option value="TITULAR">Titular</option>
@@ -188,7 +188,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
           <select
             value={countryFilter}
             onChange={(e) => setCountryFilter(e.target.value)}
-            className="flex-1 sm:flex-initial bg-[#161616] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-zinc-100"
+            className="flex-1 sm:flex-initial bg-white border border-ink-900/10 rounded-2xl px-3 py-2 text-xs text-ink-900 focus:outline-none focus:border-ink-900"
           >
             <option value="ALL">Todos los Países</option>
             {countries.map((c) => (
@@ -202,7 +202,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
 
       {/* Mobile cards */}
       {filteredProducts.length === 0 ? (
-        <div className="md:hidden p-12 text-center text-slate-500 text-sm bg-[#161616] rounded-3xl border border-zinc-800/80">
+        <div className="md:hidden p-12 text-center text-ink-500 text-sm bg-white rounded-3xl border border-ink-900/10">
           No se encontraron productos en el catálogo con los filtros aplicados.
         </div>
       ) : (
@@ -212,49 +212,49 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
             return (
               <div
                 key={prod.id}
-                className={`p-4 bg-[#161616] rounded-2xl border border-zinc-800 space-y-3 ${
+                className={`p-4 bg-white rounded-2xl border border-ink-900/10 space-y-3 ${
                   prod.isDeleted ? 'opacity-50' : ''
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-14 h-14 rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden shrink-0">
+                  <div className="w-14 h-14 rounded-2xl bg-cream-50 border border-ink-900/10 overflow-hidden shrink-0">
                     {prod.images[0] ? (
                       <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-slate-600 text-[10px]">Sin imagen</div>
+                      <div className="w-full h-full flex items-center justify-center text-ink-500 text-[10px]">Sin imagen</div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-white flex items-center gap-2 flex-wrap">
+                    <div className="font-bold text-sm text-ink-900 flex items-center gap-2 flex-wrap">
                       <span>{prod.name}</span>
                       {prod.isDeleted && (
-                        <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-700 border border-rose-300 px-1.5 py-0.5 rounded">
                           Oculto
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] text-slate-400 line-clamp-2 mt-0.5">{prod.description}</div>
+                    <div className="text-[11px] text-ink-500 line-clamp-2 mt-0.5">{prod.description}</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
                   <div>
-                    <span className="text-slate-500 block">Categoría</span>
-                    <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-slate-200 rounded font-semibold inline-block mt-0.5">
+                    <span className="text-ink-500 block">Categoría</span>
+                    <span className="px-2 py-0.5 bg-cream-50 border border-ink-900/10 text-ink-900 rounded font-semibold inline-block mt-0.5">
                       {prod.category}
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Precio</span>
-                    <span className="font-bold text-white font-outfit">${prod.price.toLocaleString('es-AR')}</span>
+                    <span className="text-ink-500 block">Precio</span>
+                    <span className="font-bold text-ink-900 font-outfit">${prod.price.toLocaleString('es-AR')}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">País / Liga</span>
-                    <div className="text-slate-200 font-semibold mt-0.5">{prod.country?.name || 'Sin país'}</div>
-                    {prod.league && <div className="text-[10px] text-slate-400">{prod.league.name}</div>}
+                    <span className="text-ink-500 block">País / Liga</span>
+                    <div className="text-ink-900 font-semibold mt-0.5">{prod.country?.name || 'Sin país'}</div>
+                    {prod.league && <div className="text-[10px] text-ink-500">{prod.league.name}</div>}
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Estado</span>
+                    <span className="text-ink-500 block">Estado</span>
                     <div className="mt-1">{renderStatusBadge(prod.status)}</div>
                   </div>
                 </div>
@@ -265,10 +265,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                       key={v.size}
                       className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${
                         v.stock === 0
-                          ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                          ? 'bg-rose-50 border-rose-300 text-rose-700'
                           : v.stock <= 5
-                          ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                          : 'bg-zinc-900 border-zinc-800 text-slate-300'
+                          ? 'bg-amber-50 border-amber-300 text-amber-700'
+                          : 'bg-cream-50 border-ink-900/10 text-ink-700'
                       }`}
                     >
                       {v.size}: {v.stock}
@@ -276,10 +276,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                   ))}
                 </div>
 
-                <div className="flex gap-2 pt-2 border-t border-zinc-800">
+                <div className="flex gap-2 pt-2 border-t border-ink-900/10">
                   <button
                     onClick={() => handleOpenEditModal(prod)}
-                    className="flex-1 px-3 py-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded-lg border border-zinc-800 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                    className="flex-1 px-3 py-2 bg-cream-50 hover:bg-cream-200 text-ink-700 rounded-lg border border-ink-900/10 transition text-xs font-semibold flex items-center justify-center gap-1.5"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     Editar
@@ -288,7 +288,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                     <button
                       onClick={() => handleSoftDelete(prod.id, prod.name)}
                       disabled={deletingId === prod.id}
-                      className="flex-1 px-3 py-2 bg-zinc-900 hover:bg-rose-950 text-rose-400 rounded-lg border border-zinc-800 transition text-xs font-semibold flex items-center justify-center gap-1.5"
+                      className="flex-1 px-3 py-2 bg-cream-50 hover:bg-rose-950 text-rose-700 rounded-lg border border-ink-900/10 transition text-xs font-semibold flex items-center justify-center gap-1.5"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       Ocultar
@@ -302,11 +302,11 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
       )}
 
       {/* Desktop table */}
-      <div className="hidden md:block p-6 bg-[#161616] rounded-3xl border border-zinc-800/80 shadow-xl overflow-hidden">
+      <div className="hidden md:block p-6 bg-white rounded-3xl border border-ink-900/10 shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-zinc-800 text-slate-400 uppercase text-[10px] tracking-wider">
+              <tr className="border-b border-ink-900/10 text-ink-500 uppercase text-[10px] tracking-wider">
                 <th className="py-3 px-3">Producto</th>
                 <th className="py-3 px-3">Categoría</th>
                 <th className="py-3 px-3">País / Liga</th>
@@ -316,10 +316,10 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                 <th className="py-3 px-3 text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/60">
+            <tbody className="divide-y divide-ink-900/8/60">
               {filteredProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-500">
+                  <td colSpan={7} className="py-12 text-center text-ink-500">
                     No se encontraron productos en el catálogo con los filtros aplicados.
                   </td>
                 </tr>
@@ -329,53 +329,53 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                   return (
                     <tr
                       key={prod.id}
-                      className={`hover:bg-zinc-900/50 transition ${
-                        prod.isDeleted ? 'opacity-50 bg-rose-950/10' : ''
+                      className={`hover:bg-cream-50/50 transition ${
+                        prod.isDeleted ? 'opacity-50 bg-rose-50' : ''
                       }`}
                     >
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden shrink-0">
+                          <div className="w-12 h-12 rounded-2xl bg-cream-50 border border-ink-900/10 overflow-hidden shrink-0">
                             {prod.images[0] ? (
                               <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center text-slate-600">Camiseta</div>
+                              <div className="w-full h-full flex items-center justify-center text-ink-500">Camiseta</div>
                             )}
                           </div>
                           <div>
-                            <div className="font-bold text-white flex items-center gap-2">
+                            <div className="font-bold text-ink-900 flex items-center gap-2">
                               <span>{prod.name}</span>
                               {prod.isDeleted && (
-                                <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">
+                                <span className="text-[10px] font-semibold bg-rose-500/20 text-rose-700 border border-rose-300 px-1.5 py-0.5 rounded">
                                   Oculto (Soft Deleted)
                                 </span>
                               )}
                             </div>
-                            <div className="text-[11px] text-slate-400 truncate max-w-xs">{prod.description}</div>
+                            <div className="text-[11px] text-ink-500 truncate max-w-xs">{prod.description}</div>
                           </div>
                         </div>
                       </td>
 
                       <td className="py-3 px-3">
-                        <span className="px-2.5 py-1 bg-zinc-900 border border-zinc-800 text-slate-300 rounded-lg font-semibold text-[11px]">
+                        <span className="px-2.5 py-1 bg-cream-50 border border-ink-900/10 text-ink-700 rounded-lg font-semibold text-[11px]">
                           {prod.category}
                         </span>
                       </td>
 
                       <td className="py-3 px-3 space-y-1">
-                        <div className="flex items-center gap-1.5 text-slate-300 font-semibold">
-                          <Globe className="w-3.5 h-3.5 text-zinc-300" />
+                        <div className="flex items-center gap-1.5 text-ink-700 font-semibold">
+                          <Globe className="w-3.5 h-3.5 text-ink-700" />
                           <span>{prod.country?.name || 'Sin país'}</span>
                         </div>
                         {prod.league && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                            <Trophy className="w-3 h-3 text-amber-400" />
+                          <div className="flex items-center gap-1.5 text-[11px] text-ink-500">
+                            <Trophy className="w-3 h-3 text-amber-700" />
                             <span>{prod.league.name}</span>
                           </div>
                         )}
                       </td>
 
-                      <td className="py-3 px-3 font-bold text-white font-outfit">
+                      <td className="py-3 px-3 font-bold text-ink-900 font-outfit">
                         ${prod.price.toLocaleString('es-AR')}
                       </td>
 
@@ -386,18 +386,18 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                               key={v.size}
                               className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${
                                 v.stock === 0
-                                  ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                                  ? 'bg-rose-50 border-rose-300 text-rose-700'
                                   : v.stock <= 5
-                                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                                  : 'bg-zinc-900 border-zinc-800 text-slate-300'
+                                  ? 'bg-amber-50 border-amber-300 text-amber-700'
+                                  : 'bg-cream-50 border-ink-900/10 text-ink-700'
                               }`}
                             >
                               {v.size}: {v.stock}
                             </span>
                           ))}
                         </div>
-                        <div className="text-[10px] text-slate-400 mt-1">
-                          Total: <strong className="text-slate-200">{totalStock} u.</strong>
+                        <div className="text-[10px] text-ink-500 mt-1">
+                          Total: <strong className="text-ink-900">{totalStock} u.</strong>
                         </div>
                       </td>
 
@@ -407,7 +407,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleOpenEditModal(prod)}
-                            className="p-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 rounded-xl border border-zinc-800 transition"
+                            className="p-2 bg-cream-50 hover:bg-cream-200 text-ink-700 rounded-2xl border border-ink-900/10 transition"
                             title="Editar producto"
                           >
                             <Edit2 className="w-4 h-4" />
@@ -416,7 +416,7 @@ export const ProductsManagerClient: React.FC<ProductsManagerClientProps> = ({
                             <button
                               onClick={() => handleSoftDelete(prod.id, prod.name)}
                               disabled={deletingId === prod.id}
-                              className="p-2 bg-zinc-900 hover:bg-rose-950 text-rose-400 hover:text-rose-300 rounded-xl border border-zinc-800 transition"
+                              className="p-2 bg-cream-50 hover:bg-rose-950 text-rose-700 hover:text-rose-700 rounded-2xl border border-ink-900/10 transition"
                               title="Ocultar de la tienda (Soft delete)"
                             >
                               <Trash2 className="w-4 h-4" />
