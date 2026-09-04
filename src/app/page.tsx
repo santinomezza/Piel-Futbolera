@@ -230,36 +230,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               </div>
             </section>
 
-            {/* === COLECCIONES === */}
-            <section className="bg-cream-100 py-20">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <SectionHeading
-                  eyebrow="Colecciones"
-                  title="Explorá por sección"
-                  description="Camisetas, shorts, camperas y conjuntos: cada categoría con su propia curaduría editorial."
-                  align="center"
-                  accentWord="sección"
-                />
-
-                <div className="flex gap-3 mt-12 overflow-x-auto pb-2 -mx-4 px-4 snap-x">
-                  {sections.map((s) => (
-                    <Link
-                      key={s.id}
-                      href={`/?section=${s.slug}#catalogo`}
-                      className="group shrink-0 snap-start flex flex-col items-center gap-2 min-w-[140px]"
-                    >
-                      <div className="w-28 h-28 rounded-full bg-white border-2 border-ink-900 flex items-center justify-center group-hover:bg-lime-400 transition-colors shadow-[4px_4px_0_0_rgba(10,10,10,1)]">
-                        <span className="text-3xl">⚽</span>
-                      </div>
-                      <span className="text-xs font-black uppercase tracking-wider text-ink-900 text-center">
-                        {s.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-
             {/* === PRODUCTOS DESTACADOS === */}
             {featured.length > 0 && (
               <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
